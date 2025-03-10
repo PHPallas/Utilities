@@ -1,0 +1,25 @@
+{
+    "name": "phpallas/utilities",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Sina Kuhestani",
+            "email": "sinakuhestani@gmail.com"
+        }
+    ],
+    "description": "Utility functions make it easy to work with arrays",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Phpallas\\Utilities\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "^11"
+    },
+    "require" : {
+        "php": ">=8.0"
+    }
+}
