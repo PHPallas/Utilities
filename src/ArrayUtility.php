@@ -378,7 +378,12 @@ class ArrayUtility
         return $location;
     }
 
-    
+    /**
+     * Checks if a condition for all element of an array
+     * @param array $array
+     * @param callable $function
+     * @return bool
+     */
     public static function satisfies(array $array, callable $function): bool
     {
         foreach ($array as $index => $value) {
@@ -388,23 +393,66 @@ class ArrayUtility
         }
         return true;
     }
+
+    /**
+     * Exchanges all keys with their associated values in an array
+     * @param array $array
+     * @return array
+     */
     public static function flip(array $array): array
     {
         return array_flip($array);
     }
+
+    /**
+     * Merge one or more arrays
+     * @param array[] $arrays
+     * @return array
+     */
     public static function merge(array ...$arrays): array
     {
         return array_merge(...$arrays);
     }
+
+    /**
+     * Merge one or more arrays recursively
+     * @param array[] $arrays
+     * @return array
+     */
     public static function mix(array ...$arrays): array
     {
         return array_merge_recursive(...$arrays);
     }
+
+    /**
+     * Shuffles (randomizes the order of the elements in) an array.
+     * @param array $array
+     * @return array
+     */
     public static function shuffle(array $array): array
     {
         shuffle($array);
         return $array;
     }
+
+    /**
+     * Calculate the sum of values in an array
+     * @param array $array
+     * @return float|int
+     */
+    public static function sum(array $array): int|float
+    {
+        return array_sum($array);
+    }
+
+    /**
+     * Sort elements of an array
+     * @param array $array
+     * @param mixed $sortByKeys
+     * @param mixed $descending
+     * @param mixed $isAssoc
+     * @return array
+     */
     public static function sort(array $array, $sortByKeys = false, $descending = false, $isAssoc = false): array
     {
         if (true === $sortByKeys) {
@@ -429,9 +477,5 @@ class ArrayUtility
             }
         }
         return $array;
-    }
-    public static function sum(array $array): int|float
-    {
-        return array_sum($array);
     }
 }

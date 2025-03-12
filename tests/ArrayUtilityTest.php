@@ -387,4 +387,120 @@ final class ArrayUtilityTest extends TestCase
             ]
         ], $array2);
     }
+    public function testSatisfies(): void
+    {
+        $condition = function ($index, $item) {
+            return is_string($item);
+        };
+        $array = ["john","mary","paul","john"];
+        $this->assertSame(true, ArrayUtility::satisfies($array, $condition));
+        $array = ["john",120,"paul","john"];
+        $this->assertSame(false, ArrayUtility::satisfies($array, $condition));
+    }
+    public function testFlip(): void
+    {
+        $array = [
+            "name" => "john",
+            "surname" => "doe",
+            "email" => "johndoe@example.com",
+            "country" => "Germany",
+            "city" => "Berlin",
+        ];
+        $expected = [
+            "john" => "name",
+            "doe" => "surname",
+            "johndoe@example.com" => "email",
+            "Germany" => "country",
+            "Berlin" => "city",
+        ];
+        $this->assertSame($expected, ArrayUtility::flip($array));
+    }
+    public function testMerge(): void
+    {
+        $array1 = [
+            "name" => "john",
+            "surname" => "doe",
+        ];
+        $array2 = [
+            "email" => "johndoe@example.com",
+        ];
+        $array3 = [
+            "country" => "Germany",
+            "city" => "Berlin",
+        ];
+        $expected = [
+            "name" => "john",
+            "surname" => "doe",
+            "email" => "johndoe@example.com",
+            "country" => "Germany",
+            "city" => "Berlin",
+        ];
+        $this->assertSame($expected, ArrayUtility::merge($array1,$array2,$array3));
+    }
+
+    public function testMix(): void
+    {
+        $array1 = [
+            "name" => [
+                "name" => "john",
+            ],
+        ];
+        $array2 = [
+            "email" => "johndoe@example.com",
+            "address" => [
+                "city" => "Berlin",
+            ]
+        ];
+        $array3 = [
+            "name" => [
+                "surname" => "doe",
+            ],
+            "address" => [
+                "country" => "Germany",
+            ]
+        ];
+        $expected = [
+            "name" => [
+                "name" => "john",
+                "surname" => "doe",
+            ],
+            "email" => "johndoe@example.com",
+            "address" => [
+                "city" => "Berlin",
+                "country" => "Germany",
+            ]
+        ];
+        $this->assertSame($expected, ArrayUtility::mix($array1,$array2,$array3));
+        $array1 = [
+            "fruits" => "apple"
+        ];
+        $array2 = [
+            "fruits" => "orange"
+        ];
+        $expected = [
+            "fruits" => ["apple", "orange"]
+        ];
+        $this->assertSame($expected, ArrayUtility::mix($array1,$array2));
+    }
+    public function testSum(): void
+    {
+        $array = [1,2,3];
+        $this->assertSame(6, ArrayUtility::sum($array));
+        $array = [1,2,"appale"];
+        $this->assertSame(3, ArrayUtility::sum($array));
+        $array = [1,2,"appale"=>10];
+        $this->assertSame(13, ArrayUtility::sum($array));
+    }
+
+    public function testSort(): void
+    {
+        $array = [5,6,7,1,2];
+        $this->assertSame([1,2,5,6,7], ArrayUtility::sort($array));
+        $array = [5,6,7,1,2];
+        $this->assertSame([7,6,5,2,1], ArrayUtility::sort($array,false,true));
+        $array = ["a" => 10, "b" => 20, "c" => 30];
+        $this->assertSame(["a" => 10, "b" => 20, "c" => 30], ArrayUtility::sort($array,true));
+        $this->assertSame(["a" => 10, "b" => 20, "c" => 30], ArrayUtility::sort($array,false,false,true));
+        $this->assertSame([ "c" => 30, "b" => 20,"a" => 10,], ArrayUtility::sort($array,false,true,true));
+    }
 }
