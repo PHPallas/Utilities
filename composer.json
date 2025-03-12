@@ -1,13 +1,13 @@
 {
     "name": "phpallas/utilities",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "authors": [
         {
             "name": "Sina Kuhestani",
             "email": "sinakuhestani@gmail.com"
         }
     ],
-    "description": "Utility functions make it easy to work with arrays",
+    "description": "Utility Library for PHP projects",
     "type": "library",
     "license": "MIT",
     "autoload": {
