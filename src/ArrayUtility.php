@@ -201,6 +201,16 @@ class ArrayUtility
     }
 
     /**
+     * Get all keys of an array
+     * @param array $array
+     * @return array
+     */
+    public static function getKeys(array $array): array
+    {
+        return array_keys($array);
+    }
+
+    /**
      * Gets the first key of an array
      * @param array $array
      * @return mixed
@@ -321,17 +331,6 @@ class ArrayUtility
     # --------------------------------------------------------------------------
 
     /**
-     * Checks if the given key or index exists in the array
-     * @param array $array
-     * @param int|string $key
-     * @return bool
-     */
-    public static function hasKey(array $array, int|string $key): bool
-    {
-        return array_key_exists($key, $array);
-    }
-
-    /**
      * Check if an array includes a given value
      * @param array $array
      * @param mixed $value
@@ -340,6 +339,17 @@ class ArrayUtility
     public static function has(array $array, mixed $value): bool
     {
         return in_array($value, $array, true);
+    }
+
+    /**
+     * Checks if the given key or index exists in the array
+     * @param array $array
+     * @param int|string $key
+     * @return bool
+     */
+    public static function hasKey(array $array, int|string $key): bool
+    {
+        return array_key_exists($key, $array);
     }
 
     # --------------------------------------------------------------------------
@@ -541,7 +551,7 @@ class ArrayUtility
      * @param mixed $array
      * @return array
      */
-    public static function transformToLowerrcaseKeys(array $array): array
+    public static function transformToLowercaseKeys(array $array): array
     {
         if (function_exists("\lowercaseKeys")) {
             return array_change_key_case($array, CASE_LOWER);
@@ -559,7 +569,7 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function transformToLower(array $array): array
+    public static function transformToLowercase(array $array): array
     {
         return static::transform($array, function ($key, $value) {
             if (is_string($value)) {
@@ -574,7 +584,7 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function transformToUpper(array $array): array
+    public static function transformToUppercase(array $array): array
     {
         return static::transform($array, function ($key, $value) {
             if (is_string($value)) {
@@ -612,7 +622,7 @@ class ArrayUtility
      */
     public static function isAssociative(array $array): bool
     {
-        $keys = array_keys($array);
+        $keys = static::getKeys($array);
         foreach ($keys as $key) {
             if (!is_int($key))
                 return true;
@@ -834,7 +844,7 @@ class ArrayUtility
         $size = 0;
         foreach ($array as $value) {
             if (true === is_array($value)) {
-                $size += static::size($value);
+                $size += static::estimateSize($value);
             } else {
                 $size++;
             }
@@ -982,42 +992,64 @@ class ArrayUtility
         return $array;
     }
 
+    # --------------------------------------------------------------------------
+    # Export/Import Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to export/import arrays
+    #
+    #   Contributing Roles:
+    #   [1]. All import methods MUST start in from and follow a 
+    #       camelCase naming standard.
+    #   [2]. All export methods MUST start in to and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
 
+    /**
+     * Export an array to a csv format
+     * @param array $array
+     * @return string
+     */
+    // public static function toCSV(array $array, string $delimiter = ","): string
+    // {
+    //     $csv = implode($delimiter,static::getKeys($array));
+    //     foreach ($array as $row)
+    //     {
+    //         $csv .= "\n" . implode($delimiter, $row);
+    //     }
+    //     return $csv;
+    // }
 
+    /**
+     * Import a CSV data into an array
+     * @param string $csv
+     * @return bool|string[]
+     */
+    // public static function fromCSV(string $csv, string $separator): array
+    // {
+    //     $array = explode("\n", $csv);
+    //     foreach ($array as &$row) {
+    //         $row = explode($separator, $row);
+    //     }
+    //     return $array;
+    // }
 
+    /**
+     * Export an  array into a Json
+     * @param array $array
+     * @return bool|string
+     */
+    // public static function toJson(array $array): string
+    // {
+    //     return json_encode($array);
+    // }
 
-    # TODO ---------------------------------------------------------------------
-    public static function getKeys(array $array): array
-    {
-        return array_keys($array);
-    }
-
-
-    public static function toCSV(array $array): string
-    {
-        $csv = implode(",",static::getKeys($array));
-        foreach ($array as $row)
-        {
-            $csv .= "\n" . implode(",", $row);
-        }
-        return $csv;
-    }
-
-    public static function fromCSV(string $csv): array
-    {
-        $array = explode("\n", $csv);
-        foreach ($array as &$row) {
-            $row = explode(",", $row);
-        }
-        return $array;
-    }
-
-    public static function toJson(array $array): string
-    {
-        return json_encode($array);
-    }
-    public static function fromJson(string $json): array
-    {
-        return json_decode($json, true, 2147483647, JSON_OBJECT_AS_ARRAY);
-    }
+    /**
+     * Import a json string data into an array
+     * @param string $json
+     * @return array
+     */
+    // public static function fromJson(string $json): array
+    // {
+    //     return json_decode($json, true, 2147483647, JSON_OBJECT_AS_ARRAY);
+    // }
 }
