@@ -16,9 +16,6 @@ namespace PHPallas\Utilities;
 class StringUtility
 {
 
-    const DROP_SEPARATORS_NORMAL = 1;
-    const DROP_SEPARATORS_FULL = 2;
-
     # --------------------------------------------------------------------------
     # Creational Methods
     # --------------------------------------------------------------------------
@@ -252,10 +249,10 @@ class StringUtility
     {
         return trim(
             chunk_split(
-                $string, 
-                (int) (strlen($string) / 2), 
+                $string,
+                (int) (strlen($string) / 2),
                 $value
-            ), 
+            ),
             $value
         );
     }
@@ -484,7 +481,7 @@ class StringUtility
      */
     public static function transformToFlatcase(string $string): string
     {
-        $string = static::setReplace($string, ["-","_"], " ");
+        $string = static::setReplace($string, ["-", "_"], " ");
         $string = explode(" ", $string);
         foreach ($string as &$word) {
             $word = static::transformToLowercase($word);
@@ -500,10 +497,10 @@ class StringUtility
      */
     public static function transformToPascalCase(string $string): string
     {
-        $string = static::setReplace($string, ["-","_"], " ");
+        $string = static::setReplace($string, ["-", "_"], " ");
         $string = explode(" ", $string);
         foreach ($string as &$word) {
-            $word = static::transformToLowercase($word,false,false);
+            $word = static::transformToLowercase($word, false, false);
             $word = ucfirst($word);
         }
         $string = implode("", $string);
@@ -527,10 +524,10 @@ class StringUtility
      */
     public static function transformToSnakecase(string $string): string
     {
-        $string = static::setReplace($string, ["-","_"], " ");
+        $string = static::setReplace($string, ["-", "_"], " ");
         $string = explode(" ", $string);
         foreach ($string as &$word) {
-            $word = static::transformToLowercase($word,false,false);
+            $word = static::transformToLowercase($word, false, false);
         }
         $string = implode("_", $string);
         return $string;
@@ -553,10 +550,10 @@ class StringUtility
      */
     public static function transformToPascalSnakecase(string $string): string
     {
-        $string = static::setReplace($string, ["-","_"], " ");
+        $string = static::setReplace($string, ["-", "_"], " ");
         $string = explode(" ", $string);
         foreach ($string as &$word) {
-            $word = static::transformToLowercase($word,false,false);
+            $word = static::transformToLowercase($word, false, false);
             $word = ucfirst($word);
         }
         $string = implode("_", $string);
@@ -833,9 +830,9 @@ class StringUtility
      * @param string $format
      * @return void
      */
-    public static function toFormat(string $string, string $format): string
+    public static function toFormat(string $format, string ...$values): string
     {
-        return sprintf($format, $string);
+        return sprintf($format, ...$values);
     }
 
     /**
@@ -846,40 +843,103 @@ class StringUtility
      */
     public static function fromFormat(string $string, string $format): array
     {
-        sscanf($string, $format, ...$vars);
-        return [...$vars];
+        return sscanf($string, $format);
     }
+
+    /**
+     * Split a string into an array of characters
+     * @param string $string
+     * @return array
+     */
     public static function toArray(string $string): array
     {
-        return str_split($string,1);
+        return str_split($string, 1);
     }
+
+    /**
+     * Merge array items and create a strings
+     * @param array $array
+     * @return string
+     */
     public static function fromArray(array $array): string
     {
         return implode("", $array);
     }
+
+    /**
+     * Convert string to integer
+     * @param string $string
+     * @return int
+     */
     public static function toInteger(string $string): int
     {
         return (int) $string;
     }
+
+    /**
+     * Convert integer to string
+     * @param int $integer
+     * @return string
+     */
     public static function fromInteger(int $integer): string
     {
         return (string) $integer;
     }
+
+    /**
+     * Convert string to float
+     * @param string $string
+     * @return float
+     */
     public static function toFloat(string $string): float
     {
         return (float) $string;
     }
+
+    /**
+     * Convert float to string
+     * @param float $float
+     * @return string
+     */
     public static function fromFloat(float $float): string
     {
         return (string) $float;
     }
 
+    /**
+     * convert string to boolean
+     * @param string $string
+     * @return bool
+     */
     public static function toBoolean(string $string): bool
     {
-        if (in_array(static::transformToLowercase($string), ["no", "off", "not", "false", "cancel", "incorrect", "untrue", "wrong", "erroneous", "nok"]))
+        if (
+            in_array(
+                static::transformToLowercase($string),
+                [
+                    "no",
+                    "off",
+                    "not",
+                    "false",
+                    "cancel",
+                    "incorrect",
+                    "untrue",
+                    "wrong",
+                    "erroneous",
+                    "nok",
+                    "null"
+                ]
+            )
+        )
             return false;
         return true;
     }
+
+    /**
+     * Convert boolean to string
+     * @param bool $boolean
+     * @return string
+     */
     public static function fromBoolean(bool $boolean): string
     {
         return $boolean ? "true" : "false";
@@ -915,27 +975,27 @@ class StringUtility
     {
         return stripslashes($string);
     }
-    public static function toUU(string $string): string
+    public static function inUU(string $string): string
     {
         return convert_uuencode($string);
     }
-    public static function fromUU(string $string): string
+    public static function ofUU(string $string): string
     {
         return convert_uudecode($string);
     }
-    public static function toSafeCharacters(string $string): string
+    public static function inSafeCharacters(string $string): string
     {
         return htmlspecialchars($string);
     }
-    public static function fromSafeCharacters(string $string): string
+    public static function ofSafeCharacters(string $string): string
     {
         return htmlspecialchars_decode($string);
     }
-    public static function ToHtmlEntities(string $string): string
+    public static function inHtmlEntities(string $string): string
     {
         return htmlentities($string, ENT_QUOTES);
     }
-    public static function fromHtmlEntities(string $string): string
+    public static function ofHtmlEntities(string $string): string
     {
         return html_entity_decode($string, ENT_QUOTES);
     }
@@ -952,7 +1012,6 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-
     public static function hashMD5(string $string): string
     {
         return md5($string, false);
@@ -961,7 +1020,6 @@ class StringUtility
     {
         return sha1($string);
     }
-
     public static function hashChecksum(string $string): string
     {
         return password_hash(sha1($string));

@@ -327,4 +327,65 @@ final class StringUtilityTest extends TestCase
     {
         $this->assertSame(["John","Doe"], StringUtility::splitBy("John Doe", " "));
     }
+    public function testToHex(): void
+    {
+        $this->assertSame("74657374", StringUtility::toHex("test"));
+    }
+    public function testfromHex(): void
+    {
+        $this->assertSame("test", StringUtility::fromHex("74657374"));
+    }
+    public function testToAscii(): void
+    {
+        $this->assertSame(116, StringUtility::toAscii("t"));
+    }
+    public function testFromAscii(): void
+    {
+        $this->assertSame("t", StringUtility::fromAscii(116));
+    }
+    public function testToFormat(): void
+    {
+        $this->assertSame("Hi, I am John Doe", StringUtility::toFormat("Hi, I am %s %s", "John", "Doe"));
+    }
+    public function testFromFormat(): void
+    {
+        $this->assertSame(["John", "Doe"], StringUtility::fromFormat("Hi, I am John Doe", "Hi, I am %s %s"));
+    }
+    public function testToArray(): void
+    {
+        $this->assertSame(["j", "o","h","n"], StringUtility::toArray("john"));
+    }
+    public function testFromArray(): void
+    {
+        $this->assertSame("john", StringUtility::fromArray(["j", "o","h","n"]));
+    }
+    public function testToInteger(): void
+    {
+        $this->assertSame(-10, StringUtility::toInteger("-10"));
+    }
+    public function testFromInteger(): void
+    {
+        $this->assertSame("-10", StringUtility::fromInteger(-10));
+    }
+    public function testToFloat(): void
+    {
+        $this->assertSame(-10.1, StringUtility::toFloat("-10.1"));
+    }
+    public function testFromFloat(): void
+    {
+        $this->assertSame("-10.1", StringUtility::fromFloat(-10.1));
+    }
+    public function testToBoolean(): void
+    {
+        $this->assertSame(false, StringUtility::toBoolean("false"));
+        $this->assertSame(false, StringUtility::toBoolean("no"));
+        $this->assertSame(false, StringUtility::toBoolean("not"));
+        $this->assertSame(false, StringUtility::toBoolean("nok"));
+        $this->assertSame(true, StringUtility::toBoolean("something"));
+    }
+    public function testFromBoolean(): void
+    {
+        $this->assertSame("false", StringUtility::fromBoolean(false));
+        $this->assertSame("true", StringUtility::fromBoolean(true));
+    }
 }
