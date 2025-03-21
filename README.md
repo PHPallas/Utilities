@@ -1,10 +1,10 @@
 # Utilities
 
-A utility library for PHP+JavaScript
+A utility library for PHP Projects
 
 ## Feature Request
 
-If you need a feature that is missing from my package just [create an isset](https://github.com/PHPallas/Utilities/issues). 
+If you need a feature that is missing from our package just [create an isset](https://github.com/PHPallas/Utilities/issues). 
 
 ## Contribution
 
