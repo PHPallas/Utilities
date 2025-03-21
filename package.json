@@ -1,0 +1,32 @@
+{
+  "name": "phpallas-utilities",
+  "version": "2.0.0",
+  "description": "PHP + JS utility library",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PHPallas/Utilities.git"
+  },
+  "keywords": [
+    "PHP",
+    "JavaScript",
+    "Utilities"
+  ],
+  "author": "Mitra Kashmiri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PHPallas/Utilities/issues"
+  },
+  "homepage": "https://github.com/PHPallas/Utilities#readme",
+  "dependencies": {
+    "jest-cli": "^29.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
