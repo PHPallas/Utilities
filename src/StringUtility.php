@@ -16,19 +16,39 @@ namespace PHPallas\Utilities;
 class StringUtility
 {
 
+    const DROP_SEPARATORS_NORMAL = 1;
+    const DROP_SEPARATORS_FULL = 2;
+
     # --------------------------------------------------------------------------
     # Creational Methods
     # --------------------------------------------------------------------------
-    #   Use this methods to create an array.
+    #   Use this methods to create a string.
     #
     #   Contributing Roles:
-    #   [1]. All creational methods MUST starts in create and follow a camelCase
-    #        naming standard.
+    #   [1]. All creational methods MUST starts in `create` and follow a 
+    #        camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    public static function createRandom(int $length = 8): string
+    /**
+     * Creates and string by repeating a character
+     * @param string $character
+     * @param int $length
+     * @return string
+     */
+    public static function create(string $character, int $length): string
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        return static::setInEnd("", $character, $length);
+    }
+
+    /**
+     * Generate a random string by given length
+     * @param int $length
+     * @return string
+     */
+    public static function createRandom(
+        int $length = 8,
+        $characters = 'abcdefghijklmnopqrstuvwxyz'
+    ): string {
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
@@ -36,63 +56,146 @@ class StringUtility
         }
         return $randomString;
     }
-    public static function createString(string $character, int $length): string
-    {
-        return static::fillEnd("", $character, $length);
-    }
+
+    /**
+     * Creates an string by repeating an string for given times
+     * @param string $string
+     * @param int $times
+     * @return string
+     */
     public static function createByRepeat(string $string, int $times): string
     {
         return str_repeat($string, $times);
     }
-    public static function toRot(string $string): string
+
+    # --------------------------------------------------------------------------
+    # Get Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to get sub-strings
+    #
+    #   Contributing Roles:
+    #   [1]. All get methods MUST starts in get and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Get a character from a string by index
+     * @param string $string
+     * @param int $index
+     * @return string
+     */
+    public static function get(string $string, int $index): string
     {
-        return str_rot13($string);
+        $array = StringUtility::split($string, 1);
+        return $array[$index] ?? "";
     }
-    public static function fromRot(string $string): string
+
+    /**
+     * Get a subset of a string by index and length
+     * @param string $string
+     * @param int $startIndex
+     * @param int $length
+     * @return string
+     */
+    public static function getSubset(string $string, int $startIndex, int $length): string
     {
-        return str_rot13($string);
+        return substr($string, $startIndex, $length);
     }
-    public static function shuffleize(string $string): string
+
+    /**
+     * Get a segment of a string by start and end indices
+     * @param string $string
+     * @param int $startIndex
+     * @param int $endIndex
+     * @return string
+     */
+    public static function getSegment(string $string, int $startIndex, int $endIndex): string
     {
-        return str_shuffle($string);
+        $length = $endIndex - $startIndex;
+        return static::getSubset($string, $startIndex, $length);
     }
-    public static function split(string $string, int $segmentLength): array
+
+    # --------------------------------------------------------------------------
+    # Set Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to set sub-strings
+    #
+    #   Contributing Roles:
+    #   [1]. All set methods MUST starts in set and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Set a character into a string using index
+     * @param string $string
+     * @param int $index
+     * @param string $value
+     * @return string
+     */
+    public static function set(string $string, int $index, string $value): string
     {
-        return str_split($string, $segmentLength);
+        $array = StringUtility::split($string, 1);
+        $array[$index] = $value;
+        return StringUtility::fromArray($array);
     }
-    public static function merge(array $array): string
+
+    /**
+     * Replaces sub-strings with new values
+     * @param string $string
+     * @param array|string $from
+     * @param array|string $to
+     * @param bool $caseSensitive
+     * @return array|string
+     */
+    public static function setReplace(string $string, array|string $needle, array|string $replace, bool $caseSensitive = false): string
     {
-        return implode("", $array);
+        if (true === $caseSensitive) {
+            return str_ireplace($needle, $replace, $string);
+        }
+        return str_replace($needle, $replace, $string);
     }
-    public static function format(string $string, string $format): void
+
+    /**
+     * Fill start of an string
+     * @param string $string
+     * @param string $character
+     * @param int $length
+     * @return string
+     */
+    public static function setInStart(string $string, string $character, int $length): string
     {
-        sprintf($format, $string);
+        if (function_exists("\mb_str_pad")) {
+            return mb_str_pad($string, $length, $character, STR_PAD_LEFT);
+        }
+        return str_pad($string, $length, $character, STR_PAD_LEFT);
     }
-    public static function detect(string $string, string $format): array
+
+    /**
+     * Fill end of a string
+     * @param string $string
+     * @param string $character
+     * @param int $length
+     * @return string
+     */
+    public static function setInEnd(string $string, string $character, int $length): string
     {
-        sscanf($string, $format, ...$vars);
-        return [...$vars];
+        if (function_exists("\mb_str_pad")) {
+            return mb_str_pad($string, $length, $character, STR_PAD_RIGHT);
+        }
+        return str_pad($string, $length, $character, STR_PAD_RIGHT);
     }
-    public static function isEqualTo(string $string1, string $string2): bool
-    {
-        return $string1 === $string2;
-    }
-    public static function isSameAs(string $string1, string $string2): bool
-    {
-        return static::isEqualTo(
-            static::transformToLowercase($string1),
-            static::transformToLowercase($string2)
-        );
-    }
-    public static function transformToNoTag(string $string,  array|string|null $allowedTags = null): string
-    {
-        return strip_tags($string,$allowedTags);
-    }
-    public static function estimateSimilarity(string $string1, string $string2): float
-    {
-        // TODO
-        return 0;
-    }
+
+    # --------------------------------------------------------------------------
+    # Has Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to check existence of characters and sub-strings
+    #
+    #   Contributing Roles:
+    #   [1]. All check methods MUST starts in has and follow a 
+    #       camelCase naming standard.
+    #   [2]. All Has methods must return a boolean value
+    # --------------------------------------------------------------------------
+
     public static function hasPhrase(
         string $string,
         string $needle,
@@ -106,10 +209,493 @@ class StringUtility
         }
         return str_contains($string, $needle);
     }
-    public static function hasEnd(string $string, string $ending): bool
+
+    # --------------------------------------------------------------------------
+    # Add Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to add new sub-strings to strings
+    #
+    #   Contributing Roles:
+    #   [1]. All creational methods MUST starts in get and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Prepend a value into the start of a string
+     * @param string $string
+     * @param string $value
+     * @return string
+     */
+    public static function addToStart(string $string, string $value): string
+    {
+        return "$value$string";
+    }
+
+    /**
+     * append a value into the end of a string
+     * @param string $string
+     * @param string $value
+     * @return string
+     */
+    public static function addToEnd(string $string, string $value): string
+    {
+        return "$string$value";
+    }
+
+    /**
+     * Add a value into the center of another string
+     * @param string $string
+     * @param string $value
+     * @return string
+     */
+    public static function addToCenter(string $string, string $value): string
+    {
+        return trim(
+            chunk_split(
+                $string, 
+                (int) (strlen($string) / 2), 
+                $value
+            ), 
+            $value
+        );
+    }
+    public static function addEvenly(string $string, string $value, int $size): string
+    {
+        return trim(chunk_split($string, $size, $value), $value);
+    }
+
+    # --------------------------------------------------------------------------
+    # Drop Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to drop sub-strings from the string
+    #
+    #   Contributing Roles:
+    #   [1]. All drop methods MUST starts in drop and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Drops characters from string
+     * @param string $string
+     * @param string $characters
+     * @return string
+     */
+    public static function drop(string $string, string $characters = " \n\r\t\v\x00"): string
+    {
+        return static::setReplace($string, $characters, "");
+    }
+
+    public static function dropFirst(string $string): string
+    {
+        return static::fromArray(
+            ArrayUtility::dropFirst(
+                static::toArray($string)
+            ),
+            ""
+        );
+    }
+
+    public static function dropLast(string $string): string
+    {
+        return static::fromArray(
+            ArrayUtility::dropLast(
+                static::toArray($string)
+            )
+        );
+    }
+
+    public static function dropNth(string $string, int $index): string
+    {
+        return static::fromArray(
+            ArrayUtility::dropKey(
+                static::toArray($string),
+                $index,
+                false
+            )
+        );
+    }
+
+    /**
+     * Drops characters from start and end of a string
+     * @param string $string
+     * @param string $characters
+     * @return string
+     */
+    public static function dropFromSides(string $string, string $characters = " \n\r\t\v\x00"): string
+    {
+        return trim($string, $characters);
+    }
+
+    /**
+     * Drops characters from start of a string
+     * @param string $string
+     * @param string $characters
+     * @return string
+     */
+    public static function dropFromStart(string $string, string $characters = " \n\r\t\v\x00"): string
+    {
+        return ltrim($string, $characters);
+    }
+
+    /**
+     * Drops characters from end of a string
+     * @param string $string
+     * @param string $characters
+     * @return string
+     */
+    public static function dropFromEnd(string $string, string $characters = " \n\r\t\v\x00"): string
+    {
+        return rtrim($string, $characters);
+    }
+
+    /**
+     * Drop - and _ from string
+     * @param string $string
+     * @return array|string
+     */
+    public static function dropSeparator(string $string): string
+    {
+        return static::setReplace($string, ["-", "_"], "");
+    }
+
+    /**
+     * Frop space from string
+     * @param string $string
+     * @return array|string
+     */
+    public static function dropSpace(string $string): string
+    {
+        return static::setReplace($string, " ", "");
+    }
+
+    # --------------------------------------------------------------------------
+    # Transform Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to transform sub-strings of a string
+    #
+    #   Contributing Roles:
+    #   [1]. All transform methods MUST starts in transform and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Reverse a string
+     * @param string $string
+     * @return string
+     */
+    public static function transformToReverse(string $string): string
+    {
+        return strrev($string);
+    }
+
+    /**
+     * Shuffelize a string
+     * @param string $string
+     * @return string
+     */
+    public static function transformToShuffle(string $string): string
+    {
+        return str_shuffle($string);
+    }
+
+    /**
+     * Remove all Html & PHP tags from string
+     * @param string $string
+     * @param array|string|null $allowedTags
+     * @return string
+     */
+    public static function transformToNoTag(string $string, array|string|null $allowedTags = null): string
+    {
+        return strip_tags($string, $allowedTags);
+    }
+
+    /**
+     * Transform a string to lowercase
+     * @param string $string
+     * @return string
+     */
+    public static function transformToLowercase(string $string, bool $removeSeparators = false, $dropSpace = false): string
+    {
+        if ($removeSeparators) {
+            $string = static::dropSeparator($string);
+        }
+        if ($dropSpace) {
+            $string = static::dropSpace($string);
+        }
+        return strtolower($string);
+    }
+
+    /**
+     * Transform a string to uppercase
+     * @param string $string
+     * @return string
+     */
+    public static function transformToUppercase(string $string, bool $removeSeparators = false, bool $removeSpace = false): string
+    {
+        if ($removeSeparators) {
+            $string = static::dropSeparator($string);
+        }
+        if ($removeSpace) {
+            $string = static::dropSpace($string);
+        }
+        return strtoupper($string);
+    }
+
+    /**
+     * Transform the first character of a string into lowercase
+     * @param string $string
+     * @param bool $removeSeparators
+     * @param bool $removeSpace
+     * @return string
+     */
+    public static function transformToLowercaseFirst(string $string, bool $removeSeparators = false, bool $removeSpace = false): string
+    {
+        if ($removeSeparators) {
+            $string = static::dropSeparator($string);
+        }
+        if ($removeSpace) {
+            $string = static::dropSpace($string);
+        }
+        return lcfirst($string);
+    }
+
+    /**
+     * Transform the first character of a string into uppercase
+     * @param string $string
+     * @param bool $removeSeparators
+     * @param bool $removeSpace
+     * @return string
+     */
+    public static function transformToUppercaseFirst(string $string, bool $removeSeparators = false, bool $removeSpace = false): string
+    {
+        if ($removeSeparators) {
+            $string = static::dropSeparator($string);
+        }
+        if ($removeSpace) {
+            $string = static::dropSpace($string);
+        }
+        return ucfirst($string);
+    }
+
+    /**
+     * Transform a string to flatcase
+     * @param string $string
+     * @return string
+     */
+    public static function transformToFlatcase(string $string): string
+    {
+        $string = static::setReplace($string, ["-","_"], " ");
+        $string = explode(" ", $string);
+        foreach ($string as &$word) {
+            $word = static::transformToLowercase($word);
+        }
+        $string = implode("", $string);
+        return $string;
+    }
+
+    /**
+     * Transform a string to PascalCase
+     * @param string $string
+     * @return array|string
+     */
+    public static function transformToPascalCase(string $string): string
+    {
+        $string = static::setReplace($string, ["-","_"], " ");
+        $string = explode(" ", $string);
+        foreach ($string as &$word) {
+            $word = static::transformToLowercase($word,false,false);
+            $word = ucfirst($word);
+        }
+        $string = implode("", $string);
+        return $string;
+    }
+
+    /**
+     * Transform a string to camelCase
+     * @param string $string
+     * @return string
+     */
+    public static function transformToCamelcase(string $string): string
+    {
+        return static::transformToLowercaseFirst(static::transformToPascalCase($string));
+    }
+
+    /**
+     * Transform a string to snake_case
+     * @param string $string
+     * @return string
+     */
+    public static function transformToSnakecase(string $string): string
+    {
+        $string = static::setReplace($string, ["-","_"], " ");
+        $string = explode(" ", $string);
+        foreach ($string as &$word) {
+            $word = static::transformToLowercase($word,false,false);
+        }
+        $string = implode("_", $string);
+        return $string;
+    }
+
+    /**
+     * Transform a string to MACRO_CASE
+     * @param string $string
+     * @return string
+     */
+    public static function transformToMacrocase(string $string): string
+    {
+        return static::transformToUppercase(static::transformToSnakecase($string));
+    }
+
+    /**
+     * Transform a string to the Pascal_Snake_Case
+     * @param string $string
+     * @return string
+     */
+    public static function transformToPascalSnakecase(string $string): string
+    {
+        $string = static::setReplace($string, ["-","_"], " ");
+        $string = explode(" ", $string);
+        foreach ($string as &$word) {
+            $word = static::transformToLowercase($word,false,false);
+            $word = ucfirst($word);
+        }
+        $string = implode("_", $string);
+        return $string;
+    }
+
+    /**
+     * Transform string to snake_Camel_Case
+     * @param string $string
+     * @return string
+     */
+    public static function transformToCamelSnakecase(string $string): string
+    {
+        return static::transformToLowercaseFirst(static::transformToPascalSnakecase($string));
+    }
+
+    /**
+     * Transform string to kebaba-case
+     * @param string $string
+     * @return array|string
+     */
+    public static function transformToKebabcase(string $string): string
+    {
+        return static::setReplace(static::transformToSnakecase($string), "_", "-");
+    }
+
+    /**
+     * Transform String to COBOL-CASE
+     * @param string $string
+     * @return string
+     */
+    public static function transformToCobolcase(string $string): string
+    {
+        return static::transformToUppercase(static::transformToKebabcase($string));
+    }
+
+    /**
+     * Transform string to Pascal-Snake-Case
+     * @param string $string
+     * @return array|string
+     */
+    public static function transformToTraincase(string $string): string
+    {
+        return static::setReplace(static::transformToPascalSnakecase($string), "_", "-");
+    }
+
+    /**
+     * Transform string To Metaphone
+     * @param string $string
+     * @return string
+     */
+    public static function transformToMetaphone(string $string): string
+    {
+        return metaphone($string, 0);
+    }
+
+    /**
+     * Transform string to soundex
+     * @param string $string
+     * @return string
+     */
+    public static function transformToSoundex(string $string): string
+    {
+        return soundex($string);
+    }
+
+    # --------------------------------------------------------------------------
+    # Is Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to evaluate sub-strings
+    #
+    #   Contributing Roles:
+    #   [1]. All Is methods MUST starts in `is` and follow a 
+    #       camelCase naming standard.
+    #   [2]. All Is methods must return a boolean value
+    # --------------------------------------------------------------------------
+
+    /**
+     * Checks if two string are equal
+     * @param string $string1
+     * @param string $string2
+     * @return bool
+     */
+    public static function isEqualTo(string $string1, string $string2): bool
+    {
+        return $string1 === $string2;
+    }
+
+    /**
+     * Checks if two string are equal (case insentive)
+     * @param string $string1
+     * @param string $string2
+     * @return bool
+     */
+    public static function isSameAs(string $string1, string $string2): bool
+    {
+        return static::isEqualTo(
+            static::transformToLowercase($string1),
+            static::transformToLowercase($string2)
+        );
+    }
+
+    /**
+     * Checks if a string starts by another string
+     * @param string $string
+     * @param string $starting
+     * @return bool
+     */
+    public static function isStartedBy(string $string, string $starting): bool
+    {
+        return str_starts_with($string, $starting);
+    }
+
+    /**
+     * Checks if a string ends with another string
+     * @param string $string
+     * @param string $ending
+     * @return bool
+     */
+    public static function isEndedWith(string $string, string $ending): bool
     {
         return str_ends_with($string, $ending);
     }
+    # --------------------------------------------------------------------------
+    # Estimate Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to get statistics of a string
+    #
+    #   Contributing Roles:
+    #   [1]. All estimate methods MUST start in estimate and follow a 
+    #       camelCase naming standard.
+    #   [2]. All estimate methods must return an integer value
+    # --------------------------------------------------------------------------
+
+    /**
+     * Get length of an string
+     * @param string $string
+     * @return int
+     */
     public static function estimateLength(string $string): int
     {
         if (function_exists("\mb_strlen")) {
@@ -117,207 +703,159 @@ class StringUtility
         }
         return strlen($string);
     }
-    public static function transformToReverse(string $string): string
+
+    /**
+     * Summary of estimateCounts
+     * @param string $string
+     * @return array|string
+     */
+    public static function estimateCounts(string $string): array
     {
-        return strrev($string);
+        $counts = [];
+        $array = static::toArray($string);
+        foreach ($array as $character) {
+            if (!isset($counts[$character])) {
+                $counts[$character] = 0;
+            }
+            $counts[$character]++;
+        }
+        return $counts;
     }
 
-    public static function hasStart(string $string, string $starting): bool
+    # --------------------------------------------------------------------------
+    # Merge Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to merge strings
+    #
+    #   Contributing Roles:
+    #   [1]. All merge methods MUST start in merge and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Merge strings and create new string
+     * @param mixed $separator
+     * @param array $strings
+     * @return string
+     */
+    public static function merge($separator, ...$strings): string
     {
-        return str_starts_with($string, $starting);
+        return implode($separator, $strings);
     }
-    
-    public static function addSlashes(string $string): string
+
+    # --------------------------------------------------------------------------
+    # Split Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to split strings
+    #
+    #   Contributing Roles:
+    #   [1]. All split methods MUST start in split and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Split a string into sub-strings using given length
+     * @param string $string
+     * @param int $segmentLength
+     * @return array
+     */
+    public static function split(string $string, int $segmentLength): array
     {
-        return addslashes($string);
+        return str_split($string, $segmentLength);
     }
-    public static function removeSlashes(string $string): string
+
+    /**
+     * Split a string into sub-strings using given separator
+     * @param string $string
+     * @param string $separator
+     * @return bool|string[]
+     */
+    public static function splitBy(string $string, string $separator): array
     {
-        return stripslashes($string);
+        return explode($separator, $string);
     }
+
+    # --------------------------------------------------------------------------
+    # Export/Import/Convert Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to export/import strings
+    #
+    #   Contributing Roles:
+    #   [1]. All import methods MUST start in from and follow a 
+    #       camelCase naming standard.
+    #   [2]. All export methods MUST start in to and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    /**
+     * Convert a string into hexadecimal
+     * @param string $string
+     * @return string
+     */
     public static function toHex(string $string): string
     {
         return bin2hex($string);
     }
+
+    /**
+     * Convert a hexadecimal into string
+     * @param string $string
+     * @return bool|string
+     */
     public static function fromHex(string $string): string
     {
         return hex2bin($string);
     }
 
-    public static function removeChars(string $string, string $characters = " \n\r\t\v\x00"): string
-    {
-        return chop($string, $characters);
-    }
+    /**
+     * Convert a character into ascii number
+     * @param string $character
+     * @return int
+     */
     public static function toAscii(string $character): int
     {
         return ord($character);
     }
+
+    /**
+     * Convert a ascii number into character
+     * @param int $ascii
+     * @return string
+     */
     public static function fromAscii(int $ascii): string
     {
         return chr($ascii);
     }
-    public static function addSeparator(string $string, int $size, string $separator): string
+
+    /**
+     * Apply a format to a string and get a formatted string
+     * @param string $string
+     * @param string $format
+     * @return void
+     */
+    public static function toFormat(string $string, string $format): string
     {
-        return chunk_split($string, $size, $separator);
+        return sprintf($format, $string);
     }
 
-    public static function toUU(string $string): string
+    /**
+     * Give a formatted string and extract variables
+     * @param string $string
+     * @param string $format
+     * @return array
+     */
+    public static function fromFormat(string $string, string $format): array
     {
-        return convert_uuencode($string);
+        sscanf($string, $format, ...$vars);
+        return [...$vars];
     }
-    public static function fromUU(string $string): string
+    public static function toArray(string $string): array
     {
-        return convert_uudecode($string);
+        return str_split($string,1);
     }
-    public static function estimateCounts(string $string): array
+    public static function fromArray(array $array): string
     {
-        return count_chars($string, 1);
-    }
-    public static function getChecksum(string $string): string
-    {
-        return password_hash(sha1($string));
-    }
-    public static function validateChecksum(string $string, string $checksum): bool
-    {
-        return password_verify(sha1($string), $checksum);
-    }
-    public static function toArray(string $string, string $separator = ""): array
-    {
-        return explode($separator, $string);
-    }
-    public static function fromArray(array $array, string $separator): string
-    {
-        return implode($separator, $array);
-    }
-    public static function toSafeCharacters(string $string): string
-    {
-        return htmlspecialchars($string);
-    }
-    public static function fromSafeCharacters(string $string): string
-    {
-        return htmlspecialchars_decode($string);
-    }
-    public static function ToHtmlEntities(string $string): string
-    {
-        return htmlentities($string, ENT_QUOTES);
-    }
-    public static function fromHtmlEntities(string $string): string
-    {
-        return html_entity_decode($string, ENT_QUOTES);
-    }
-    public static function transformToLowercase(string $string): string
-    {
-        return strtolower($string);
-    }
-    public static function transformToUppercase(string $string): string
-    {
-        return strtoupper($string);
-    }
-    public static function transformToLowercaseFirst(string $string): string
-    {
-        return lcfirst($string);
-    }
-    public static function replace(string $string, array|string $from, array|string $to, bool $caseSensitive = false): string
-    {
-        if (true === $caseSensitive) {
-            return str_ireplace($from, $to, $string);
-        }
-        return str_replace($from, $to, $string);
-    }
-    public static function fillStart(string $string, string $character, int $length): string
-    {
-        if (function_exists("\mb_str_pad")) {
-            return mb_str_pad($string, $length, $character, STR_PAD_LEFT);
-        }
-        return str_pad($string, $length, $character, STR_PAD_LEFT);
-    }
-    public static function fillEnd(string $string, string $character, int $length): string
-    {
-        if (function_exists("\mb_str_pad")) {
-            return mb_str_pad($string, $length, $character, STR_PAD_RIGHT);
-        }
-        return str_pad($string, $length, $character, STR_PAD_RIGHT);
-    }
-    public static function transformToUppercaseFirst(string $string): string
-    {
-        return ucfirst($string);
-    }
-    public static function transformToFlatcase(string $string): string
-    {
-        return static::transformToLowercase(static::replace($string, " ", ""));
-    }
-    public static function transformToPascalCase(string $string): string
-    {
-        $array = static::toArray(static::transformToLowercase($string), " ");
-        foreach ($array as &$item) {
-            $item = static::transformToUppercaseFirst($item);
-        }
-        return static::fromArray($array, "");
-    }
-    public static function transformToCamelcase(string $string): string
-    {
-        return static::transformToLowercaseFirst(static::transformToPascalCase($string));
-    }
-    public static function transformToSnakecase(string $string): string
-    {
-        return static::transformToLowercase(static::replace($string, " ", "_"));
-    }
-    public static function transformToMacrocase(string $string): string
-    {
-        return static::transformToUppercase(static::transformToSnakecase($string));
-    }
-    public static function transformToPascalSnakecase(string $string): string
-    {
-        $array = static::toArray($string, " ");
-        foreach ($array as &$item) {
-            $item = static::transformToPascalCase($item);
-        }
-        return static::fromArray($array, "_");
-    }
-    public static function transformToCamelSnakecase(string $string): string
-    {
-        return static::transformToLowercaseFirst(static::transformToPascalSnakecase($string));
-    }
-    public static function transformToKebabcase(string $string): string
-    {
-        return static::replace(static::transformToSnakecase($string), "_", "-");
-    }
-    public static function transformToCobolcase(string $string): string
-    {
-        return static::transformToUppercase(static::transformToKebabcase($string));
-    }
-    public static function transformToTraincase(string $string): string
-    {
-        return static::replace(static::transformToPascalSnakecase($string));
-    }
-
-    public static function trim(string $string, string $characters = " \n\r\t\v\x00"): string
-    {
-        return trim($string, $characters);
-    }
-    public static function trimStart(string $string, string $characters = " \n\r\t\v\x00"): string
-    {
-        return ltrim($string, $characters);
-    }
-    public static function trimEnd(string $string, string $characters = " \n\r\t\v\x00"): string
-    {
-        return rtrim($string, $characters);
-    }
-    public static function MD5(string $string): string
-    {
-        return md5($string, false);
-    }
-    public static function SHA(string $string): string
-    {
-        return sha1($string);
-    }
-    public static function transformToMetaphone(string $string): string
-    {
-        return metaphone($string, 0);
-    }
-    public static function transformToSoundex(string $string): string
-    {
-        return soundex($string);
+        return implode("", $array);
     }
     public static function toInteger(string $string): int
     {
@@ -345,6 +883,92 @@ class StringUtility
     public static function fromBoolean(bool $boolean): string
     {
         return $boolean ? "true" : "false";
+    }
+
+    # --------------------------------------------------------------------------
+    # Encode/Decode Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to encode/decode strings
+    #
+    #   Contributing Roles:
+    #   [1]. All encode methods MUST start in in and follow a 
+    #       camelCase naming standard.
+    #   [2]. All decode methods MUST start in of and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+    public static function inRot(string $string): string
+    {
+        return str_rot13($string);
+    }
+
+    public static function ofRot(string $string): string
+    {
+        return str_rot13($string);
+    }
+
+    public static function inSlashes(string $string): string
+    {
+        return addslashes($string);
+    }
+    public static function ofSlashes(string $string): string
+    {
+        return stripslashes($string);
+    }
+    public static function toUU(string $string): string
+    {
+        return convert_uuencode($string);
+    }
+    public static function fromUU(string $string): string
+    {
+        return convert_uudecode($string);
+    }
+    public static function toSafeCharacters(string $string): string
+    {
+        return htmlspecialchars($string);
+    }
+    public static function fromSafeCharacters(string $string): string
+    {
+        return htmlspecialchars_decode($string);
+    }
+    public static function ToHtmlEntities(string $string): string
+    {
+        return htmlentities($string, ENT_QUOTES);
+    }
+    public static function fromHtmlEntities(string $string): string
+    {
+        return html_entity_decode($string, ENT_QUOTES);
+    }
+
+    # --------------------------------------------------------------------------
+    # Hash Methods
+    # --------------------------------------------------------------------------
+    #   Use this methods to hash strings
+    #
+    #   Contributing Roles:
+    #   [1]. All hashing methods MUST start in hash and follow a 
+    #       camelCase naming standard.
+    #   [2]. All validate methods MUST start validate of and follow a 
+    #       camelCase naming standard.
+    # --------------------------------------------------------------------------
+
+
+    public static function hashMD5(string $string): string
+    {
+        return md5($string, false);
+    }
+    public static function hashSHA(string $string): string
+    {
+        return sha1($string);
+    }
+
+    public static function hashChecksum(string $string): string
+    {
+        return password_hash(sha1($string));
+    }
+    public static function validateChecksum(string $string, string $checksum): bool
+    {
+        return password_verify(sha1($string), $checksum);
     }
 
 }
