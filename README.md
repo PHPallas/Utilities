@@ -1,6 +1,6 @@
 # Utilities
 
-Utility functions make it easy to work with arrays
+A utility library for PHP+JavaScript
 
 ## Feature Request
 
