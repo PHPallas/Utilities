@@ -861,9 +861,9 @@ class StringUtility
      * @param array $array
      * @return string
      */
-    public static function fromArray(array $array): string
+    public static function fromArray(array $array, string $separator = ""): string
     {
-        return implode("", $array);
+        return implode($separator, $array);
     }
 
     /**
