@@ -30,12 +30,12 @@ class SqlUtility
     ];
 
     # --------------------------------------------------------------------------
-    # Select Methods
+    # create Methods
     # --------------------------------------------------------------------------
-    #   Use this methods to create a select command.
+    #   Use this methods to create a query.
     #
     #   Contributing Roles:
-    #   [1]. All creational methods MUST starts in select and follow a 
+    #   [1]. All creational methods MUST starts in create and follow a 
     #        camelCase naming standard.
     # --------------------------------------------------------------------------
 
