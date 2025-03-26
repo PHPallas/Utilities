@@ -30,22 +30,12 @@ class StringUtility
     #        camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Creates and string by repeating a character
-     * @param $character
-     * @param $length
-     * @return string
-     */
+
     public static function create($character, $length)
     {
         return static::setInEnd(static::$EMPTY, $character, $length);
     }
 
-    /**
-     * Generate a random string by given length
-     * @param $length
-     * @return string
-     */
     public static function createRandom(
         $length = 8,
         $characters = "abcdefghijklmnopqrstuvwxyz"
@@ -55,19 +45,13 @@ class StringUtility
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
             while (empty($char)) {
-                $char = $characters[MathUtility::createRandomInteger(0, $charactersLength - 1)];
+                $index = MathUtility::createRandomInteger(0, $charactersLength - 1);
+                $char = isset($characters[$index]) ? $characters[$index] : "";
             }
             $randomString .= $char;
         }
         return $randomString;
     }
-
-    /**
-     * Creates an string by repeating an string for given times
-     * @param $string
-     * @param $times
-     * @return string
-     */
     public static function createByRepeat($string, $times)
     {
         return str_repeat($string, $times);
@@ -83,25 +67,12 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Get a character from a string by index
-     * @param $string
-     * @param $index
-     * @return string
-     */
     public static function get($string, $index)
     {
         $array = StringUtility::split($string, 1);
-        return isset($array[$index]) ? $array[$index] : "";
+        $output = isset($array[$index]) ? $array[$index] : static::$EMPTY;;
+        return $output;
     }
-
-    /**
-     * Get a subset of a string by index and length
-     * @param $string
-     * @param $startIndex
-     * @param $length
-     * @return string
-     */
     public static function getSubset($string, $startIndex, $length, $encoding = 'UTF-8')
     {
         if (function_exists("mb_substr")) {
@@ -134,14 +105,6 @@ class StringUtility
         }
         return $result;
     }
-
-    /**
-     * Get a segment of a string by start and end indices
-     * @param $string
-     * @param $startIndex
-     * @param $endIndex
-     * @return string
-     */
     public static function getSegment($string, $startIndex, $endIndex)
     {
         $length = $endIndex - $startIndex;
@@ -158,28 +121,12 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Set a character into a string using index
-     * @param $string
-     * @param $index
-     * @param $value
-     * @return string
-     */
     public static function set($string, $index, $value)
     {
         $array = StringUtility::split($string, 1);
         $array[$index] = $value;
         return StringUtility::fromArray($array);
     }
-
-    /**
-     * Replaces sub-strings with new values
-     * @param $string
-     * @param array|$from
-     * @param array|$to
-     * @param $caseSensitive
-     * @return array|string
-     */
     public static function setReplace($string, $needle, $replace, $caseSensitive = false)
     {
         if (true === $caseSensitive) {
@@ -187,26 +134,10 @@ class StringUtility
         }
         return str_replace($needle, $replace, $string);
     }
-
-    /**
-     * Fill start of an string
-     * @param $string
-     * @param $character
-     * @param $length
-     * @return string
-     */
     public static function setInStart($string, $character, $length)
     {
         return Polyfill::mb_str_pad($string, $length, $character, STR_PAD_LEFT);
     }
-
-    /**
-     * Fill end of a string
-     * @param $string
-     * @param $character
-     * @param $length
-     * @return string
-     */
     public static function setInEnd($string, $character, $length)
     {
         return Polyfill::mb_str_pad($string, $length, $character, STR_PAD_RIGHT);
@@ -229,12 +160,12 @@ class StringUtility
         $caseSensitive = true
     ) {
         if (false === $caseSensitive) {
-            return str_contains(
+            return Polyfill::str_contains(
                 static::transformToLowercase($string),
                 static::transformToLowercase($needle)
             );
         }
-        return str_contains($string, $needle);
+        return Polyfill::str_contains($string, $needle);
     }
 
     # --------------------------------------------------------------------------
@@ -247,39 +178,19 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Prepend a value into the start of a string
-     * @param $string
-     * @param $value
-     * @return string
-     */
     public static function addToStart($string, $value)
     {
         return "$value$string";
     }
-
-    /**
-     * append a value into the end of a string
-     * @param $string
-     * @param $value
-     * @return string
-     */
     public static function addToEnd($string, $value)
     {
         return "$string$value";
     }
-
-    /**
-     * Add a value into the center of another string
-     * @param $string
-     * @param $value
-     * @return string
-     */
     public static function addToCenter($string, $value)
     {
         $middle = Polyfill::mb_strlen($string) / 2;
         $firstPart = Polyfill::mb_substr($string, 0, floor($middle));
-        $secondPart = static::setReplace(   $string, [$firstPart], [""]);
+        $secondPart = static::setReplace(   $string, $firstPart, static::$EMPTY);
         return $firstPart . $value . $secondPart;
     }
     public static function addEvenly($string, $value, $size)
@@ -307,27 +218,19 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Drops characters from string
-     * @param $string
-     * @param $characters
-     * @return string
-     */
     public static function drop($string, $characters = " \n\r\t\v\x00")
     {
-        return static::setReplace($string, [$characters], [""]);
+        return static::setReplace($string, $characters, static::$EMPTY);
     }
-
     public static function dropFirst($string)
     {
         return static::fromArray(
             ArrayUtility::dropFirst(
                 static::toArray($string)
             ),
-            ""
+            static::$EMPTY
         );
     }
-
     public static function dropLast($string)
     {
         return static::fromArray(
@@ -336,7 +239,6 @@ class StringUtility
             )
         );
     }
-
     public static function dropNth($string, $index)
     {
         return static::fromArray(
@@ -347,58 +249,25 @@ class StringUtility
             )
         );
     }
-
-    /**
-     * Drops characters from start and end of a string
-     * @param $string
-     * @param $characters
-     * @return string
-     */
     public static function dropFromSides($string, $characters = " \n\r\t\v\x00")
     {
         return trim($string, $characters);
     }
-
-    /**
-     * Drops characters from start of a string
-     * @param $string
-     * @param $characters
-     * @return string
-     */
     public static function dropFromStart($string, $characters = " \n\r\t\v\x00")
     {
         return ltrim($string, $characters);
     }
-
-    /**
-     * Drops characters from end of a string
-     * @param $string
-     * @param $characters
-     * @return string
-     */
     public static function dropFromEnd($string, $characters = " \n\r\t\v\x00")
     {
         return rtrim($string, $characters);
     }
-
-    /**
-     * Drop - and _ from string
-     * @param $string
-     * @return array|string
-     */
     public static function dropSeparator($string)
     {
-        return static::setReplace($string, ["-", "_"], "");
+        return static::setReplace($string, array("-", "_"), static::$EMPTY);
     }
-
-    /**
-     * Frop space from string
-     * @param $string
-     * @return array|string
-     */
     public static function dropSpace($string)
     {
-        return static::setReplace($string, " ", "");
+        return static::setReplace($string, static::$SPACE, static::$EMPTY);
     }
 
     # --------------------------------------------------------------------------
@@ -411,42 +280,18 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Reverse a string
-     * @param $string
-     * @return string
-     */
     public static function transformToReverse($string)
     {
         return Polyfill::mb_strrev($string);
     }
-
-    /**
-     * Shuffelize a string
-     * @param $string
-     * @return string
-     */
     public static function transformToShuffle($string)
     {
         return Polyfill::mb_str_shuffle($string);
     }
-
-    /**
-     * Remove all Html & PHP tags from string
-     * @param $string
-     * @param array|string|null $allowedTags
-     * @return string
-     */
     public static function transformToNoTag($string, $allowedTags = null)
     {
         return strip_tags($string, $allowedTags);
     }
-
-    /**
-     * Transform a string to lowercase
-     * @param $string
-     * @return string
-     */
     public static function transformToLowercase($string, $removeSeparators = false, $dropSpace = false)
     {
         if ($removeSeparators) {
@@ -457,12 +302,6 @@ class StringUtility
         }
         return strtolower($string);
     }
-
-    /**
-     * Transform a string to uppercase
-     * @param $string
-     * @return string
-     */
     public static function transformToUppercase($string, $removeSeparators = false, $removeSpace = false)
     {
         if ($removeSeparators) {
@@ -473,14 +312,6 @@ class StringUtility
         }
         return strtoupper($string);
     }
-
-    /**
-     * Transform the first character of a string into lowercase
-     * @param $string
-     * @param $removeSeparators
-     * @param $removeSpace
-     * @return string
-     */
     public static function transformToLowercaseFirst($string, $removeSeparators = false, $removeSpace = false)
     {
         if ($removeSeparators) {
@@ -491,14 +322,6 @@ class StringUtility
         }
         return lcfirst($string);
     }
-
-    /**
-     * Transform the first character of a string into uppercase
-     * @param $string
-     * @param $removeSeparators
-     * @param $removeSpace
-     * @return string
-     */
     public static function transformToUppercaseFirst($string, $removeSeparators = false, $removeSpace = false)
     {
         if ($removeSeparators) {
@@ -509,85 +332,49 @@ class StringUtility
         }
         return ucfirst($string);
     }
-
-    /**
-     * Transform a string to flatcase
-     * @param $string
-     * @return string
-     */
     public static function transformToFlatcase($string)
     {
-        $string = static::setReplace($string, ["-", "_"], " ");
-        $string = explode(" ", $string);
+        $string = static::setReplace($string, array("-", "_"), static::$SPACE);
+        $string = explode(static::$SPACE, $string);
         foreach ($string as &$word) {
             $word = static::transformToLowercase($word);
         }
-        $string = implode("", $string);
+        $string = implode(static::$EMPTY, $string);
         return $string;
     }
-
-    /**
-     * Transform a string to PascalCase
-     * @param $string
-     * @return array|string
-     */
     public static function transformToPascalCase($string)
     {
-        $string = static::setReplace($string, ["-", "_"], " ");
-        $string = explode(" ", $string);
+        $string = static::setReplace($string, array("-", "_"), static::$SPACE);
+        $string = explode(static::$SPACE, $string);
         foreach ($string as &$word) {
             $word = static::transformToLowercase($word, false, false);
             $word = ucfirst($word);
         }
-        $string = implode("", $string);
+        $string = implode(static::$EMPTY, $string);
         return $string;
     }
-
-    /**
-     * Transform a string to camelCase
-     * @param $string
-     * @return string
-     */
     public static function transformToCamelcase($string)
     {
         return static::transformToLowercaseFirst(static::transformToPascalCase($string));
     }
-
-    /**
-     * Transform a string to snake_case
-     * @param $string
-     * @return string
-     */
     public static function transformToSnakecase($string)
     {
-        $string = static::setReplace($string, ["-", "_"], " ");
-        $string = explode(" ", $string);
+        $string = static::setReplace($string, array("-", "_"), static::$SPACE);
+        $string = explode(static::$SPACE, $string);
         foreach ($string as &$word) {
             $word = static::transformToLowercase($word, false, false);
         }
         $string = implode("_", $string);
         return $string;
     }
-
-    /**
-     * Transform a string to MACRO_CASE
-     * @param $string
-     * @return string
-     */
     public static function transformToMacrocase($string)
     {
         return static::transformToUppercase(static::transformToSnakecase($string));
     }
-
-    /**
-     * Transform a string to the Pascal_Snake_Case
-     * @param $string
-     * @return string
-     */
     public static function transformToPascalSnakecase($string)
     {
-        $string = static::setReplace($string, ["-", "_"], " ");
-        $string = explode(" ", $string);
+        $string = static::setReplace($string, array("-", "_"), static::$SPACE);
+        $string = explode(static::$SPACE, $string);
         foreach ($string as &$word) {
             $word = static::transformToLowercase($word, false, false);
             $word = ucfirst($word);
@@ -595,62 +382,26 @@ class StringUtility
         $string = implode("_", $string);
         return $string;
     }
-
-    /**
-     * Transform string to snake_Camel_Case
-     * @param $string
-     * @return string
-     */
     public static function transformToCamelSnakecase($string)
     {
         return static::transformToLowercaseFirst(static::transformToPascalSnakecase($string));
     }
-
-    /**
-     * Transform string to kebaba-case
-     * @param $string
-     * @return array|string
-     */
     public static function transformToKebabcase($string)
     {
         return static::setReplace(static::transformToSnakecase($string), "_", "-");
     }
-
-    /**
-     * Transform String to COBOL-CASE
-     * @param $string
-     * @return string
-     */
     public static function transformToCobolcase($string)
     {
         return static::transformToUppercase(static::transformToKebabcase($string));
     }
-
-    /**
-     * Transform string to Pascal-Snake-Case
-     * @param $string
-     * @return array|string
-     */
     public static function transformToTraincase($string)
     {
         return static::setReplace(static::transformToPascalSnakecase($string), "_", "-");
     }
-
-    /**
-     * Transform string To Metaphone
-     * @param $string
-     * @return string
-     */
     public static function transformToMetaphone($string)
     {
         return metaphone($string, 0);
     }
-
-    /**
-     * Transform string to soundex
-     * @param $string
-     * @return string
-     */
     public static function transformToSoundex($string)
     {
         return soundex($string);
@@ -667,23 +418,10 @@ class StringUtility
     #   [2]. All Is methods must return a boolean value
     # --------------------------------------------------------------------------
 
-    /**
-     * Checks if two string are equal
-     * @param $string1
-     * @param $string2
-     * @return bool
-     */
     public static function isEqualTo($string1, $string2)
     {
         return $string1 === $string2;
     }
-
-    /**
-     * Checks if two string are equal (case insentive)
-     * @param $string1
-     * @param $string2
-     * @return bool
-     */
     public static function isSameAs($string1, $string2)
     {
         return static::isEqualTo(
@@ -691,27 +429,13 @@ class StringUtility
             static::transformToLowercase($string2)
         );
     }
-
-    /**
-     * Checks if a string starts by another string
-     * @param $string
-     * @param $starting
-     * @return bool
-     */
     public static function isStartedBy($string, $starting)
     {
-        return str_starts_with($string, $starting);
+        return Polyfill::str_starts_with($string, $starting);
     }
-
-    /**
-     * Checks if a string ends with another string
-     * @param $string
-     * @param $ending
-     * @return bool
-     */
     public static function isEndedWith($string, $ending)
     {
-        return str_ends_with($string, $ending);
+        return Polyfill::str_ends_with($string, $ending);
     }
     # --------------------------------------------------------------------------
     # Estimate Methods
@@ -724,11 +448,6 @@ class StringUtility
     #   [2]. All estimate methods must return an integer value
     # --------------------------------------------------------------------------
 
-    /**
-     * Get length of an string
-     * @param $string
-     * @return int
-     */
     public static function estimateLength($string)
     {
         if (function_exists("\mb_strlen")) {
@@ -736,15 +455,9 @@ class StringUtility
         }
         return strlen($string);
     }
-
-    /**
-     * Summary of estimateCounts
-     * @param $string
-     * @return array|string
-     */
     public static function estimateCounts($string)
     {
-        $counts = [];
+        $counts = array();
         $array = static::toArray($string);
         foreach ($array as $character) {
             if (!isset($counts[$character])) {
@@ -765,14 +478,10 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Merge strings and create new string
-     * @param mixed $separator
-     * @param array $strings
-     * @return string
-     */
-    public static function merge($separator, ...$strings)
+    public static function merge($separator)
     {
+        $strings = func_get_args();
+        array_shift($strings);
         return implode($separator, $strings);
     }
 
@@ -786,23 +495,10 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Split a string into sub-strings using given length
-     * @param $string
-     * @param $segmentLength
-     * @return array
-     */
     public static function split($string, $segmentLength)
     {
         return Polyfill::mb_str_split($string, $segmentLength);
     }
-
-    /**
-     * Split a string into sub-strings using given separator
-     * @param $string
-     * @param $separator
-     * @return bool|string[]
-     */
     public static function splitBy($string, $separator)
     {
         return explode($separator, $string);
@@ -820,134 +516,60 @@ class StringUtility
     #       camelCase naming standard.
     # --------------------------------------------------------------------------
 
-    /**
-     * Convert a string into hexadecimal
-     * @param $string
-     * @return string
-     */
     public static function toHex($string)
     {
         return bin2hex($string);
     }
-
-    /**
-     * Convert a hexadecimal into string
-     * @param $string
-     * @return bool|string
-     */
     public static function fromHex($string)
     {
         return hex2bin($string);
     }
-
-    /**
-     * Convert a character into ascii number
-     * @param $character
-     * @return int
-     */
     public static function toAscii($character)
     {
         return Polyfill::mb_ord($character);
     }
-
-    /**
-     * Convert a ascii number into character
-     * @param $ascii
-     * @return string
-     */
     public static function fromAscii($ascii)
     {
         return Polyfill::mb_chr($ascii);
     }
-
-    /**
-     * Apply a format to a string and get a formatted string
-     * @param $string
-     * @param $format
-     * @return string
-     */
     public static function toFormat($format, ...$values)
     {
         return sprintf($format, ...$values);
     }
-
-
     public static function fromFormat($string, $format)
     {
         return sscanf($string, $format);
     }
-
-    /**
-     * Split a string into an array of characters
-     * @param $string
-     * @return array
-     */
     public static function toArray($string)
     {
         return Polyfill::mb_str_split($string, 1);
     }
-
-    /**
-     * Merge array items and create a strings
-     * @param array $array
-     * @return string
-     */
-    public static function fromArray(array $array, $separator = "")
+    public static function fromArray($array, $separator = "")
     {
         return implode($separator, $array);
     }
-
-    /**
-     * Convert string to integer
-     * @param $string$
-     * @return int
-     */
     public static function toInteger($string)
     {
         return (int) $string;
     }
-
-    /**
-     * Convert integer to string
-     * @param $integer
-     * @return string
-     */
     public static function fromInteger($integer)
     {
         return (string) $integer;
     }
-
-    /**
-     * Convert string to float
-     * @param $string
-     * @return float
-     */
     public static function toFloat($string)
     {
         return (float) $string;
     }
-
-    /**
-     * Convert float to string
-     * @param $float
-     * @return string
-     */
     public static function fromFloat($float)
     {
         return (string) $float;
     }
-
-    /**
-     * convert string to boolean
-     * @param $string
-     * @return bool
-     */
     public static function toBoolean($string)
     {
         if (
             in_array(
                 static::transformToLowercase($string),
-                [
+                array (
                     "no",
                     "off",
                     "not",
@@ -959,18 +581,12 @@ class StringUtility
                     "erroneous",
                     "nok",
                     "null"
-                ]
+                )
             )
         )
             return false;
         return true;
     }
-
-    /**
-     * Convert boolean to string
-     * @param $boolean
-     * @return string
-     */
     public static function fromBoolean($boolean)
     {
         return $boolean ? "true" : "false";
@@ -992,12 +608,10 @@ class StringUtility
     {
         return str_rot13($string);
     }
-
     public static function ofRot($string)
     {
         return str_rot13($string);
     }
-
     public static function inSlashes($string)
     {
         return addslashes($string);
