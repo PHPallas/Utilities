@@ -95,18 +95,18 @@ class Polyfill
             return mb_str_split($string, $length, $encoding);
         }
         if ($encoding === null) {
-            $encoding = mb_internal_encoding();
+            $encoding = static::mb_internal_encoding();
         }
 
         // Initialize the result array
         $result = array();
 
         // Get the total length of the string
-        $string_length = mb_strlen($string, $encoding);
+        $string_length = static::mb_strlen($string, $encoding);
 
         // Loop through the string and extract substrings
         for ($i = 0; $i < $string_length; $i += $length) {
-            $result[] = mb_substr($string, $i, $length, $encoding);
+            $result[] = static::mb_substr($string, $i, $length, $encoding);
         }
 
         return $result;
@@ -143,7 +143,7 @@ class Polyfill
     {
         // Set the default encoding if not specified
         if ($encoding === null) {
-            $encoding = mb_internal_encoding();
+            $encoding = static::mb_internal_encoding();
         }
 
         // If no character mask is provided, use whitespace by default
@@ -176,7 +176,7 @@ class Polyfill
         $len = static::mb_strlen($string, $encoding);
         $end = $len;
 
-        while ($end > 0 && static::mb_strpos($character_mask, mb_substr($string, $end - 1, 1, $encoding), 0, $encoding) !== false) {
+        while ($end > 0 && static::mb_strpos($character_mask, static::mb_substr($string, $end - 1, 1, $encoding), 0, $encoding) !== false) {
             $end--;
         }
 
@@ -241,7 +241,7 @@ class Polyfill
         }
     
         // Return the corresponding character
-        return mb_convert_encoding(pack('C', $ascii), 'UTF-8');
+        return static::mb_convert_encoding(pack('C', $ascii), 'UTF-8');
     }
     public static function polyfill_mb_detect_encoding($string, $encodings = null) {
         // If no encodings are provided, use a default list
@@ -339,7 +339,31 @@ class Polyfill
         }
         return $codepoint;
     }
-
+    public static function str_contains($haystack, $needle, $encoding = 'UTF-8') {
+        if ($needle === '') {
+            return true; // An empty needle always matches
+        }
+        return static::mb_strpos($haystack, $needle, 0, $encoding) !== false;
+    }
+    public static function str_starts_with($haystack, $needle, $encoding = 'UTF-8') {
+        if ($needle === '') {
+            return true; // An empty needle always matches
+        }
+        
+        // Use mb_substr to get the start of the haystack and compare it to the needle
+        return static::mb_substr($haystack, 0, static::mb_strlen($needle, $encoding), $encoding) === $needle;
+    }
+    public static function str_ends_with($haystack, $needle, $encoding = 'UTF-8') {
+        if ($needle === '') {
+            return true; // An empty needle always matches
+        }
+        $haystackLength = static::mb_strlen($haystack, $encoding);
+        $needleLength = static::mb_strlen($needle, $encoding);
+        if ($needleLength > $haystackLength) {
+            return false; // Needle is longer than haystack
+        }
+        return static::mb_substr($haystack, -$needleLength, null, $encoding) === $needle;
+    }
     public static function mb_chr($codepoint) {
         if (!is_int($codepoint) || $codepoint < 0 || $codepoint > 0x10FFFF) {
             throw new \InvalidArgumentException('Codepoint must be an integer between 0 and 0x10FFFF.');
@@ -389,7 +413,7 @@ class Polyfill
     
             case 'ISO-8859-1':
                 // Check if the string contains only valid ISO-8859-1 characters
-                return mb_detect_encoding($string, 'ISO-8859-1', true) === 'ISO-8859-1';
+                return static::mb_detect_encoding($string, 'ISO-8859-1', true) === 'ISO-8859-1';
     
             case 'ASCII':
                 // Check if the string is valid ASCII (0-127)
