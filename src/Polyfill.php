@@ -425,4 +425,40 @@ class Polyfill
                 throw new \InvalidArgumentException('Unsupported encoding: ' . $encoding);
         }
     }
+    public static function password_verify($password, $hash) {
+        if (function_exists("\password_verify")) {
+            return password_verify($password, $hash);
+        }
+        // Extract the salt from the hash
+        $salt = substr($hash, 0, 29);
+        
+        // Hash the password using the same salt
+        $newHash = crypt($password, $salt);
+        
+        // Compare the hashes
+        return $newHash === $hash;
+    }
+    public static function password_hash($password, $algo = PASSWORD_DEFAULT, array $options = []) {
+        if (function_exists("\password_hash")) {
+            return password_hash($password, $algo, $options);
+        }
+        if ($algo !== PASSWORD_DEFAULT) {
+            trigger_error('Only PASSWORD_DEFAULT is supported', E_USER_WARNING);
+            return false;
+        }
+        
+        // Use bcrypt for hashing
+        $cost = 10; // Default cost
+        if (isset($options['cost'])) {
+            $cost = $options['cost'];
+        }
+
+        // Create a salt
+        $salt = sprintf("$2y$%02d$", $cost) . substr(strtr(base64_encode(mcrypt_create_iv(16)), '+', '.'), 0, 22);
+        
+        // Hash the password
+        $hash = crypt($password, $salt);
+        
+        return $hash;
+    }
 }
