@@ -760,13 +760,13 @@ class StringUtility
      */
     public static function dropNth($string, $index)
     {
-        return static::fromArray(
-            ArrayUtility::dropKey(
-                static::toArray($string), // Convert string to array and drop the character at the specified index
-                $index,
-                false,
-            ),
+        $array = static::toArray($string);
+        ArrayUtility::dropKey(
+            $array,
+            $index,
+            false,
         );
+        return static::fromArray($array);
     }
 
     /**
