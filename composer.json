@@ -1,6 +1,6 @@
 {
     "name": "phpallas/utilities",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "authors": [
         {
             "name": "Sina Kuhestani",
@@ -20,7 +20,7 @@
         "phpunit/phpunit": "^11"
     },
     "require" : {
-        "php": ">=8.0"
+        "php": ">=5.3"
     },
     "scripts": {
         "test": "./vendor/bin/phpunit tests/"

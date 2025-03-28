@@ -1,16 +1,13 @@
 <?php declare(strict_types=1);
 
-use PHPallas\Utilities\ArrayUtility;
 use PHPallas\Utilities\SqlUtility;
 use PHPallas\Utilities\StringUtility;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 
 final class SqlUtilityTest extends TestCase
 {
-    public function testDelete(): void
+    public function testDelete()
     {
         $tables = ["users", "customers"];
         $datbases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -170,7 +167,7 @@ final class SqlUtilityTest extends TestCase
             }
         }
     }
-    public function testInsert(): void
+    public function testInsert()
     {
         $tables = ["users", "customers"];
         $databases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -268,7 +265,7 @@ final class SqlUtilityTest extends TestCase
 
 
     }
-    public function testUpdate(): void
+    public function testUpdate()
     {
         $tables = ["users", "customers"];
         $databases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -460,7 +457,7 @@ final class SqlUtilityTest extends TestCase
 
 
     }
-    public function testSelect(): void
+    public function testSelect()
     {
         $fieldsSet = [
             null,
