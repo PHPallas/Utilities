@@ -1,6 +1,13 @@
 <?php
 
-declare(strict_types=1);
+/*
+ * This file is part of the PHPallas package.
+ *
+ * (c) Sina Kuhestani <sinakuhestani@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace PHPallas\Utilities;
 
@@ -10,7 +17,7 @@ class PHP
      * Get PHP version
      * @return bool|string
      */
-    public static function version(): string
+    public static function version()
     {
         return phpversion();
     }
@@ -18,7 +25,7 @@ class PHP
      * Get PHP version as a number
      * @return int
      */
-    public static function versionID(): int
+    public static function versionID()
     {
         $version = explode(".", phpversion());
         $value = 10000 * (int) $version[0] + 100 * (int) $version[1] + (int) $version[2];
@@ -28,27 +35,27 @@ class PHP
      * Get PHP major version
      * @return int|string
      */
-    public static function versionMajor(): int
+    public static function versionMajor()
     {
         $version = explode(".", phpversion());
-        return $version[0] ?? 0;
+        return isset($version[0]) ? $version[0] : 0;
     }
     /**
      * Get PHP minor Version
      * @return int|string
      */
-    public static function versionMinor(): int
+    public static function versionMinor()
     {
         $version = explode(".", phpversion());
-        return $version[1] ?? 0;
+        return isset($version[1]) ? $version[1] : 0;
     }
     /**
      * Get PHP release version
      * @return int|string
      */
-    public static function versionRelease(): int
+    public static function versionRelease()
     {
         $version = explode(".", phpversion());
-        return $version[2] ?? 0;
+        return isset($version[2]) ? $version[2] : 0;
     }
 }
