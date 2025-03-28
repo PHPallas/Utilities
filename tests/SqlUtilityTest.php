@@ -7,8 +7,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(SqlUtility::class)]
-#[UsesClass(StringUtility::class)]
+
 final class SqlUtilityTest extends TestCase
 {
     public function testDelete(): void

@@ -270,7 +270,7 @@ class StringUtility
             // Select a random character until a valid one is found
             while (empty($char))
             {
-                $index = MathUtility::createRandomInteger(
+                $index = rand(
                     0,
                     $charactersLength - 1
                 );

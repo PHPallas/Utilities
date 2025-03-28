@@ -119,7 +119,10 @@ class BooleanUtility
         {
             return $boolean1 === $boolean2; // Strict comparison
         }
-        static::throwError();
+        else {
+            static::throwError();
+        }
+        return static::FALSE;
     }
 
     /**
