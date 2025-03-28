@@ -467,18 +467,44 @@ class ArrayUtility
     }
 
     /**
-     * Drops an element from an array by key
+     * Drops an element from an array by key, supporting dot notation
      * @param array $array
      * @param mixed $key
      * @param bool $reIndex
      * @return array
      */
     public static function dropKey(
-        $array,
+        &$array,
         $key,
         $reIndex = true
     ) {
-        unset($array[$key]);
+        // Split the key into parts based on dot notation
+        $keys = explode(".", $key);
+        $location = &$array;
+
+        // Traverse the array to find the location of the key
+        foreach ($keys as $step)
+        {
+            if (isset($location[$step]))
+            {
+                // If we're at the last key, we unset it
+                if ($step === end($keys))
+                {
+                    unset($location[$step]);
+                }
+                else
+                {
+                    $location = &$location[$step];
+                }
+            }
+            else
+            {
+                // Key does not exist, return the original array
+                return $array;
+            }
+        }
+
+        // Re-index the array if required
         if ($reIndex && !static::isAssociative($array))
         {
             return array_values($array);
