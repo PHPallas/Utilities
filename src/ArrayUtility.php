@@ -29,9 +29,9 @@ class ArrayUtility
      * @param mixed[] $elements The elements of the array
      * @return array
      */
-    public static function create(mixed ...$elements): array
+    public static function create()
     {
-        return [...$elements];
+        return func_get_args();
     }
 
     /**
@@ -39,11 +39,12 @@ class ArrayUtility
      * @param int $size Length of array
      * @return int[]
      */
-    public static function createRandom(int $size): array
+    public static function createRandom($size)
     {
-        $array = [];
-        for ($i = 0; $i < $size; $i++) {
-            $array[] = rand(1,100);
+        $array = array();
+        for ($i = 0; $i < $size; $i++)
+        {
+            $array[] = rand(1, 100);
         }
         return $array;
     }
@@ -58,10 +59,10 @@ class ArrayUtility
      * @return array
      */
     public static function createRange(
-        float|int $min,
-        float|int $max,
-        float|int $step = 1
-    ): array {
+        $min,
+        $max,
+        $step = 1
+    ) {
         return range($min, $max, $step);
     }
 
@@ -72,10 +73,11 @@ class ArrayUtility
      * @param mixed $value value of array elements
      * @return array
      */
-    public static function createByValue(int $size, mixed $value): array
+    public static function createByValue($size, $value)
     {
-        $output = [];
-        for ($i = 0; $i < $size; $i++) {
+        $output = array();
+        for ($i = 0; $i < $size; $i++)
+        {
             $output[] = $value;
         }
         return $output;
@@ -86,7 +88,7 @@ class ArrayUtility
      * @param int $size
      * @return array
      */
-    public static function createZeroArray(int $size): array
+    public static function createZeroArray($size)
     {
         return static::createByValue($size, 0);
     }
@@ -96,7 +98,7 @@ class ArrayUtility
      * @param int $size
      * @return array
      */
-    public static function createNullArray(int $size): array
+    public static function createNullArray($size)
     {
         return static::createByValue($size, null);
     }
@@ -105,9 +107,9 @@ class ArrayUtility
      * Creates an empty array
      * @return array
      */
-    public static function createEmpty(): array
+    public static function createEmpty()
     {
-        return [];
+        return array();
     }
 
     /**
@@ -116,10 +118,11 @@ class ArrayUtility
      * @param mixed $value
      * @return array
      */
-    public static function createByKeys(array $keys, mixed $value): array
+    public static function createByKeys($keys, $value)
     {
-        $output = [];
-        foreach ($keys as $key) {
+        $output = array();
+        foreach ($keys as $key)
+        {
             $output[$key] = $value;
         }
         return $output;
@@ -134,10 +137,10 @@ class ArrayUtility
      * @return array
      */
     public static function createMatrixArray(
-        int $columnsCount,
-        int $rowsCount,
-        mixed $value
-    ): array {
+        $columnsCount,
+        $rowsCount,
+        $value
+    ) {
         return static::createByValue($columnsCount, static::createByValue($rowsCount, $value));
     }
 
@@ -150,10 +153,10 @@ class ArrayUtility
      * @return array
      */
     public static function createTableArray(
-        array $columns,
-        int $rowsCount,
-        mixed $value
-    ): array {
+        $columns,
+        $rowsCount,
+        $value
+    ) {
         return static::createByValue($rowsCount, static::createByKeys($columns, $value));
 
     }
@@ -165,20 +168,10 @@ class ArrayUtility
      * @param array $values
      * @return array
      */
-    public static function createPairs(array $keys, array $values): array
+    public static function createPairs($keys, $values)
     {
         return array_combine($keys, $values);
     }
-
-    # --------------------------------------------------------------------------
-    # Get Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to get array elements.
-    #
-    #   Contributing Roles:
-    #   [1]. All get methods MUST starts in get and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Get array items, supporting dot notation
@@ -187,13 +180,21 @@ class ArrayUtility
      * @param mixed $default
      */
     public static function get(
-        array &$array,
-        string $path,
-        mixed $default = null
+        &$array,
+        $path,
+        $default = null
     ) {
         $location = &$array;
-        foreach (explode(".", $path) as $step) {
-            $location = &$location[$step] ?? $default;
+        foreach (explode(".", $path) as $step)
+        {
+            if (isset($location[$step]))
+            {
+                $location = &$location[$step];
+            }
+            else
+            {
+                $location = $default;
+            }
         }
         return $location;
     }
@@ -203,7 +204,7 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function getKeys(array $array): array
+    public static function getKeys($array)
     {
         return array_keys($array);
     }
@@ -213,9 +214,17 @@ class ArrayUtility
      * @param array $array
      * @return mixed
      */
-    public static function getFirstKey(array $array): mixed
+    public static function getFirstKey($array)
     {
-        return array_key_first($array);
+        if (function_exists("\array_key_first"))
+        {
+            return array_key_first($array);
+        }
+        else
+        {
+            $keys = array_keys($array);
+            return $keys[0];
+        }
     }
 
     /**
@@ -223,9 +232,17 @@ class ArrayUtility
      * @param array $array
      * @return mixed
      */
-    public static function getLastKey(array $array): mixed
+    public static function getLastKey($array)
     {
-        return array_key_last($array);
+        if (function_exists("\array_key_last"))
+        {
+            return array_key_last($array);
+        }
+        else
+        {
+            $keys = array_keys($array);
+            return $keys[count($keys) - 1];
+        }
     }
 
     /**
@@ -233,10 +250,10 @@ class ArrayUtility
      * @param array $array
      * @return mixed
      */
-    public static function getFirst(array $array): mixed
+    public static function getFirst($array)
     {
         $key = static::getFirstKey($array);
-        return $array[$key] ?? null;
+        return isset($array[$key]) ? $array[$key] : null;
     }
 
     /**
@@ -244,10 +261,10 @@ class ArrayUtility
      * @param array $array
      * @return mixed
      */
-    public static function getLast(array $array): mixed
+    public static function getLast($array)
     {
         $key = static::getLastKey($array);
-        return $array[$key] ?? null;
+        return isset($array[$key]) ? $array[$key] : null;
     }
 
     /**
@@ -256,10 +273,11 @@ class ArrayUtility
      * @param array $keys
      * @return array
      */
-    public static function getSubset(array $array, array $keys): array
+    public static function getSubset($array, $keys)
     {
-        $output = [];
-        foreach ($array as $key => $item) {
+        $output = array();
+        foreach ($array as $key => $item)
+        {
             if (false === in_array($key, $keys))
                 continue;
             $output[$key] = $item;
@@ -273,9 +291,10 @@ class ArrayUtility
      * @param array $columns
      * @return array
      */
-    public static function getColumns(array $array, array $columns): array
+    public static function getColumns($array, $columns)
     {
-        foreach ($array as &$item) {
+        foreach ($array as &$item)
+        {
             $item = static::getSubset($item, $columns);
         }
         return $array;
@@ -287,20 +306,26 @@ class ArrayUtility
      * @param callable $function
      * @return array
      */
-    public static function getFiltered(array $array, callable $function): array
+    public static function getFiltered($array, $function)
     {
-        return array_values(array_filter($array, $function, ARRAY_FILTER_USE_BOTH));
+        if (defined("ARRAY_FILTER_USE_BOTH"))
+        {
+            return array_values(array_filter($array, $function, ARRAY_FILTER_USE_BOTH));
+        }
+        else
+        {
+            $output = array();
+            foreach ($array as $key => $value)
+            {
+                // Call the function with both key and value
+                if ($function($key, $value))
+                {
+                    $output[$key] = $value; // Include the item in the output if the function returns true
+                }
+            }
+            return array_values($output);
+        }
     }
-
-    # --------------------------------------------------------------------------
-    # Set Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to set array elements.
-    #
-    #   Contributing Roles:
-    #   [1]. All set methods MUST starts in set and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Set array items, supporting dot notation
@@ -308,25 +333,15 @@ class ArrayUtility
      * @param string $path
      * @param mixed $value
      */
-    public static function set(array &$array, string $path, mixed $value): mixed
+    public static function set(&$array, $path, $value)
     {
         $location = &$array;
-        foreach (explode(".", $path) as $step) {
+        foreach (explode(".", $path) as $step)
+        {
             $location = &$location[$step];
         }
         return $location = $value;
     }
-
-    # --------------------------------------------------------------------------
-    # Has Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to check existence of elements
-    #
-    #   Contributing Roles:
-    #   [1]. All check methods MUST starts in has and follow a 
-    #       camelCase naming standard.
-    #   [2]. All Has methods must return a boolean value
-    # --------------------------------------------------------------------------
 
     /**
      * Check if an array includes a given value
@@ -334,7 +349,7 @@ class ArrayUtility
      * @param mixed $value
      * @return bool
      */
-    public static function has(array $array, mixed $value): bool
+    public static function has($array, $value)
     {
         return in_array($value, $array, true);
     }
@@ -345,20 +360,10 @@ class ArrayUtility
      * @param int|string $key
      * @return bool
      */
-    public static function hasKey(array $array, int|string $key): bool
+    public static function hasKey($array, $key)
     {
         return array_key_exists($key, $array);
     }
-
-    # --------------------------------------------------------------------------
-    # Add Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to add new element to arrays
-    #
-    #   Contributing Roles:
-    #   [1]. All creational methods MUST starts in get and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * An acronym to addToEnd()
@@ -366,9 +371,10 @@ class ArrayUtility
      * @param mixed[] $values
      * @return array
      */
-    public static function add(array $array, mixed ...$values): array
+    public static function add()
     {
-        return static::addToEnd($array, ...$values);
+        $values = func_get_args();
+        return call_user_func_array([__CLASS__, "addToEnd"], $values);
     }
 
     /**
@@ -377,9 +383,15 @@ class ArrayUtility
      * @param mixed[] $values
      * @return array
      */
-    public static function addToEnd(array $array, mixed ...$values): array
+    public static function addToEnd($array)
     {
-        array_push($array, ...$values);
+        $values = func_get_args();
+        array_shift($values); // Remove the first argument (the array)
+        krsort($values);
+        foreach ($values as $value)
+        {
+            array_push($array, $value);
+        }
         return $array;
     }
 
@@ -389,21 +401,18 @@ class ArrayUtility
      * @param mixed[] $values
      * @return array
      */
-    public static function addToStart(array $array, mixed ...$values): array
+    public static function addToStart($array)
     {
-        array_unshift($array, ...$values);
+        $values = func_get_args();
+        array_shift($values); // Remove the first argument (the array)
+        krsort($values);
+        foreach ($values as $value)
+        {
+            array_unshift($array, $value);
+        }
+
         return $array;
     }
-
-    # --------------------------------------------------------------------------
-    # Drop Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to drop element from the array
-    #
-    #   Contributing Roles:
-    #   [1]. All drop methods MUST starts in drop and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Drop n first element(s) of an array
@@ -411,10 +420,11 @@ class ArrayUtility
      * @param int $count
      * @return array
      */
-    public static function dropFromStart(array $array, int $count = 1): array
+    public static function dropFromStart($array, $count = 1)
     {
         $n = min(count($array), $count);
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             array_shift($array);
         }
         return $array;
@@ -425,7 +435,7 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function dropFirst(array $array): array
+    public static function dropFirst($array)
     {
         return static::dropFromStart($array, 1);
     }
@@ -436,10 +446,11 @@ class ArrayUtility
      * @param int $count
      * @return array
      */
-    public static function dropFromEnd(array $array, int $count = 1): array
+    public static function dropFromEnd($array, $count = 1)
     {
         $n = min(count($array), $count);
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             array_pop($array);
         }
         return $array;
@@ -450,7 +461,7 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function dropLast(array $array): array
+    public static function dropLast($array)
     {
         return static::dropFromEnd($array, 1);
     }
@@ -463,12 +474,13 @@ class ArrayUtility
      * @return array
      */
     public static function dropKey(
-        array $array,
-        mixed $key,
-        bool $reIndex = true
-    ): array {
+        $array,
+        $key,
+        $reIndex = true
+    ) {
         unset($array[$key]);
-        if ($reIndex && !static::isAssociative($array)) {
+        if ($reIndex && !static::isAssociative($array))
+        {
             return array_values($array);
         }
         return $array;
@@ -482,29 +494,21 @@ class ArrayUtility
      * @return array
      */
     public static function drop(
-        array $array,
-        mixed $value,
-        bool $reIndex = true
-    ): array {
-        foreach ($array as $key => $itemValue) {
+        $array,
+        $value,
+        $reIndex = true
+    ) {
+        foreach ($array as $key => $itemValue)
+        {
             if ($value === $itemValue)
                 unset($array[$key]);
         }
-        if ($reIndex && !static::isAssociative($array)) {
+        if ($reIndex && !static::isAssociative($array))
+        {
             return array_values($array);
         }
         return $array;
     }
-
-    # --------------------------------------------------------------------------
-    # Transform Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to transform elements of an array
-    #
-    #   Contributing Roles:
-    #   [1]. All transform methods MUST starts in transform and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Applies a transform callable to all elements of an array
@@ -512,11 +516,13 @@ class ArrayUtility
      * @param callable $function
      * @return array
      */
-    public static function transform(array $array, callable $function): array
+    public static function transform($array, $function)
     {
-        foreach ($array as $key => $value) {
+        foreach ($array as $key => $value)
+        {
             [$transformedKey, $transformedValue] = $function($key, $value);
-            if ($transformedKey !== $key) {
+            if ($transformedKey !== $key)
+            {
                 unset($array[$key]);
                 $key = $transformedKey;
             }
@@ -531,13 +537,16 @@ class ArrayUtility
      * @param mixed $array
      * @return array
      */
-    public static function transformToUppercaseKeys(array $array): array
+    public static function transformToUppercaseKeys($array)
     {
-        if (function_exists("\array_change_key_case")) {
+        if (function_exists("\array_change_key_case"))
+        {
             return array_change_key_case($array, CASE_UPPER);
         }
-        return static::transform($array, function ($key, $value) {
-            if (is_string($key)) {
+        return static::transform($array, function ($key, $value)
+        {
+            if (is_string($key))
+            {
                 $key = strtoupper($key);
             }
             return [$key, $value];
@@ -549,13 +558,16 @@ class ArrayUtility
      * @param mixed $array
      * @return array
      */
-    public static function transformToLowercaseKeys(array $array): array
+    public static function transformToLowercaseKeys($array)
     {
-        if (function_exists("\lowercaseKeys")) {
+        if (function_exists("\lowercaseKeys"))
+        {
             return array_change_key_case($array, CASE_LOWER);
         }
-        return static::transform($array, function ($key, $value) {
-            if (is_string($key)) {
+        return static::transform($array, function ($key, $value)
+        {
+            if (is_string($key))
+            {
                 $key = strtolower($key);
             }
             return [$key, $value];
@@ -567,10 +579,12 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function transformToLowercase(array $array): array
+    public static function transformToLowercase($array)
     {
-        return static::transform($array, function ($key, $value) {
-            if (is_string($value)) {
+        return static::transform($array, function ($key, $value)
+        {
+            if (is_string($value))
+            {
                 $value = strtolower($value);
             }
             return [$key, $value];
@@ -582,10 +596,12 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function transformToUppercase(array $array): array
+    public static function transformToUppercase($array)
     {
-        return static::transform($array, function ($key, $value) {
-            if (is_string($value)) {
+        return static::transform($array, function ($key, $value)
+        {
+            if (is_string($value))
+            {
                 $value = strtoupper($value);
             }
             return [$key, $value];
@@ -597,31 +613,21 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function transformFlip(array $array): array
+    public static function transformFlip($array)
     {
         return array_flip($array);
     }
-
-    # --------------------------------------------------------------------------
-    # Is Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to get array elements.
-    #
-    #   Contributing Roles:
-    #   [1]. All get methods MUST starts in get and follow a 
-    #       camelCase naming standard.
-    #   [2]. All Is methods must return a boolean value
-    # --------------------------------------------------------------------------
 
     /**
      * Checks if an array is associative
      * @param array $array
      * @return bool
      */
-    public static function isAssociative(array $array): bool
+    public static function isAssociative($array)
     {
         $keys = static::getKeys($array);
-        foreach ($keys as $key) {
+        foreach ($keys as $key)
+        {
             if (!is_int($key))
                 return true;
         }
@@ -633,7 +639,7 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isEmpty(array $array): bool
+    public static function isEmpty($array)
     {
         return empty($array);
     }
@@ -646,13 +652,16 @@ class ArrayUtility
      * @return bool
      */
     public static function isSameAs(
-        array $array1,
-        array $array2,
-        bool $strict = false
-    ): bool {
-        if (false === $strict) {
+        $array1,
+        $array2,
+        $strict = false
+    ) {
+        if (false === $strict)
+        {
             return 0 === count(array_diff($array1, $array2));
-        } else {
+        }
+        else
+        {
             return 0 === count(array_diff_assoc($array1, $array2));
         }
     }
@@ -664,11 +673,13 @@ class ArrayUtility
      * @return bool
      */
     public static function isEligibleTo(
-        array $array,
-        callable $function
-    ): bool {
-        foreach ($array as $index => $value) {
-            if (false === $function($index, $value)) {
+        $array,
+        $function
+    ) {
+        foreach ($array as $index => $value)
+        {
+            if (false === $function($index, $value))
+            {
                 return false;
             }
         }
@@ -680,10 +691,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isString(array $array): bool
+    public static function isString($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_string($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isString($value);
         });
     }
 
@@ -692,10 +704,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isBoolean(array $array): bool
+    public static function isBoolean($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_bool($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isBoolean($value);
         });
     }
 
@@ -704,10 +717,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isCallable(array $array): bool
+    public static function isCallable($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_callable($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isCallable($value);
         });
     }
 
@@ -716,10 +730,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isCountable(array $array): bool
+    public static function isCountable($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_countable($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isCountable($value);
         });
     }
 
@@ -728,10 +743,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isIterable(array $array): bool
+    public static function isIterable($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_iterable($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isIterable($value);
         });
     }
 
@@ -740,10 +756,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isNumeric(array $array): bool
+    public static function isNumeric($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_numeric($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isNumeric($value);
         });
     }
 
@@ -752,10 +769,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isScalar(array $array): bool
+    public static function isScalar($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_scalar($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isScalar($value);
         });
     }
 
@@ -764,10 +782,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isFloat(array $array): bool
+    public static function isFloat($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_float($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isFloat($value);
         });
     }
 
@@ -776,9 +795,10 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isNull(array $array): bool
+    public static function isNull($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
+        return static::isEligibleTo($array, function ($index, $value)
+        {
             return null === $value;
         });
     }
@@ -788,10 +808,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isObject(array $array): bool
+    public static function isObject($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_object($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isObject($value);
         });
     }
 
@@ -800,10 +821,11 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isArray(array $array): bool
+    public static function isArray($array)
     {
-        return static::isEligibleTo($array, function ($index, $value) {
-            return is_array($value);
+        return static::isEligibleTo($array, function ($index, $value)
+        {
+            return TypesUtility::isArray($value);
         });
     }
 
@@ -812,38 +834,32 @@ class ArrayUtility
      * @param array $array
      * @return bool
      */
-    public static function isInstanceOf(array $array, string $class): bool
+    public static function isInstanceOf($array, $class)
     {
-        foreach ($array as $item) {
+        foreach ($array as $item)
+        {
             if (!$item instanceof $class)
                 return false;
         }
         return true;
     }
 
-    # --------------------------------------------------------------------------
-    # Estimate Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to get statistics of an array
-    #
-    #   Contributing Roles:
-    #   [1]. All estimate methods MUST start in estimate and follow a 
-    #       camelCase naming standard.
-    #   [2]. All estimate methods must return an integer value
-    # --------------------------------------------------------------------------
-
     /**
      * Get total number of elements inside an array
      * @param array $array
      * @return int
      */
-    public static function estimateSize(array $array): int
+    public static function estimateSize($array)
     {
         $size = 0;
-        foreach ($array as $value) {
-            if (true === is_array($value)) {
+        foreach ($array as $value)
+        {
+            if (true === is_array($value))
+            {
                 $size += static::estimateSize($value);
-            } else {
+            }
+            else
+            {
                 $size++;
             }
         }
@@ -855,10 +871,11 @@ class ArrayUtility
      * @param array $array
      * @return int[]
      */
-    public static function estimateCounts(array $array): array
+    public static function estimateCounts($array)
     {
-        $output = [];
-        foreach ($array as $value) {
+        $output = array();
+        foreach ($array as $value)
+        {
             if (!isset($output[$value]))
                 $output[$value] = 0;
             $output[$value]++;
@@ -871,29 +888,20 @@ class ArrayUtility
      * @param array $array
      * @return float|int
      */
-    public static function estimateSum(array $array): int|float
+    public static function estimateSum($array)
     {
         return array_sum($array);
     }
-
-    # --------------------------------------------------------------------------
-    # Merge Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to merge arrays
-    #
-    #   Contributing Roles:
-    #   [1]. All merge methods MUST start in merge and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Merge one or more arrays
      * @param array[] $arrays
      * @return array
      */
-    public static function merge(array ...$arrays): array
+    public static function merge()
     {
-        return array_merge(...$arrays);
+        $arrays = func_get_args();
+        return call_user_func_array("array_merge", $arrays);
     }
 
     /**
@@ -901,20 +909,11 @@ class ArrayUtility
      * @param array[] $arrays
      * @return array
      */
-    public static function mergeInDepth(array ...$arrays): array
+    public static function mergeInDepth()
     {
-        return array_merge_recursive(...$arrays);
+        $arrays = func_get_args();
+        return call_user_func_array("array_merge_recursive", $arrays);
     }
-
-    # --------------------------------------------------------------------------
-    # Split Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to split arrays
-    #
-    #   Contributing Roles:
-    #   [1]. All split methods MUST start in split and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Split an array into chunks
@@ -924,22 +923,12 @@ class ArrayUtility
      * @return array
      */
     public static function split(
-        array $array,
-        int $size,
-        bool $isAssoc = false
-    ): array {
+        $array,
+        $size,
+        $isAssoc = false
+    ) {
         return array_chunk($array, $size, $isAssoc);
     }
-
-    # --------------------------------------------------------------------------
-    # Sort Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to sort arrays
-    #
-    #   Contributing Roles:
-    #   [1]. All sort methods MUST start in sort and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Sort elements of an array
@@ -950,28 +939,43 @@ class ArrayUtility
      * @return array
      */
     public static function sort(
-        array $array,
-        bool $sortByKeys = false,
-        bool $descending = false,
-        bool $isAssoc = false
-    ): array {
-        if (true === $sortByKeys) {
-            if (true === $descending) {
+        $array,
+        $sortByKeys = false,
+        $descending = false,
+        $isAssoc = false
+    ) {
+        if (true === $sortByKeys)
+        {
+            if (true === $descending)
+            {
                 krsort($array);
-            } else {
+            }
+            else
+            {
                 ksort($array);
             }
-        } else {
-            if (true === $descending) {
-                if (true === $isAssoc) {
+        }
+        else
+        {
+            if (true === $descending)
+            {
+                if (true === $isAssoc)
+                {
                     arsort($array);
-                } else {
+                }
+                else
+                {
                     rsort($array);
                 }
-            } else {
-                if (true === $isAssoc) {
+            }
+            else
+            {
+                if (true === $isAssoc)
+                {
                     asort($array);
-                } else {
+                }
+                else
+                {
                     sort($array);
                 }
             }
@@ -984,30 +988,18 @@ class ArrayUtility
      * @param array $array
      * @return array
      */
-    public static function sortRandom(array $array): array
+    public static function sortRandom($array)
     {
         shuffle($array);
         return $array;
     }
-
-    # --------------------------------------------------------------------------
-    # Export/Import Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to export/import arrays
-    #
-    #   Contributing Roles:
-    #   [1]. All import methods MUST start in from and follow a 
-    #       camelCase naming standard.
-    #   [2]. All export methods MUST start in to and follow a 
-    #       camelCase naming standard.
-    # --------------------------------------------------------------------------
 
     /**
      * Export an array to a csv format
      * @param array $array
      * @return string
      */
-    // public static function toCSV(array $array, string $delimiter = ","): string
+    // public static function toCSV($array, string $delimiter = ","): string
     // {
     //     $csv = implode($delimiter,static::getKeys($array));
     //     foreach ($array as $row)
@@ -1022,7 +1014,7 @@ class ArrayUtility
      * @param string $csv
      * @return bool|string[]
      */
-    // public static function fromCSV(string $csv, string $separator): array
+    // public static function fromCSV(string $csv, string $separator)
     // {
     //     $array = explode("\n", $csv);
     //     foreach ($array as &$row) {
@@ -1036,7 +1028,7 @@ class ArrayUtility
      * @param array $array
      * @return bool|string
      */
-    // public static function toJson(array $array): string
+    // public static function toJson($array): string
     // {
     //     return json_encode($array);
     // }
@@ -1046,7 +1038,7 @@ class ArrayUtility
      * @param string $json
      * @return array
      */
-    // public static function fromJson(string $json): array
+    // public static function fromJson(string $json)
     // {
     //     return json_decode($json, true, 2147483647, JSON_OBJECT_AS_ARRAY);
     // }

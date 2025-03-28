@@ -5,19 +5,19 @@ use PHPUnit\Framework\TestCase;
 
 final class ArrayUtilityTest extends TestCase
 {
-    public function testCreateArray(): void
+    public function testCreateArray()
     {
         $expectedArray = [1, 2, 3];
         $createdArray = ArrayUtility::create(1, 2, 3);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateRandomArray(): void
+    public function testCreateRandomArray()
     {
         $expectedSize = 8;
         $createdArray = ArrayUtility::createRandom($expectedSize);
         $this->assertSame($expectedSize, ArrayUtility::estimateSize($createdArray));
     }
-    public function testCreateRangeArray(): void
+    public function testCreateRangeArray()
     {
         $expectedArray = [5, 6, 7, 8, 9];
         $createdArray = ArrayUtility::createRange(5, 9, 1);
@@ -26,31 +26,31 @@ final class ArrayUtilityTest extends TestCase
         $createdArray = ArrayUtility::createRange(3, 9, 3);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateByValue(): void
+    public function testCreateByValue()
     {
         $expectedArray = [1, 1, 1, 1, 1];
         $createdArray = ArrayUtility::createByValue(5, 1);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateZeroArray(): void
+    public function testCreateZeroArray()
     {
         $expectedArray = [0, 0, 0, 0];
         $createdArray = ArrayUtility::createZeroArray(4);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateNullArray(): void
+    public function testCreateNullArray()
     {
         $expectedArray = [null, null, null];
         $createdArray = ArrayUtility::createNullArray(3);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateEmpty(): void
+    public function testCreateEmpty()
     {
         $expectedArray = [];
         $createdArray = ArrayUtility::createEmpty();
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateByKeys(): void
+    public function testCreateByKeys()
     {
         $expectedArray = [
             "apple" => 100,
@@ -60,7 +60,7 @@ final class ArrayUtilityTest extends TestCase
         $createdArray = ArrayUtility::createByKeys(["apple", "banana", "orange"], 100);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function createMatrixarray(): void
+    public function createMatrixarray()
     {
         $expectedArray = [
             [1, 1],
@@ -70,7 +70,7 @@ final class ArrayUtilityTest extends TestCase
         $createdArray = ArrayUtility::createMatrixArray(1, 3, 1);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreateTableArray(): void
+    public function testCreateTableArray()
     {
         $expectedArray = [
             [
@@ -89,7 +89,7 @@ final class ArrayUtilityTest extends TestCase
         $createdArray = ArrayUtility::createTableArray(["fname", "lname"], 3, "test");
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testCreatePairs(): void
+    public function testCreatePairs()
     {
         $expectedArray = [
             "fname" => "John",
@@ -98,7 +98,7 @@ final class ArrayUtilityTest extends TestCase
         $createdArray = ArrayUtility::createPairs(["fname", "lname"], ["John", "Doe"]);
         $this->assertSame($expectedArray, $createdArray);
     }
-    public function testGet(): void
+    public function testGet()
     {
         $array = [
             "info" => [
@@ -111,7 +111,7 @@ final class ArrayUtilityTest extends TestCase
         $this->assertSame("doe", ArrayUtility::get($array, "info.lname"));
         $this->assertSame(18, ArrayUtility::get($array, "age"));
     }
-    public function testGetFirst(): void
+    public function testGetFirst()
     {
         $array = [
             "apple" => 100,
@@ -121,7 +121,7 @@ final class ArrayUtilityTest extends TestCase
         $array = ["apple", "banana",];
         $this->assertSame("apple", ArrayUtility::getFirst($array));
     }
-    public function testGetLast(): void
+    public function testGetLast()
     {
         $array = [
             "apple" => 100,
@@ -131,7 +131,7 @@ final class ArrayUtilityTest extends TestCase
         $array = ["apple", "banana",];
         $this->assertSame("banana", ArrayUtility::getLast($array));
     }
-    public function testGetKeys(): void
+    public function testGetKeys()
     {
         $array = [
             "fname" => "john",
@@ -139,7 +139,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame(["fname", "lname"], ArrayUtility::getKeys($array));
     }
-    public function testGetFirstKey(): void
+    public function testGetFirstKey()
     {
         $array = [
             "fname" => "john",
@@ -149,7 +149,7 @@ final class ArrayUtilityTest extends TestCase
         $array = ["john", "doe"];
         $this->assertSame(0, ArrayUtility::getFirstKey($array));
     }
-    public function testGetLastKey(): void
+    public function testGetLastKey()
     {
         $array = [
             "fname" => "john",
@@ -159,7 +159,7 @@ final class ArrayUtilityTest extends TestCase
         $array = ["john", "doe"];
         $this->assertSame(1, ArrayUtility::getLastKey($array));
     }
-    public function testGetSubset(): void
+    public function testGetSubset()
     {
         $array = [
             "fname" => "john",
@@ -173,7 +173,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame($expected, ArrayUtility::getSubset($array, ["fname", "gender"]));
     }
-    public function testGetColumns(): void
+    public function testGetColumns()
     {
         $array = [
             [
@@ -201,7 +201,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame($expected, ArrayUtility::getColumns($array, ["fname", "lname"]));
     }
-    public function testGetFiltered(): void
+    public function testGetFiltered()
     {
         $array = [
             [
@@ -230,7 +230,7 @@ final class ArrayUtilityTest extends TestCase
         };
         $this->assertSame($expected, ArrayUtility::getFiltered($array, $filter));
     }
-    public function testSet(): void
+    public function testSet()
     {
         $array = [
             "name" => [
@@ -255,7 +255,7 @@ final class ArrayUtilityTest extends TestCase
             ]
         ], $array2);
     }
-    public function testHasKey(): void
+    public function testHasKey()
     {
         $array = [
             "apple" => 100,
@@ -273,28 +273,28 @@ final class ArrayUtilityTest extends TestCase
         $this->assertSame(true, ArrayUtility::hasKey($array, 1));
         $this->assertSame(false, ArrayUtility::hasKey($array, 2));
     }
-    public function testHas(): void
+    public function testHas()
     {
         $array = ["john", "mary", "paul", "john"];
         $this->assertSame(true, ArrayUtility::has($array, "john"));
         $this->assertSame(true, ArrayUtility::has($array, "paul"));
         $this->assertSame(false, ArrayUtility::has($array, "robert"));
     }
-    public function testAdd(): void
+    public function testAdd()
     {
         $array = ["apple"];
         $this->assertSame(["apple", "orange",], ArrayUtility::add($array, "orange"));
         $this->assertNotSame(["orange", "apple",], ArrayUtility::add($array, "orange"));
 
     }
-    public function testAddToStart(): void
+    public function testAddToStart()
     {
         $array = ["apple"];
         $this->assertSame(["orange", "banana", "apple",], ArrayUtility::addToStart($array, "orange", "banana"));
         $this->assertNotSame(["apple", "orange", "banana",], ArrayUtility::addToStart($array, "orange", "banana"));
 
     }
-    public function testDropFromStart(): void
+    public function testDropFromStart()
     {
         $array = [
             "apple" => 100,
@@ -317,7 +317,7 @@ final class ArrayUtilityTest extends TestCase
         $this->assertSame([], ArrayUtility::dropFromStart($array, 3));
         $this->assertSame([], ArrayUtility::dropFromStart($array, 100));
     }
-    public function testDropFisrt(): void
+    public function testDropFisrt()
     {
         $array = [
             "apple" => 100,
@@ -332,7 +332,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::dropFirst($array)
         );
     }
-    public function testDropFromEnd(): void
+    public function testDropFromEnd()
     {
         $array = [
             "apple" => 100,
@@ -355,7 +355,7 @@ final class ArrayUtilityTest extends TestCase
         $this->assertSame([], ArrayUtility::dropFromEnd($array, 3));
         $this->assertSame([], ArrayUtility::dropFromEnd($array, 100));
     }
-    public function testDropLast(): void
+    public function testDropLast()
     {
         $array = [
             "apple" => 100,
@@ -370,7 +370,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::dropLast($array)
         );
     }
-    public function testDropKey(): void
+    public function testDropKey()
     {
         $array = [
             "apple" => 100,
@@ -385,7 +385,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::dropKey($array, "banana")
         );
     }
-    public function testDrop(): void
+    public function testDrop()
     {
         $array = [
             "apple" => 100,
@@ -411,7 +411,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::drop($array, 200)
         );
     }
-    public function testTransform(): void
+    public function testTransform()
     {
         $array = [
             "apple" => 100,
@@ -432,7 +432,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::transform($array, $transform)
         );
     }
-    public function testTransformToUppercaseKeys(): void
+    public function testTransformToUppercaseKeys()
     {
         $array = [
             "apple" => 100,
@@ -448,7 +448,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::transformToUppercaseKeys($array)
         );
     }
-    public function testTransformToLowercaseKeys(): void
+    public function testTransformToLowercaseKeys()
     {
         $array = [
             "APPLE" => 100,
@@ -465,7 +465,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::transformToLowercaseKeys($array)
         );
     }
-    public function testTransformToUppercase(): void
+    public function testTransformToUppercase()
     {
         $array = [
             "apple",
@@ -481,7 +481,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::transformToUppercase($array)
         );
     }
-    public function testTransformToLowercase(): void
+    public function testTransformToLowercase()
     {
         $array = [
             "APPLE",
@@ -497,7 +497,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::transformToLowercase($array)
         );
     }
-    public function testTransformFlip(): void
+    public function testTransformFlip()
     {
         $array = [
             "APPLE" => 100,
@@ -514,7 +514,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::transformFlip($array)
         );
     }
-    public function testIsAssociative(): void
+    public function testIsAssociative()
     {
         $array = [
             "APPLE" => 100,
@@ -537,7 +537,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isAssociative($array)
         );
     }
-    public function testIsEmpty(): void
+    public function testIsEmpty()
     {
         $this->assertSame(
             true,
@@ -548,7 +548,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isEmpty([null])
         );
     }
-    public function testIsSameAs(): void
+    public function testIsSameAs()
     {
         $this->assertSame(
             true,
@@ -571,7 +571,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isSameAs(["a" => 1, "b" => 2],["b" => 2, "a" => 1],true)
         );
     }
-    public function testIsEligible(): void
+    public function testIsEligible()
     {
         $test1 = function($key, $value){
             return $value > 5;
@@ -589,7 +589,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isEligibleTo($array, $test2)
         );
     }
-    public function testIsString(): void
+    public function testIsString()
     {
         $this->assertSame(
             false,
@@ -600,7 +600,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isString(["1","2"])
         );
     }
-    public function testIsBoolean(): void
+    public function testIsBoolean()
     {
         $this->assertSame(
             false,
@@ -611,7 +611,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isBoolean([false,true])
         );
     }
-    public function testIsCallable(): void
+    public function testIsCallable()
     {
         $this->assertSame(
             false,
@@ -622,7 +622,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isCallable([function(){},function(){}])
         );
     }
-    public function testIsCountable(): void
+    public function testIsCountable()
     {
         $this->assertSame(
             true,
@@ -633,7 +633,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isCountable([1,2,[3,4]])
         );
     }
-    public function testIsIterable(): void
+    public function testIsIterable()
     {
         $this->assertSame(
             true,
@@ -644,7 +644,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isIterable([1,2,[3,4]])
         );
     }
-    public function testIsNumeric(): void
+    public function testIsNumeric()
     {
         $this->assertSame(
             true,
@@ -655,7 +655,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isNumeric(["test",2,3])
         );
     }
-    public function testIsScalar(): void
+    public function testIsScalar()
     {
         $this->assertSame(
             true,
@@ -666,7 +666,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isScalar(["test",[2,3]])
         );
     }
-    public function testIsFloat(): void
+    public function testIsFloat()
     {
         $this->assertSame(
             true,
@@ -677,7 +677,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isFloat([1,2,3,4,5])
         );
     }
-    public function testIsNull(): void
+    public function testIsNull()
     {
         $this->assertSame(
             true,
@@ -688,7 +688,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isNull([1,2,3,4,5])
         );
     }
-    public function testIsObject(): void
+    public function testIsObject()
     {
         $this->assertSame(
             true,
@@ -699,7 +699,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isObject([1,2,3,4,5])
         );
     }
-    public function testIsArray(): void
+    public function testIsArray()
     {
         $this->assertSame(
             true,
@@ -710,7 +710,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isArray([1,2,[3,4],5])
         );
     }
-    public function testIsInstanceOf(): void
+    public function testIsInstanceOf()
     {
         $this->assertSame(
             true,
@@ -721,7 +721,7 @@ final class ArrayUtilityTest extends TestCase
             ArrayUtility::isInstanceOf([1,2,3,4,5], ArrayUtility::class)
         );
     }
-    public function testEstimateSize(): void
+    public function testEstimateSize()
     {
         $array = [
             "apple",
@@ -756,7 +756,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame(7, ArrayUtility::estimateSize($array));
     }
-    public function testEstimateSum(): void
+    public function testEstimateSum()
     {
         $array = [1,2,3];
         $this->assertSame(6, ArrayUtility::estimateSum($array));
@@ -765,7 +765,7 @@ final class ArrayUtilityTest extends TestCase
         $array = [1,2,"appale"=>10];
         $this->assertSame(13, ArrayUtility::estimateSum($array));
     }
-    public function testEstimateCounts(): void
+    public function testEstimateCounts()
     {
         $array = [
             "banana",
@@ -777,7 +777,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame(["banana"=>3,"grape"=>1,"orange"=>2], ArrayUtility::estimateCounts($array));
     }
-    public function testMerge(): void
+    public function testMerge()
     {
         $array1 = [
             "name" => "john",
@@ -824,7 +824,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame($expected, ArrayUtility::merge($array1,$array2,$array3));
     }
-    public function testMergeInDepth(): void
+    public function testMergeInDepth()
     {
         $array1 = [
             "name" => [
@@ -854,7 +854,7 @@ final class ArrayUtilityTest extends TestCase
         ];
         $this->assertSame($expected, ArrayUtility::mergeInDepth($array1,$array2,$array3));
     }
-    public function testSplit(): void
+    public function testSplit()
     {
         $array = [1,2,3,4,5,6,7,8,9];
         $this->assertSame([[1,2,3],[4,5,6],[7,8,9]], ArrayUtility::split($array,3));
@@ -878,7 +878,7 @@ final class ArrayUtilityTest extends TestCase
             ]
         ], ArrayUtility::split($array,3, true));
     }
-    public function testSort(): void
+    public function testSort()
     {
         $array = [5,6,7,1,2];
         $this->assertSame([1,2,5,6,7], ArrayUtility::sort($array));
@@ -889,14 +889,14 @@ final class ArrayUtilityTest extends TestCase
         $this->assertSame(["a" => 10, "b" => 20, "c" => 30], ArrayUtility::sort($array,false,false,true));
         $this->assertSame([ "c" => 30, "b" => 20,"a" => 10,], ArrayUtility::sort($array,false,true,true));
     }
-    public function testSortRandom(): void
+    public function testSortRandom()
     {
         $array = [1,2,3,4,5,6,7,8,9];
         $result = ArrayUtility::sortRandom($array);
         $this->assertSame($array,ArrayUtility::sort($result));
         $this->assertNotSame($array, $result);
     }
-    // public function testToCSV(): void
+    // public function testToCSV()
     // {
     //     $array = [
     //         ["fname", "lname", "age"],
