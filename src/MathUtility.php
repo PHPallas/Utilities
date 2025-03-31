@@ -192,4 +192,28 @@ class MathUtility
         }
         return ($number >= 0) ? static::round($number) : static::round(-$number) * -1;
     }
+
+    /**
+     * Generate a random integer between the given min and max values.
+     *
+     * @param int $min The minimum value (inclusive).
+     * @param int $max The maximum value (inclusive).
+     * @return int A random integer between min and max.
+     */
+    public static function randomInt($min, $max)
+    {
+        return mt_rand($min, $max);
+    }
+
+    /**
+     * Generate a random float between the given min and max values.
+     *
+     * @param float $min The minimum value (inclusive).
+     * @param float $max The maximum value (inclusive).
+     * @return float A random float between min and max.
+     */
+    public static function randomFloat($min, $max)
+    {
+        return $min + mt_rand() / mt_getrandmax() * ($max - $min);
+    }
 }
