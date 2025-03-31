@@ -102,4 +102,94 @@ class MathUtility
     const WATER_DENSITY = 997; // Density of water in kg/m³
     const STP_TEMPERATURE = 273.15; // Standard temperature in K
     const STP_PRESSURE = 101325; // Standard pressure in Pa
+
+    /**
+     * Round to the nearest integer.
+     *
+     * @param float $number The number to round.
+     * @return int The rounded integer.
+     */
+    public static function round($number)
+    {
+        return ($number >= 0) ? (int) ($number + 0.5) : (int) ($number - 0.5);
+    }
+
+    /**
+     * Floor: Round down to the nearest integer.
+     *
+     * @param float $number The number to floor.
+     * @return int The floored integer.
+     */
+    public static function floor($number)
+    {
+        return ($number >= 0) ? (int) $number : (int) ($number - 1);
+    }
+
+    /**
+     * Ceil: Round up to the nearest integer.
+     *
+     * @param float $number The number to ceil.
+     * @return int The ceiled integer.
+     */
+    public static function ceil($number)
+    {
+        return ($number >= 0) ? (int) ($number + 1) : (int) $number;
+    }
+
+    /**
+     * Truncate: Remove decimal part without rounding.
+     *
+     * @param float $number The number to truncate.
+     * @return int The truncated integer.
+     */
+    public static function truncate($number)
+    {
+        return ($number >= 0) ? (int) $number : (int) ($number);
+    }
+
+    /**
+     * Round Half Up.
+     *
+     * @param float $number The number to round.
+     * @return int The rounded integer.
+     */
+    public static function roundHalfUp($number)
+    {
+        return ($number >= 0) ? (int) ($number + 0.5) : (int) ($number - 0.5);
+    }
+
+    /**
+     * Round Half Down.
+     *
+     * @param float $number The number to round.
+     * @return int The rounded integer.
+     */
+    public static function roundHalfDown($number)
+    {
+        if ($number > 0)
+        {
+            return (int) ($number + 0.499999999);
+        }
+        else
+        {
+            return (int) ($number - 0.500000001);
+        }
+    }
+
+    /**
+     * Bankers' Rounding (Round Half to Even).
+     *
+     * @param float $number The number to round.
+     * @return int The rounded integer.
+     */
+    public static function roundHalfToEven($number)
+    {
+        $floor = static::floor($number);
+        $ceil = static::ceil($number);
+        if (($number - $floor) == 0.5)
+        {
+            return ($floor % 2 == 0) ? $floor : $ceil;
+        }
+        return ($number >= 0) ? static::round($number) : static::round(-$number) * -1;
+    }
 }
