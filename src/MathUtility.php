@@ -216,4 +216,287 @@ class MathUtility
     {
         return $min + mt_rand() / mt_getrandmax() * ($max - $min);
     }
+
+    /**
+     * Estimate simple interest.
+     *
+     * @param float $principal The principal amount.
+     * @param float $rate The annual interest rate (as a decimal).
+     * @param int $time The time in years.
+     * @return float The estimated simple interest.
+     */
+    public static function estimateSimpleInterest($principal, $rate, $time)
+    {
+        return $principal * $rate * $time;
+    }
+
+    /**
+     * Estimate compound interest.
+     *
+     * @param float $principal The principal amount.
+     * @param float $rate The annual interest rate (as a decimal).
+     * @param int $time The time in years.
+     * @param int $n The number of times interest is compounded per year.
+     * @return float The estimated compound interest.
+     */
+    public static function estimateCompoundInterest($principal, $rate, $time, $n)
+    {
+        return $principal * pow((1 + $rate / $n), $n * $time) - $principal;
+    }
+
+    /**
+     * Estimate the future value of an investment.
+     *
+     * @param float $principal The principal amount.
+     * @param float $rate The annual interest rate (as a decimal).
+     * @param int $time The time in years.
+     * @return float The estimated future value.
+     */
+    public static function estimateFutureValue($principal, $rate, $time)
+    {
+        return $principal * pow((1 + $rate), $time);
+    }
+
+    /**
+     * Estimate the present value of a future amount.
+     *
+     * @param float $futureValue The future amount.
+     * @param float $rate The annual interest rate (as a decimal).
+     * @param int $time The time in years.
+     * @return float The estimated present value.
+     */
+    public static function estimatePresentValue($futureValue, $rate, $time)
+    {
+        return $futureValue / pow((1 + $rate), $time);
+    }
+
+    /**
+     * Estimate monthly loan payment.
+     *
+     * @param float $principal The loan amount.
+     * @param float $annualRate The annual interest rate (as a decimal).
+     * @param int $months The number of months to pay off the loan.
+     * @return float The estimated monthly payment.
+     */
+    public static function estimateLoanPayment($principal, $annualRate, $months)
+    {
+        if ($annualRate == 0)
+        {
+            return $principal / $months;
+        }
+
+        $monthlyRate = $annualRate / 12;
+        return ($principal * $monthlyRate) / (1 - pow(1 + $monthlyRate, -$months));
+    }
+
+    /**
+     * Estimate the total amount paid over the life of the loan.
+     *
+     * @param float $monthlyPayment The monthly payment amount.
+     * @param int $months The number of months to pay off the loan.
+     * @return float The estimated total amount paid.
+     */
+    public static function estimateTotalPayment($monthlyPayment, $months)
+    {
+        return $monthlyPayment * $months;
+    }
+
+    /**
+     * Estimate the total interest paid over the life of the loan.
+     *
+     * @param float $totalPayment The total amount paid.
+     * @param float $principal The loan amount.
+     * @return float The estimated total interest paid.
+     */
+    public static function estimateTotalInterest($totalPayment, $principal)
+    {
+        return $totalPayment - $principal;
+    }
+
+    /**
+     * Estimate the Annual Percentage Rate (APR).
+     *
+     * @param float $interest The total interest paid.
+     * @param float $principal The loan amount.
+     * @param int $months The number of months.
+     * @return float The estimated APR as a decimal.
+     */
+    public static function estimateAPR($interest, $principal, $months)
+    {
+        return ($interest / $principal) * (12 / $months);
+    }
+
+    /**
+     * Estimate the Effective Annual Rate (EAR).
+     *
+     * @param float $nominalRate The nominal interest rate (as a decimal).
+     * @param int $n The number of compounding periods per year.
+     * @return float The estimated EAR as a decimal.
+     */
+    public static function estimateEAR($nominalRate, $n)
+    {
+        return pow((1 + $nominalRate / $n), $n) - 1;
+    }
+
+    /**
+     * Generate a loan amortization schedule.
+     *
+     * @param float $principal The loan amount.
+     * @param float $annualRate The annual interest rate (as a decimal).
+     * @param int $months The number of months to pay off the loan.
+     * @return array The amortization schedule.
+     */
+    public static function generateAmortizationSchedule($principal, $annualRate, $months)
+    {
+        $monthlyRate = $annualRate / 12;
+        $monthlyPayment = self::estimateLoanPayment($principal, $annualRate, $months);
+        $schedule = [];
+
+        for ($i = 1; $i <= $months; $i++)
+        {
+            $interestPayment = $principal * $monthlyRate;
+            $principalPayment = $monthlyPayment - $interestPayment;
+            $remainingBalance = $principal - $principalPayment;
+
+            $schedule[] = [
+                'Month' => $i,
+                'Payment' => round($monthlyPayment, 2),
+                'Principal' => round($principalPayment, 2),
+                'Interest' => round($interestPayment, 2),
+                'Remaining Balance' => round($remainingBalance, 2)
+            ];
+
+            $principal = $remainingBalance;
+        }
+
+        return $schedule;
+    }
+
+    /**
+     * Estimate the loan payoff time in months.
+     *
+     * @param float $principal The loan amount.
+     * @param float $monthlyPayment The monthly payment amount.
+     * @param float $annualRate The annual interest rate (as a decimal).
+     * @return int The estimated number of months to pay off the loan.
+     */
+    public static function estimateLoanPayoffTime($principal, $monthlyPayment, $annualRate)
+    {
+        if ($monthlyPayment <= 0 || $annualRate < 0)
+        {
+            throw new \InvalidArgumentException("Monthly payment must be greater than zero and annual rate cannot be negative.");
+        }
+
+        $monthlyRate = $annualRate / 12;
+        $months = 0;
+
+        while ($principal > 0)
+        {
+            $interest = $principal * $monthlyRate;
+            $principalPayment = $monthlyPayment - $interest;
+
+            if ($principalPayment <= 0)
+            {
+                throw new \RuntimeException("Monthly payment is not enough to cover interest.");
+            }
+
+            // Adjust for the last payment if the remaining principal is less than the principalPayment
+            if ($principalPayment > $principal)
+            {
+                $months++; // Count the last month
+                break; // Exit the loop since the loan will be paid off
+            }
+
+            $principal -= $principalPayment;
+            $months++;
+        }
+
+        return $months;
+    }
+
+    /**
+     * Estimate the Net Present Value (NPV) of cash flows.
+     *
+     * @param array $cashFlows An array of cash flows (positive and negative).
+     * @param float $rate The discount rate (as a decimal).
+     * @return float The estimated NPV.
+     * @throws \InvalidArgumentException If the cash flows array is empty or if the rate is negative.
+     */
+    public static function estimateNPV($cashFlows, $rate)
+    {
+        if (empty($cashFlows))
+        {
+            throw new \InvalidArgumentException("Cash flows array cannot be empty.");
+        }
+
+        if ($rate < 0)
+        {
+            throw new \InvalidArgumentException("Discount rate cannot be negative.");
+        }
+
+        $npv = 0.0;
+        foreach ($cashFlows as $t => $cashFlow)
+        {
+            // Ensure that the index is non-negative
+            if ($t < 0)
+            {
+                throw new \InvalidArgumentException("Time period must be non-negative.");
+            }
+
+            $npv += $cashFlow / pow((1 + $rate), $t);
+        }
+
+        return round($npv, 2); // Optionally round to 2 decimal places
+    }
+
+    /**
+     * Compare two loans based on total cost.
+     *
+     * @param float $principal1 The first loan amount.
+     * @param float $annualRate1 The first loan annual interest rate (as a decimal).
+     * @param int $months1 The first loan term in months.
+     * @param float $principal2 The second loan amount.
+     * @param float $annualRate2 The second loan annual interest rate (as a decimal).
+     * @param int $months2 The second loan term in months.
+     * @return string Comparison result.
+     * @throws \InvalidArgumentException If any of the inputs are invalid.
+     */
+    public static function compareLoans($principal1, $annualRate1, $months1, $principal2, $annualRate2, $months2)
+    {
+        // Input validation
+        if ($principal1 <= 0 || $principal2 <= 0)
+        {
+            throw new \InvalidArgumentException("Principal amounts must be greater than zero.");
+        }
+        if ($annualRate1 < 0 || $annualRate2 < 0)
+        {
+            throw new \InvalidArgumentException("Annual rates cannot be negative.");
+        }
+        if ($months1 <= 0 || $months2 <= 0)
+        {
+            throw new \InvalidArgumentException("Loan terms must be greater than zero.");
+        }
+
+        // Calculate total payments
+        $monthlyPayment1 = self::estimateLoanPayment($principal1, $annualRate1, $months1);
+        $totalPayment1 = self::estimateTotalPayment($monthlyPayment1, $months1);
+
+        $monthlyPayment2 = self::estimateLoanPayment($principal2, $annualRate2, $months2);
+        $totalPayment2 = self::estimateTotalPayment($monthlyPayment2, $months2);
+
+        // Compare total payments and generate result
+        if ($totalPayment1 < $totalPayment2)
+        {
+            return "Loan 1 is cheaper by " . round($totalPayment2 - $totalPayment1, 2) . ". (Total Cost: " . round($totalPayment1, 2) . ")";
+        }
+        elseif ($totalPayment1 > $totalPayment2)
+        {
+            return "Loan 2 is cheaper by " . round($totalPayment1 - $totalPayment2, 2) . ". (Total Cost: " . round($totalPayment2, 2) . ")";
+        }
+        else
+        {
+            return "Both loans cost the same. (Total Cost: " . round($totalPayment1, 2) . ")";
+        }
+    }
+
 }
