@@ -7,6 +7,102 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+    public function testExponential()
+    {
+        $this->assertEquals(exp(2), MathUtility::exponential(2));
+        $this->assertEquals(exp(0), MathUtility::exponential(0));
+        $this->assertEquals(exp(-1), MathUtility::exponential(-1));
+    }
+
+    public function testNaturalLog()
+    {
+        $this->assertEquals(log(10), MathUtility::naturalLog(10));
+        $this->assertEquals(0, MathUtility::naturalLog(1));
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::naturalLog(0);
+    }
+
+    public function testLogBase10()
+    {
+        $this->assertEquals(log10(100), MathUtility::logBase10(100));
+        $this->assertEquals(1, MathUtility::logBase10(10));
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::logBase10(0);
+    }
+
+    public function testLogBase2()
+    {
+        $this->assertEquals(log(8, 2), MathUtility::logBase2(8));
+        $this->assertEquals(0, MathUtility::logBase2(1));
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::logBase2(0);
+    }
+
+    public function testLogBase()
+    {
+        $this->assertEquals(log(100, 5), MathUtility::logBase(100, 5));
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::logBase(100, 1);
+        MathUtility::logBase(0, 10);
+    }
+
+    public function testChangeBase()
+    {
+        $this->assertEquals(log(100) / log(10) * log(2), MathUtility::changeBase(100, 10, 2));
+        $this->assertEquals(log(8) / log(2) * log(10), MathUtility::changeBase(8, 2, 10)); // log10(8)
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::changeBase(100, 1, 2);
+        MathUtility::changeBase(100, 10, 1);
+    }
+
+    public function testInverseNaturalLog()
+    {
+        $this->assertEquals(exp(2), MathUtility::inverseNaturalLog(2));
+        $this->assertEquals(1, MathUtility::inverseNaturalLog(0));
+    }
+
+    public function testInverseLogBase10()
+    {
+        $this->assertEquals(100, MathUtility::inverseLogBase10(2));
+        $this->assertEquals(1, MathUtility::inverseLogBase10(0));
+    }
+
+    public function testInverseLogBase2()
+    {
+        $this->assertEquals(8, MathUtility::inverseLogBase2(3));
+        $this->assertEquals(1, MathUtility::inverseLogBase2(0));
+    }
+
+    public function testExponentialGrowth()
+    {
+        $this->assertEquals(100 * exp(0.05 * 10), MathUtility::exponentialGrowth(100, 0.05, 10));
+    }
+
+    public function testExponentialDecay()
+    {
+        $this->assertEquals(100 * exp(-0.05 * 10), MathUtility::exponentialDecay(100, 0.05, 10));
+    }
+
+    public function testPower()
+    {
+        $this->assertEquals(8, MathUtility::power(2, 3));
+        $this->assertEquals(1, MathUtility::power(5, 0));
+    }
+
+    public function testSolveExponentialEquation()
+    {
+        $this->assertEquals(3, MathUtility::solveExponentialEquation(2, 8));
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::solveExponentialEquation(1, 8);
+    }
+
+    public function testLogFactorial()
+    {
+        $this->assertEquals(log(120), MathUtility::logFactorial(5)); // 5! = 120
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::logFactorial(-1);
+    }
+
     public function testSin()
     {
         $this->assertEqualsWithDelta(0, MathUtility::sin(0), 0.00001);
@@ -15,7 +111,7 @@ final class MathUtilityTest extends TestCase
         $this->assertEqualsWithDelta(-1, MathUtility::sin(3 * M_PI / 2), 0.00001);
         $this->assertEqualsWithDelta(0, MathUtility::sin(2 * M_PI), 0.00001);
     }
-  
+
     public function testCos()
     {
         $this->assertEqualsWithDelta(1, MathUtility::cos(0), 0.00001);
@@ -24,7 +120,7 @@ final class MathUtilityTest extends TestCase
         $this->assertEqualsWithDelta(0, MathUtility::cos(3 * M_PI / 2), 0.00001);
         $this->assertEqualsWithDelta(1, MathUtility::cos(2 * M_PI), 0.00001);
     }
-  
+
     public function testTan()
     {
         $this->assertEqualsWithDelta(0, MathUtility::tan(0), 0.00001);
@@ -32,7 +128,7 @@ final class MathUtilityTest extends TestCase
         $this->assertEqualsWithDelta(-1, MathUtility::tan(3 * M_PI / 4), 0.00001);
         $this->assertEqualsWithDelta(0, MathUtility::tan(M_PI), 0.00001);
     }
-  
+
     public function testAtan()
     {
         $this->assertEqualsWithDelta(0.0, MathUtility::atan(0), 0.00001);
@@ -41,13 +137,13 @@ final class MathUtilityTest extends TestCase
         $this->assertEqualsWithDelta(0.4636476090008061, MathUtility::atan(0.5), 0.00001);
         $this->assertEqualsWithDelta(-0.4636476090008061, MathUtility::atan(-0.5), 0.00001);
     }
-  
+
     public function testDeg2Rad()
     {
         $this->assertEqualsWithDelta(M_PI, MathUtility::deg2rad(180), 0.00001);
         $this->assertEqualsWithDelta(-M_PI, MathUtility::deg2rad(-180), 0.00001);
     }
-  
+
     public function testRad2Deg()
     {
         $this->assertEqualsWithDelta(180, MathUtility::rad2deg(M_PI), 0.00001);
