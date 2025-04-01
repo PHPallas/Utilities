@@ -1124,4 +1124,303 @@ class MathUtility
         return $logFactorial;
     }
 
+    /**
+     * Add two matrices.
+     *
+     * @param array $matrixA The first matrix.
+     * @param array $matrixB The second matrix.
+     * @return array The resulting matrix after addition.
+     * @throws InvalidArgumentException if matrices have different dimensions.
+     */
+    public static function addMatrix($matrixA, $matrixB)
+    {
+        self::validateDimensions($matrixA, $matrixB);
+        $result = [];
+        for ($i = 0; $i < count($matrixA); $i++)
+        {
+            for ($j = 0; $j < count($matrixA[0]); $j++)
+            {
+                $result[$i][$j] = $matrixA[$i][$j] + $matrixB[$i][$j];
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Subtract two matrices.
+     *
+     * @param array $matrixA The first matrix.
+     * @param array $matrixB The second matrix.
+     * @return array The resulting matrix after subtraction.
+     * @throws InvalidArgumentException if matrices have different dimensions.
+     */
+    public static function subtractMatrix($matrixA, $matrixB)
+    {
+        self::validateDimensions($matrixA, $matrixB);
+        $result = [];
+        for ($i = 0; $i < count($matrixA); $i++)
+        {
+            for ($j = 0; $j < count($matrixA[0]); $j++)
+            {
+                $result[$i][$j] = $matrixA[$i][$j] - $matrixB[$i][$j];
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Multiply two matrices.
+     *
+     * @param array $matrixA The first matrix.
+     * @param array $matrixB The second matrix.
+     * @return array The resulting matrix after multiplication.
+     * @throws InvalidArgumentException if matrices cannot be multiplied.
+     */
+    public static function multiplyMatrix($matrixA, $matrixB)
+    {
+        if (count($matrixA[0]) !== count($matrixB))
+        {
+            throw new InvalidArgumentException('Number of columns in first matrix must equal number of rows in second matrix.');
+        }
+        $result = [];
+        for ($i = 0; $i < count($matrixA); $i++)
+        {
+            for ($j = 0; $j < count($matrixB[0]); $j++)
+            {
+                $result[$i][$j] = 0;
+                for ($k = 0; $k < count($matrixB); $k++)
+                {
+                    $result[$i][$j] += $matrixA[$i][$k] * $matrixB[$k][$j];
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Calculate the inverse of a matrix.
+     *
+     * @param array $matrix The matrix to invert.
+     * @return array The inverted matrix.
+     * @throws InvalidArgumentException if the matrix is not invertible.
+     */
+    public static function inverseMatrix($matrix)
+    {
+        $n = count($matrix);
+        $identity = [];
+        for ($i = 0; $i < $n; $i++)
+        {
+            $identity[$i] = array_fill(0, $n, 0);
+            $identity[$i][$i] = 1;
+        }
+
+        // Augment the matrix with the identity matrix
+        for ($i = 0; $i < $n; $i++)
+        {
+            $matrix[$i] = array_merge($matrix[$i], $identity[$i]);
+        }
+
+        // Perform Gaussian elimination
+        for ($i = 0; $i < $n; $i++)
+        {
+            // Find the pivot
+            $pivot = $matrix[$i][$i];
+            if ($pivot == 0)
+            {
+                throw new InvalidArgumentException('Matrix is not invertible.');
+            }
+            for ($j = 0; $j < 2 * $n; $j++)
+            {
+                $matrix[$i][$j] /= $pivot;
+            }
+            for ($j = 0; $j < $n; $j++)
+            {
+                if ($j != $i)
+                {
+                    $factor = $matrix[$j][$i];
+                    for ($k = 0; $k < 2 * $n; $k++)
+                    {
+                        $matrix[$j][$k] -= $factor * $matrix[$i][$k];
+                    }
+                }
+            }
+        }
+
+        // Extract the inverted matrix
+        $inverse = [];
+        for ($i = 0; $i < $n; $i++)
+        {
+            $inverse[$i] = array_slice($matrix[$i], $n);
+        }
+
+        return $inverse;
+    }
+
+    /**
+     * Get the eigenvalues of a matrix (simplified for 2x2 matrices).
+     *
+     * @param array $matrix The matrix to find eigenvalues for.
+     * @return array The eigenvalues of the matrix.
+     * @throws InvalidArgumentException if the matrix is not 2x2.
+     */
+    public static function eigenvaluesMatrix($matrix)
+    {
+        if (count($matrix) !== 2 || count($matrix[0]) !== 2)
+        {
+            throw new InvalidArgumentException('Eigenvalues can only be calculated for 2x2 matrices.');
+        }
+
+        $a = $matrix[0][0];
+        $b = $matrix[0][1];
+        $c = $matrix[1][0];
+        $d = $matrix[1][1];
+
+        $trace = $a + $d;
+        $determinant = $a * $d - $b * $c;
+
+        $lambda1 = ($trace + sqrt($trace ** 2 - 4 * $determinant)) / 2;
+        $lambda2 = ($trace - sqrt($trace ** 2 - 4 * $determinant)) / 2;
+
+        return [$lambda1, $lambda2];
+    }
+
+    /**
+     * Perform LU decomposition of a matrix.
+     *
+     * @param array $matrix The matrix to decompose.
+     * @return array An array containing matrices L and U.
+     * @throws InvalidArgumentException if the matrix is not square.
+     */
+    public static function luDecompositionMatrix($matrix)
+    {
+        $n = count($matrix);
+        if ($n !== count($matrix[0]))
+        {
+            throw new InvalidArgumentException('Matrix must be square for LU decomposition.');
+        }
+
+        $L = array_fill(0, $n, array_fill(0, $n, 0));
+        $U = array_fill(0, $n, array_fill(0, $n, 0));
+
+        for ($i = 0; $i < $n; $i++)
+        {
+            for ($j = $i; $j < $n; $j++)
+            {
+                $U[$i][$j] = $matrix[$i][$j];
+                for ($k = 0; $k < $i; $k++)
+                {
+                    $U[$i][$j] -= $L[$i][$k] * $U[$k][$j];
+                }
+            }
+            for ($j = $i; $j < $n; $j++)
+            {
+                if ($i == $j)
+                {
+                    $L[$i][$i] = 1; // Diagonal elements of L are 1
+                }
+                else
+                {
+                    $L[$j][$i] = $matrix[$j][$i];
+                    for ($k = 0; $k < $i; $k++)
+                    {
+                        $L[$j][$i] -= $L[$j][$k] * $U[$k][$i];
+                    }
+                    $L[$j][$i] /= $U[$i][$i];
+                }
+            }
+        }
+
+        return ['L' => $L, 'U' => $U];
+    }
+
+    /**
+     * Perform QR decomposition of a matrix using Gram-Schmidt process.
+     *
+     * @param array $matrix The matrix to decompose.
+     * @return array An array containing matrices Q and R.
+     * @throws InvalidArgumentException if the matrix is not rectangular.
+     */
+    public static function qrDecompositionMatrix($matrix)
+    {
+        $m = count($matrix);
+        $n = count($matrix[0]);
+        $Q = array_fill(0, $m, array_fill(0, $m, 0));
+        $R = array_fill(0, $n, array_fill(0, $n, 0));
+
+        for ($j = 0; $j < $n; $j++)
+        {
+            $v = [];
+            for ($i = 0; $i < $m; $i++)
+            {
+                $v[$i] = $matrix[$i][$j];
+            }
+
+            for ($i = 0; $i < $j; $i++)
+            {
+                $R[$i][$j] = 0;
+                for ($k = 0; $k < $m; $k++)
+                {
+                    $R[$i][$j] += $Q[$k][$i] * $matrix[$k][$j];
+                }
+                for ($k = 0; $k < $m; $k++)
+                {
+                    $v[$k] -= $R[$i][$j] * $Q[$k][$i];
+                }
+            }
+
+            $R[$j][$j] = sqrt(array_reduce($v, function ($carry, $item)
+            {
+                return $carry + $item ** 2;
+            }, 0));
+
+            for ($i = 0; $i < $m; $i++)
+            {
+                $Q[$i][$j] = $v[$i] / $R[$j][$j];
+            }
+        }
+
+        return ['Q' => $Q, 'R' => $R];
+    }
+
+    /**
+     * Validate that two matrices have the same dimensions.
+     *
+     * @param array $matrixA The first matrix.
+     * @param array $matrixB The second matrix.
+     * @throws InvalidArgumentException if matrices have different dimensions.
+     */
+    private static function validateDimensions($matrixA, $matrixB)
+    {
+        if (count($matrixA) !== count($matrixB) || count($matrixA[0]) !== count($matrixB[0]))
+        {
+            throw new InvalidArgumentException('Matrices must have the same dimensions.');
+        }
+    }
+
+    /**
+     * Get a subset of a matrix.
+     *
+     * @param array $matrix The original matrix.
+     * @param int $startRow The starting row index.
+     * @param int $startCol The starting column index.
+     * @param int $numRows The number of rows to include.
+     * @param int $numCols The number of columns to include.
+     * @return array The subset of the matrix.
+     * @throws InvalidArgumentException if indices are out of bounds.
+     */
+    public static function subsetMatrix($matrix, $startRow, $startCol, $numRows, $numCols)
+    {
+        if ($startRow < 0 || $startCol < 0 || $startRow + $numRows > count($matrix) || $startCol + $numCols > count($matrix[0]))
+        {
+            throw new InvalidArgumentException('Subset indices are out of bounds.');
+        }
+
+        $subset = [];
+        for ($i = $startRow; $i < $startRow + $numRows; $i++)
+        {
+            $subset[] = array_slice($matrix[$i], $startCol, $numCols);
+        }
+        return $subset;
+    }
+
 }

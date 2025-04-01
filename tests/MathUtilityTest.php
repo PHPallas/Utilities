@@ -7,6 +7,179 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+    public function testAddMatrix() {
+        $matrixA = [
+            [1, 2],
+            [3, 4]
+        ];
+        $matrixB = [
+            [5, 6],
+            [7, 8]
+        ];
+        $expected = [
+            [6, 8],
+            [10, 12]
+        ];
+        $this->assertEquals($expected, MathUtility::addMatrix($matrixA, $matrixB));
+    }
+
+    public function testSubtractMatrix() {
+        $matrixA = [
+            [5, 6],
+            [7, 8]
+        ];
+        $matrixB = [
+            [1, 2],
+            [3, 4]
+        ];
+        $expected = [
+            [4, 4],
+            [4, 4]
+        ];
+        $this->assertEquals($expected, MathUtility::subtractMatrix($matrixA, $matrixB));
+    }
+
+    public function testMultiplyMatrix() {
+        $matrixA = [
+            [1, 2],
+            [3, 4]
+        ];
+        $matrixB = [
+            [5, 6],
+            [7, 8]
+        ];
+        $expected = [
+            [19, 22],
+            [43, 50]
+        ];
+        $this->assertEquals($expected, MathUtility::multiplyMatrix($matrixA, $matrixB));
+    }
+
+    public function testInverseMatrix() {
+        $matrix = [
+            [4, 7],
+            [2, 6]
+        ];
+        $expected = [
+            [0.6, -0.7],
+            [-0.2, 0.4]
+        ];
+        $actual = MathUtility::inverseMatrix($matrix);
+        foreach ($expected as $i => $row) {
+            foreach ($row as $j => $value) {
+                $this->assertAlmostEqual($value, $actual[$i][$j], 0.0001);
+            }
+        }
+    }
+
+    public function testEigenvaluesMatrix() {
+        $matrix = [
+            [4, 1],
+            [2, 3]
+        ];
+        $expected = [5, 2];
+        $this->assertEquals($expected, MathUtility::eigenvaluesMatrix($matrix));
+    }
+
+    public function testLuDecompositionMatrix() {
+        $matrix = [
+            [4, 3],
+            [6, 3]
+        ];
+        $result = MathUtility::luDecompositionMatrix($matrix);
+        
+        // Validate L
+        $expectedL = [
+            [1, 0],
+            [1.5, 1]
+        ];
+        $this->assertEquals($expectedL, $result['L']);
+
+        // Validate U
+        $expectedU = [
+            [4, 3],
+            [0, -1.5]
+        ];
+        $this->assertEquals($expectedU, $result['U']);
+    }
+
+    public function testQrDecompositionMatrix() {
+        $matrix = [
+            [1, 2],
+            [3, 4]
+        ];
+        $result = MathUtility::qrDecompositionMatrix($matrix);
+        
+        // Validate Q
+        $expectedQ = [
+            [0.316227766, 0.948683298],
+            [0.948683298, -0.316227766]
+        ];
+        foreach ($expectedQ as $i => $row) {
+            foreach ($row as $j => $value) {
+                $this->assertAlmostEqual($value, $result['Q'][$i][$j], 0.0001);
+            }
+        }
+
+        // Validate R
+        $expectedR = [
+            [3.16227766, 4.42718872],
+            [0, 0.632455532]
+        ];
+        foreach ($expectedR as $i => $row) {
+            foreach ($row as $j => $value) {
+                $this->assertAlmostEqual($value, $result['R'][$i][$j], 0.0001);
+            }
+        }
+    }
+
+    public function testSubsetMatrix() {
+        $matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ];
+        $expected = [
+            [1, 2],
+            [4, 5]
+        ];
+        $this->assertEquals($expected, MathUtility::subsetMatrix($matrix, 0, 0, 2, 2));
+    }
+
+    public function testAddMatrixDifferentDimensions() {
+        $this->expectException(InvalidArgumentException::class);
+        $matrixA = [
+            [1, 2],
+            [3, 4]
+        ];
+        $matrixB = [
+            [5, 6, 7],
+            [8, 9, 10]
+        ];
+        MathUtility::addMatrix($matrixA, $matrixB);
+    }
+
+    public function testInverseMatrixNotInvertible() {
+        $this->expectException(InvalidArgumentException::class);
+        $matrix = [
+            [1, 2],
+            [2, 4]
+        ];
+        MathUtility::inverseMatrix($matrix);
+    }
+
+    public function testEigenvaluesMatrixNot2x2() {
+        $this->expectException(InvalidArgumentException::class);
+        $matrix = [
+            [1, 2, 3],
+            [4, 5, 6]
+        ];
+        MathUtility::eigenvaluesMatrix($matrix);
+    }
+
+    private function assertAlmostEqual($expected, $actual, $delta) {
+        $this->assertTrue(abs($expected - $actual) < $delta, "Failed asserting that $actual is almost equal to $expected.");
+    }
     public function testExponential()
     {
         $this->assertEquals(exp(2), MathUtility::exponential(2));
