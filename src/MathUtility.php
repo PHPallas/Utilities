@@ -921,4 +921,207 @@ class MathUtility
         return rad2deg($radians);
     }
 
+    /**
+     * Calculate the exponential of a number.
+     *
+     * @param float $x The exponent.
+     * @return float The value of e raised to the power of x.
+     */
+    public static function exponential($x)
+    {
+        return exp($x);
+    }
+
+    /**
+     * Calculate the natural logarithm of a number.
+     *
+     * @param float $x The number to calculate the logarithm for.
+     * @return float The natural logarithm of x.
+     * @throws InvalidArgumentException if x is less than or equal to zero.
+     */
+    public static function naturalLog($x)
+    {
+        if ($x <= 0)
+        {
+            throw new InvalidArgumentException('Input must be greater than zero.');
+        }
+        return log($x);
+    }
+
+    /**
+     * Calculate the base 10 logarithm of a number.
+     *
+     * @param float $x The number to calculate the logarithm for.
+     * @return float The base 10 logarithm of x.
+     * @throws InvalidArgumentException if x is less than or equal to zero.
+     */
+    public static function logBase10($x)
+    {
+        if ($x <= 0)
+        {
+            throw new InvalidArgumentException('Input must be greater than zero.');
+        }
+        return log10($x);
+    }
+
+    /**
+     * Calculate the base 2 logarithm of a number.
+     *
+     * @param float $x The number to calculate the logarithm for.
+     * @return float The base 2 logarithm of x.
+     * @throws InvalidArgumentException if x is less than or equal to zero.
+     */
+    public static function logBase2($x)
+    {
+        if ($x <= 0)
+        {
+            throw new InvalidArgumentException('Input must be greater than zero.');
+        }
+        return log($x, 2);
+    }
+
+    /**
+     * Calculate the logarithm of a number with an arbitrary base.
+     *
+     * @param float $x The number to calculate the logarithm for.
+     * @param float $base The base of the logarithm.
+     * @return float The logarithm of x with the specified base.
+     * @throws InvalidArgumentException if x is less than or equal to zero or base is less than or equal to one.
+     */
+    public static function logBase($x, $base)
+    {
+        if ($x <= 0 || $base <= 1)
+        {
+            throw new InvalidArgumentException('Input must be greater than zero and base must be greater than one.');
+        }
+        return log($x) / log($base);
+    }
+
+    /**
+     * Change the base of a logarithm from one base to another.
+     *
+     * @param float $x The number to calculate the logarithm for.
+     * @param float $fromBase The original base of the logarithm.
+     * @param float $toBase The new base for the logarithm.
+     * @return float The logarithm of x with the new base.
+     * @throws InvalidArgumentException if x is less than or equal to zero or either base is less than or equal to one.
+     */
+    public static function changeBase($x, $fromBase, $toBase)
+    {
+        if ($x <= 0 || $fromBase <= 1 || $toBase <= 1)
+        {
+            throw new InvalidArgumentException('Input must be greater than zero and bases must be greater than one.');
+        }
+        return log($x) / log($fromBase) * log($toBase);
+    }
+
+    /**
+     * Calculate the inverse of the natural logarithm.
+     *
+     * @param float $y The value to calculate the inverse for.
+     * @return float The value of e raised to the power of y.
+     */
+    public static function inverseNaturalLog($y)
+    {
+        return exp($y);
+    }
+
+    /**
+     * Calculate the inverse of the base 10 logarithm.
+     *
+     * @param float $y The value to calculate the inverse for.
+     * @return float The value of 10 raised to the power of y.
+     */
+    public static function inverseLogBase10($y)
+    {
+        return pow(10, $y);
+    }
+
+    /**
+     * Calculate the inverse of the base 2 logarithm.
+     *
+     * @param float $y The value to calculate the inverse for.
+     * @return float The value of 2 raised to the power of y.
+     */
+    public static function inverseLogBase2($y)
+    {
+        return pow(2, $y);
+    }
+
+    /**
+     * Calculate exponential growth.
+     *
+     * @param float $initial The initial amount.
+     * @param float $rate The growth rate.
+     * @param float $time The time period.
+     * @return float The amount after exponential growth.
+     */
+    public static function exponentialGrowth($initial, $rate, $time)
+    {
+        return $initial * exp($rate * $time);
+    }
+
+    /**
+     * Calculate exponential decay.
+     *
+     * @param float $initial The initial amount.
+     * @param float $rate The decay rate.
+     * @param float $time The time period.
+     * @return float The amount after exponential decay.
+     */
+    public static function exponentialDecay($initial, $rate, $time)
+    {
+        return $initial * exp(-$rate * $time);
+    }
+
+    /**
+     * Calculate the power of a base raised to an exponent.
+     *
+     * @param float $base The base.
+     * @param float $exponent The exponent.
+     * @return float The result of base raised to the exponent.
+     */
+    public static function power($base, $exponent)
+    {
+        return pow($base, $exponent);
+    }
+
+    /**
+     * Solve for x in the equation a^x = b.
+     *
+     * @param float $a The base.
+     * @param float $b The result.
+     * @return float The value of x.
+     * @throws InvalidArgumentException if a is less than or equal to zero, equal to one, or b is less than or equal to zero.
+     */
+    public static function solveExponentialEquation($a, $b)
+    {
+        if ($a <= 0 || $a == 1 || $b <= 0)
+        {
+            throw new InvalidArgumentException('Invalid input values.');
+        }
+        return log($b) / log($a);
+    }
+
+    /**
+     * Calculate the logarithm of a factorial (log(n!)).
+     *
+     * @param int $n A non-negative integer.
+     * @return float The logarithm of n!.
+     * @throws InvalidArgumentException if n is negative.
+     */
+    public static function logFactorial($n)
+    {
+        if ($n < 0)
+        {
+            throw new InvalidArgumentException('Input must be a non-negative integer.');
+        }
+        $logFactorial = 0;
+        for ($i = 1; $i <= $n; $i++)
+        {
+            $logFactorial += log($i);
+        }
+        return $logFactorial;
+    }
+
 }
