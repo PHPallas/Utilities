@@ -755,4 +755,170 @@ class MathUtility
             }
         }
     }
+    /**
+     * Calculates the sine of an angle.
+     *
+     * @param float $angle The angle in radians.
+     * @return float The sine of the angle.
+     */
+    public static function sin($angle)
+    {
+        return sin($angle);
+    }
+
+    /**
+     * Calculates the cosine of an angle.
+     *
+     * @param float $angle The angle in radians.
+     * @return float The cosine of the angle.
+     */
+    public static function cos($angle)
+    {
+        return cos($angle);
+    }
+
+    /**
+     * Calculates the tangent of an angle.
+     *
+     * @param float $angle The angle in radians.
+     * @return float The tangent of the angle.
+     */
+    public static function tan($angle)
+    {
+        return tan($angle);
+    }
+
+    /**
+     * Calculates the arcsine (inverse sine) of a value.
+     *
+     * @param float $value The value, in the range [-1, 1].
+     * @return float The angle in radians whose sine is the given value.
+     */
+    public static function asin($value)
+    {
+        return asin($value);
+    }
+
+    /**
+     * Calculates the arccosine (inverse cosine) of a value.
+     *
+     * @param float $value The value, in the range [-1, 1].
+     * @return float The angle in radians whose cosine is the given value.
+     */
+    public static function acos($value)
+    {
+        return acos($value);
+    }
+
+    /**
+     * Calculates the arctangent (inverse tangent) of a value.
+     *
+     * @param float $value The value.
+     * @return float The angle in radians whose tangent is the given value.
+     */
+    public static function atan($value)
+    {
+        return atan($value);
+    }
+
+    /**
+     * Calculates the arctangent of y/x, using the signs of the arguments to determine the quadrant of the result.
+     *
+     * @param float $y The y-coordinate.
+     * @param float $x The x-coordinate.
+     * @return float The angle in radians.
+     */
+    public static function atan2($y, $x)
+    {
+        return atan2($y, $x);
+    }
+
+    /**
+     * Calculates the hyperbolic sine of a value.
+     *
+     * @param float $value The value.
+     * @return float The hyperbolic sine of the value.
+     */
+    public static function sinh($value)
+    {
+        return sinh($value);
+    }
+
+    /**
+     * Calculates the hyperbolic cosine of a value.
+     *
+     * @param float $value The value.
+     * @return float The hyperbolic cosine of the value.
+     */
+    public static function cosh($value)
+    {
+        return cosh($value);
+    }
+
+    /**
+     * Calculates the hyperbolic tangent of a value.
+     *
+     * @param float $value The value.
+     * @return float The hyperbolic tangent of the value.
+     */
+    public static function tanh($value)
+    {
+        return tanh($value);
+    }
+
+    /**
+     * Calculates the inverse hyperbolic sine of a value.
+     *
+     * @param float $value The value.
+     * @return float The inverse hyperbolic sine of the value.
+     */
+    public static function asinh($value)
+    {
+        return asinh($value);
+    }
+
+    /**
+     * Calculates the inverse hyperbolic cosine of a value.
+     *
+     * @param float $value The value.
+     * @return float The inverse hyperbolic cosine of the value.
+     */
+    public static function acosh($value)
+    {
+        return acosh($value);
+    }
+
+    /**
+     * Calculates the inverse hyperbolic tangent of a value.
+     *
+     * @param float $value The value.
+     * @return float The inverse hyperbolic tangent of the value.
+     */
+    public static function atanh($value)
+    {
+        return atanh($value);
+    }
+
+    /**
+     * Converts an angle from degrees to radians.
+     *
+     * @param float $degrees The angle in degrees.
+     * @return float The angle in radians.
+     */
+    public static function deg2rad($degrees)
+    {
+        return deg2rad($degrees);
+    }
+
+    /**
+     * Converts an angle from radians to degrees.
+     *
+     * @param float $radians The angle in radians.
+     * @return float The angle in degrees.
+     */
+    public static function rad2deg($radians)
+    {
+        return rad2deg($radians);
+    }
+
 }

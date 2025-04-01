@@ -7,6 +7,53 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+    public function testSin()
+    {
+        $this->assertEqualsWithDelta(0, MathUtility::sin(0), 0.00001);
+        $this->assertEqualsWithDelta(1, MathUtility::sin(M_PI / 2), 0.00001);
+        $this->assertEqualsWithDelta(0, MathUtility::sin(M_PI), 0.00001);
+        $this->assertEqualsWithDelta(-1, MathUtility::sin(3 * M_PI / 2), 0.00001);
+        $this->assertEqualsWithDelta(0, MathUtility::sin(2 * M_PI), 0.00001);
+    }
+  
+    public function testCos()
+    {
+        $this->assertEqualsWithDelta(1, MathUtility::cos(0), 0.00001);
+        $this->assertEqualsWithDelta(0, MathUtility::cos(M_PI / 2), 0.00001);
+        $this->assertEqualsWithDelta(-1, MathUtility::cos(M_PI), 0.00001);
+        $this->assertEqualsWithDelta(0, MathUtility::cos(3 * M_PI / 2), 0.00001);
+        $this->assertEqualsWithDelta(1, MathUtility::cos(2 * M_PI), 0.00001);
+    }
+  
+    public function testTan()
+    {
+        $this->assertEqualsWithDelta(0, MathUtility::tan(0), 0.00001);
+        $this->assertEqualsWithDelta(1, MathUtility::tan(M_PI / 4), 0.00001);
+        $this->assertEqualsWithDelta(-1, MathUtility::tan(3 * M_PI / 4), 0.00001);
+        $this->assertEqualsWithDelta(0, MathUtility::tan(M_PI), 0.00001);
+    }
+  
+    public function testAtan()
+    {
+        $this->assertEqualsWithDelta(0.0, MathUtility::atan(0), 0.00001);
+        $this->assertEqualsWithDelta(0.7853981633974483, MathUtility::atan(1), 0.00001);
+        $this->assertEqualsWithDelta(-0.7853981633974483, MathUtility::atan(-1), 0.00001);
+        $this->assertEqualsWithDelta(0.4636476090008061, MathUtility::atan(0.5), 0.00001);
+        $this->assertEqualsWithDelta(-0.4636476090008061, MathUtility::atan(-0.5), 0.00001);
+    }
+  
+    public function testDeg2Rad()
+    {
+        $this->assertEqualsWithDelta(M_PI, MathUtility::deg2rad(180), 0.00001);
+        $this->assertEqualsWithDelta(-M_PI, MathUtility::deg2rad(-180), 0.00001);
+    }
+  
+    public function testRad2Deg()
+    {
+        $this->assertEqualsWithDelta(180, MathUtility::rad2deg(M_PI), 0.00001);
+        $this->assertEqualsWithDelta(-180, MathUtility::rad2deg(-M_PI), 0.00001);
+    }
+
     public function testAddVectors()
     {
         $vecA = [2, 3];
@@ -34,7 +81,7 @@ final class MathUtilityTest extends TestCase
         $normalized = MathUtility::normalize($vector);
         $this->assertEqualsWithDelta([0.6, 0.8], $normalized, 0.001);
     }
-  
+
     public function testNormalizeZeroVector()
     {
         $this->expectException(RuntimeException::class);
@@ -48,7 +95,7 @@ final class MathUtilityTest extends TestCase
         $angle = MathUtility::angleBetween($vecA, $vecB);
         $this->assertEqualsWithDelta(M_PI / 2, $angle, 0.001);
     }
-  
+
     public function testProjection()
     {
         $vecA = [4, 3];
@@ -63,7 +110,7 @@ final class MathUtilityTest extends TestCase
         MathUtility::vectorAppend($vector, 3);
         $this->assertEquals([1, 2, 3], $vector);
     }
-  
+
     public function testVectorReverse()
     {
         $original = [1, 2, 3];
@@ -91,44 +138,54 @@ final class MathUtilityTest extends TestCase
         $result = MathUtility::scalarMultiply($vector, 2);
         $this->assertEquals([0, 0, 0], $result);
     }
-    
-    public function testEstimateSimpleInterest() {
+
+    public function testEstimateSimpleInterest()
+    {
         $this->assertEquals(150, MathUtility::estimateSimpleInterest(1000, 0.05, 3));
     }
 
-    public function testEstimateCompoundInterest() {
+    public function testEstimateCompoundInterest()
+    {
         $this->assertEquals(157.63, round(MathUtility::estimateCompoundInterest(1000, 0.05, 3, 1), 2));
     }
 
-    public function testEstimateFutureValue() {
+    public function testEstimateFutureValue()
+    {
         $this->assertEquals(1157.63, round(MathUtility::estimateFutureValue(1000, 0.05, 3), 2));
     }
 
-    public function testEstimatePresentValue() {
+    public function testEstimatePresentValue()
+    {
         $this->assertEquals(1000, round(MathUtility::estimatePresentValue(1157.63, 0.05, 3), 2));
     }
 
-    public function testEstimateLoanPayment() {
+    public function testEstimateLoanPayment()
+    {
         $this->assertEquals(377.42, round(MathUtility::estimateLoanPayment(20000, 0.05, 60), 2));
     }
 
-    public function testEstimateTotalPayment() {
+    public function testEstimateTotalPayment()
+    {
         $this->assertEquals(22645.20, round(MathUtility::estimateTotalPayment(377.42, 60), 2));
     }
 
-    public function testEstimateTotalInterest() {
+    public function testEstimateTotalInterest()
+    {
         $this->assertEquals(2645.20, round(MathUtility::estimateTotalInterest(22645.20, 20000), 2));
     }
 
-    public function testEstimateAPR() {
+    public function testEstimateAPR()
+    {
         $this->assertEquals(0.03, round(MathUtility::estimateAPR(2645.20, 20000, 60), 2));
     }
 
-    public function testEstimateEAR() {
+    public function testEstimateEAR()
+    {
         $this->assertEquals(0.0512, round(MathUtility::estimateEAR(0.05, 12), 4));
     }
 
-    public function testGenerateAmortizationSchedule() {
+    public function testGenerateAmortizationSchedule()
+    {
         $schedule = MathUtility::generateAmortizationSchedule(20000, 0.05, 60);
         $this->assertCount(60, $schedule);
         $this->assertArrayHasKey('Payment', $schedule[0]);
@@ -137,12 +194,14 @@ final class MathUtilityTest extends TestCase
         $this->assertArrayHasKey('Remaining Balance', $schedule[0]);
     }
 
-    public function testEstimateNPV() {
+    public function testEstimateNPV()
+    {
         $cashFlows = [-10000, 3000, 4200, 6800, 5000];
         $this->assertEquals(4722.36, round(MathUtility::estimateNPV($cashFlows, 0.1), 2));
     }
 
-    public function testCompareLoans() {
+    public function testCompareLoans()
+    {
         $this->assertEquals("Loan 2 is cheaper by 273.86. (Total Cost: 22371.62)", MathUtility::compareLoans(20000, 0.05, 60, 20000, 0.045, 60));
     }
 
