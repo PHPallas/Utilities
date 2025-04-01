@@ -11,6 +11,9 @@
 
 namespace PHPallas\Utilities;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 /**
  * Class MathUtility
  * A utility class for common mathematical and physical constants.
@@ -349,7 +352,7 @@ class MathUtility
     public static function generateAmortizationSchedule($principal, $annualRate, $months)
     {
         $monthlyRate = $annualRate / 12;
-        $monthlyPayment = self::estimateLoanPayment($principal, $annualRate, $months);
+        $monthlyPayment = static::estimateLoanPayment($principal, $annualRate, $months);
         $schedule = [];
 
         for ($i = 1; $i <= $months; $i++)
@@ -384,7 +387,7 @@ class MathUtility
     {
         if ($monthlyPayment <= 0 || $annualRate < 0)
         {
-            throw new \InvalidArgumentException("Monthly payment must be greater than zero and annual rate cannot be negative.");
+            throw new InvalidArgumentException("Monthly payment must be greater than zero and annual rate cannot be negative.");
         }
 
         $monthlyRate = $annualRate / 12;
@@ -420,18 +423,18 @@ class MathUtility
      * @param array $cashFlows An array of cash flows (positive and negative).
      * @param float $rate The discount rate (as a decimal).
      * @return float The estimated NPV.
-     * @throws \InvalidArgumentException If the cash flows array is empty or if the rate is negative.
+     * @throws InvalidArgumentException If the cash flows array is empty or if the rate is negative.
      */
     public static function estimateNPV($cashFlows, $rate)
     {
         if (empty($cashFlows))
         {
-            throw new \InvalidArgumentException("Cash flows array cannot be empty.");
+            throw new InvalidArgumentException("Cash flows array cannot be empty.");
         }
 
         if ($rate < 0)
         {
-            throw new \InvalidArgumentException("Discount rate cannot be negative.");
+            throw new InvalidArgumentException("Discount rate cannot be negative.");
         }
 
         $npv = 0.0;
@@ -440,7 +443,7 @@ class MathUtility
             // Ensure that the index is non-negative
             if ($t < 0)
             {
-                throw new \InvalidArgumentException("Time period must be non-negative.");
+                throw new InvalidArgumentException("Time period must be non-negative.");
             }
 
             $npv += $cashFlow / pow((1 + $rate), $t);
@@ -459,30 +462,30 @@ class MathUtility
      * @param float $annualRate2 The second loan annual interest rate (as a decimal).
      * @param int $months2 The second loan term in months.
      * @return string Comparison result.
-     * @throws \InvalidArgumentException If any of the inputs are invalid.
+     * @throws InvalidArgumentException If any of the inputs are invalid.
      */
     public static function compareLoans($principal1, $annualRate1, $months1, $principal2, $annualRate2, $months2)
     {
         // Input validation
         if ($principal1 <= 0 || $principal2 <= 0)
         {
-            throw new \InvalidArgumentException("Principal amounts must be greater than zero.");
+            throw new InvalidArgumentException("Principal amounts must be greater than zero.");
         }
         if ($annualRate1 < 0 || $annualRate2 < 0)
         {
-            throw new \InvalidArgumentException("Annual rates cannot be negative.");
+            throw new InvalidArgumentException("Annual rates cannot be negative.");
         }
         if ($months1 <= 0 || $months2 <= 0)
         {
-            throw new \InvalidArgumentException("Loan terms must be greater than zero.");
+            throw new InvalidArgumentException("Loan terms must be greater than zero.");
         }
 
         // Calculate total payments
-        $monthlyPayment1 = self::estimateLoanPayment($principal1, $annualRate1, $months1);
-        $totalPayment1 = self::estimateTotalPayment($monthlyPayment1, $months1);
+        $monthlyPayment1 = static::estimateLoanPayment($principal1, $annualRate1, $months1);
+        $totalPayment1 = static::estimateTotalPayment($monthlyPayment1, $months1);
 
-        $monthlyPayment2 = self::estimateLoanPayment($principal2, $annualRate2, $months2);
-        $totalPayment2 = self::estimateTotalPayment($monthlyPayment2, $months2);
+        $monthlyPayment2 = static::estimateLoanPayment($principal2, $annualRate2, $months2);
+        $totalPayment2 = static::estimateTotalPayment($monthlyPayment2, $months2);
 
         // Compare total payments and generate result
         if ($totalPayment1 < $totalPayment2)
@@ -499,4 +502,257 @@ class MathUtility
         }
     }
 
+    /**
+     * Add two vectors element-wise
+     * @param array $vec1
+     * @param array $vec2
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    public static function addVectors($vec1, $vec2)
+    {
+        static::checkDimensions($vec1, $vec2);
+        $result = array();
+        foreach ($vec1 as $i => $val)
+        {
+            $result[] = $val + $vec2[$i];
+        }
+        return $result;
+    }
+
+    /**
+     * Subtract two vectors element-wise
+     * @param array $vec1
+     * @param array $vec2
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    public static function subtractVectors($vec1, $vec2)
+    {
+        static::checkDimensions($vec1, $vec2);
+        $result = array();
+        foreach ($vec1 as $i => $val)
+        {
+            $result[] = $val - $vec2[$i];
+        }
+        return $result;
+    }
+
+    /**
+     * Multiply vector by scalar
+     * @param array $vector
+     * @param float $scalar
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    public static function scalarMultiply($vector, $scalar)
+    {
+        static::validateVector($vector);
+        if (!is_numeric($scalar))
+        {
+            throw new InvalidArgumentException("Scalar must be numeric");
+        }
+        $result = array();
+        foreach ($vector as $val)
+        {
+            $result[] = $val * $scalar;
+        }
+        return $result;
+    }
+
+    /**
+     * Normalize vector (convert to unit vector)
+     * @param array $vector
+     * @return array
+     * @throws RuntimeException
+     */
+    public static function normalize($vector)
+    {
+        $magnitude = static::magnitude($vector);
+        if ($magnitude == 0)
+        {
+            throw new RuntimeException("Cannot normalize zero vector");
+        }
+        return static::scalarMultiply($vector, 1 / $magnitude);
+    }
+
+    /**
+     * Calculate vector magnitude (Euclidean norm)
+     * @param array $vector
+     * @return float
+     */
+    public static function magnitude($vector)
+    {
+        $sumOfSquares = 0;
+        foreach ($vector as $val)
+        {
+            $sumOfSquares += $val * $val;
+        }
+        return sqrt($sumOfSquares);
+    }
+
+    /**
+     * Dot product of two vectors
+     * @param array $vec1
+     * @param array $vec2
+     * @return float
+     * @throws InvalidArgumentException
+     */
+    public static function dotProduct($vec1, $vec2)
+    {
+        self::checkDimensions($vec1, $vec2);
+        $sum = 0;
+        foreach ($vec1 as $i => $val)
+        {
+            $sum += $val * $vec2[$i];
+        }
+        return $sum;
+    }
+
+    /**
+     * Calculate angle between two vectors in radians
+     * @param array $vec1
+     * @param array $vec2
+     * @return float
+     * @throws InvalidArgumentException
+     */
+    public static function angleBetween($vec1, $vec2)
+    {
+        static::checkDimensions($vec1, $vec2);
+        $dotProduct = static::dotProduct($vec1, $vec2);
+        $mag1 = static::magnitude($vec1);
+        $mag2 = static::magnitude($vec2);
+
+        if ($mag1 == 0 || $mag2 == 0)
+        {
+            throw new InvalidArgumentException("Vectors must have non-zero magnitude");
+        }
+
+        return acos($dotProduct / ($mag1 * $mag2));
+    }
+
+    /**
+     * Calculate sum of vector elements
+     * @param array $vector
+     * @return float
+     */
+    public static function vectorSum($vector)
+    {
+        static::validateVector($vector);
+        return array_sum($vector);
+    }
+
+    /**
+     * Calculate average of vector elements
+     * @param array $vector
+     * @return float
+     */
+    public static function vectorAvg($vector)
+    {
+        static::validateVector($vector);
+        return static::vectorSum($vector) / count($vector);
+    }
+
+    /**
+     * Find minimum value in vector
+     * @param array $vector
+     * @return float
+     */
+    public static function vectorMin($vector)
+    {
+        static::validateVector($vector);
+        return min($vector);
+    }
+
+    /**
+     * Find maximum value in vector
+     * @param array $vector
+     * @return float
+     */
+    public static function vectorMax($vector)
+    {
+        static::validateVector($vector);
+        return max($vector);
+    }
+
+    /**
+     * 1D cross product (returns scalar value)
+     * @param array $vec1
+     * @param array $vec2
+     * @return float
+     */
+    public static function crossProduct1D($vec1, $vec2)
+    {
+        static::checkDimensions($vec1, $vec2);
+        return ($vec1[0] * $vec2[0]) - ($vec1[0] * $vec2[0]); // Returns 0 in 1D
+    }
+
+    /**
+     * Project vector A onto vector B
+     * @param array $vecA
+     * @param array $vecB
+     * @return array
+     */
+    public static function projection($vecA, $vecB)
+    {
+        $scalar = static::dotProduct($vecA, $vecB) / pow(static::magnitude($vecB), 2);
+        return static::scalarMultiply($vecB, $scalar);
+    }
+
+    /**
+     * Append value to vector (modifies original vector)
+     * @param array $vector
+     * @param float $value
+     */
+    public static function vectorAppend(&$vector, $value)
+    {
+        if (!is_array($vector))
+        {
+            throw new InvalidArgumentException("Input must be an array");
+        }
+        $vector[] = $value;
+    }
+
+    /**
+     * Reverse vector elements
+     * @param array $vector
+     * @return array
+     */
+    public static function vectorReverse($vector)
+    {
+        static::validateVector($vector);
+        return array_reverse($vector);
+    }
+
+    // Helper validation methods
+    private static function checkDimensions($vec1, $vec2)
+    {
+        if (!is_array($vec1) || !is_array($vec2))
+        {
+            throw new InvalidArgumentException("Both arguments must be arrays");
+        }
+        if (count($vec1) !== count($vec2))
+        {
+            throw new InvalidArgumentException("Vector dimensions must match");
+        }
+    }
+
+    private static function validateVector($vector)
+    {
+        if (!is_array($vector))
+        {
+            throw new InvalidArgumentException("Input must be an array");
+        }
+        if (count($vector) === 0)
+        {
+            throw new InvalidArgumentException("Vector cannot be empty");
+        }
+        foreach ($vector as $val)
+        {
+            if (!is_numeric($val))
+            {
+                throw new InvalidArgumentException("Vector contains non-numeric values");
+            }
+        }
+    }
 }
