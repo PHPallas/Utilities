@@ -7,6 +7,137 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+
+    public function testMean() {
+        $data = [1, 2, 3, 4, 5];
+        $this->assertEquals(3, MathUtility::mean($data));
+    }
+
+    public function testMedianOdd() {
+        $data = [1, 3, 2, 5, 4];
+        $this->assertEquals(3, MathUtility::median($data));
+    }
+
+    public function testMedianEven() {
+        $data = [1, 2, 3, 4];
+        $this->assertEquals(2.5, MathUtility::median($data));
+    }
+
+    public function testMode() {
+        $data = [1, 2, 2, 3, 4];
+        $this->assertEquals([2], MathUtility::mode($data));
+    }
+
+    public function testModeMultiple() {
+        $data = [1, 2, 2, 3, 3, 4];
+        $this->assertEquals([2, 3], MathUtility::mode($data));
+    }
+
+    public function testVariance() {
+        $data = [1, 2, 3, 4, 5];
+        $this->assertEquals(2.5, MathUtility::variance($data));
+    }
+
+    public function testPopulationVariance() {
+        $data = [1, 2, 3, 4, 5];
+        $this->assertEquals(2, MathUtility::populationVariance($data));
+    }
+
+    public function testStandardDeviation() {
+        $data = [1, 2, 3, 4, 5];
+        $this->assertEquals(sqrt(2.5), MathUtility::standardDeviation($data));
+    }
+
+    public function testPopulationStandardDeviation() {
+        $data = [1, 2, 3, 4, 5];
+        $this->assertEquals(sqrt(2), MathUtility::populationStandardDeviation($data));
+    }
+
+    public function testCorrelation() {
+        $x = [1, 2, 3, 4, 5];
+        $y = [2, 4, 6, 8, 10];
+        $this->assertEquals(1, MathUtility::correlation($x, $y));
+    }
+
+    public function testMultipleLinearRegression() {
+        $X = [
+            [1, 2],
+            [2, 9],
+            [3, 11],
+            [4, 5],
+            [5, 6],
+        ];
+        $Y = [5, 7, 9, 11, 13];
+        $coefficients = MathUtility::multipleLinearRegression($X, $Y);
+        $this->assertCount(3, $coefficients); // Intercept + 2 coefficients
+        $this->assertEquals(-1423.0, $coefficients[1]); // Check slope for first variable
+        $this->assertEquals(1089.0, $coefficients[2]); // Check slope for second variable
+    }
+
+    public function testNormalDistributionPDF() {
+        $mean = 0;
+        $stdDev = 1;
+        $x = 0;
+        $this->assertEquals(0.4, round(MathUtility::normalDistributionPDF($x, $mean, $stdDev, '', 14),2));
+    }
+
+    public function testNormalDistributionCDF() {
+        $mean = 0;
+        $stdDev = 1;
+        $x = 0;
+        $this->assertEquals(0.5, round(MathUtility::normalDistributionCDF($x, $mean, $stdDev),1));
+    }
+
+    public function testBinomialProbability() {
+        $n = 5;
+        $k = 2;
+        $p = 0.5;
+        $this->assertEquals(0.3125, MathUtility::binomialProbability($n, $k, $p));
+    }
+
+    public function testPoissonDistribution() {
+        $lambda = 3;
+        $x = 2;
+        $this->assertEquals(0.22, round(MathUtility::poissonDistribution($x, $lambda),2));
+    }
+
+    public function testExponentialDistributionPDF() {
+        $lambda = 1;
+        $x = 2;
+        $this->assertEquals(0.1353352832366127, MathUtility::exponentialDistributionPDF($x, $lambda));
+    }
+
+    public function testExponentialDistributionCDF() {
+        $lambda = 1;
+        $x = 2;
+        $this->assertEquals(0.8646647167633873, MathUtility::exponentialDistributionCDF($x, $lambda));
+    }
+
+    public function testUniformDistributionPDF() {
+        $a = 0;
+        $b = 10;
+        $x = 5;
+        $this->assertEquals(0.1, MathUtility::uniformDistributionPDF($x, $a, $b));
+    }
+
+    public function testUniformDistributionCDF() {
+        $a = 0;
+        $b = 10;
+        $x = 5;
+        $this->assertEquals(0.5, MathUtility::uniformDistributionCDF($x, $a, $b));
+    }
+
+    public function testSkewness() {
+        $data = [1, 2, 2, 3, 4];
+        $this->assertEquals(0.97, round(MathUtility::skewness($data),2));
+    }
+
+    public function testKurtosis() {
+        $data = [1, 2, 2, 3, 4];
+        $this->assertEquals(-6.44, round(MathUtility::kurtosis($data),2));
+    }
+
+
     public function testAddMatrix() {
         $matrixA = [
             [1, 2],

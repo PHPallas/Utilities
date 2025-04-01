@@ -1423,4 +1423,413 @@ class MathUtility
         return $subset;
     }
 
+        /**
+     * Calculate the mean of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The mean of the numbers.
+     */
+    public static function mean(array $data) {
+        return array_sum($data) / count($data);
+    }
+
+    /**
+     * Calculate the median of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The median of the numbers.
+     */
+    public static function median(array $data) {
+        sort($data);
+        $count = count($data);
+        $middle = floor(($count - 1) / 2);
+        if ($count % 2) {
+            return $data[$middle];
+        } else {
+            return ($data[$middle] + $data[$middle + 1]) / 2;
+        }
+    }
+
+    /**
+     * Calculate the mode of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return array The mode(s) of the numbers.
+     */
+    public static function mode(array $data) {
+        $values = array_count_values($data);
+        $maxCount = max($values);
+        $modes = array_keys($values, $maxCount);
+        return (count($modes) === count($data)) ? [] : $modes; // No mode if all values are unique
+    }
+
+    /**
+     * Calculate the sample variance of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The sample variance of the numbers.
+     */
+    public static function variance(array $data) {
+        $mean = self::mean($data);
+        $squaredDiffs = array_map(function($value) use ($mean) {
+            return pow($value - $mean, 2);
+        }, $data);
+        return array_sum($squaredDiffs) / (count($data) - 1);
+    }
+
+    /**
+     * Calculate the population variance of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The population variance of the numbers.
+     */
+    public static function populationVariance(array $data) {
+        $mean = self::mean($data);
+        $squaredDiffs = array_map(function($value) use ($mean) {
+            return pow($value - $mean, 2);
+        }, $data);
+        return array_sum($squaredDiffs) / count($data);
+    }
+
+    /**
+     * Calculate the sample standard deviation of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The sample standard deviation of the numbers.
+     */
+    public static function standardDeviation(array $data) {
+        return sqrt(self::variance($data));
+    }
+
+    /**
+     * Calculate the population standard deviation of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The population standard deviation of the numbers.
+     */
+    public static function populationStandardDeviation(array $data) {
+        return sqrt(self::populationVariance($data));
+    }
+
+    /**
+     * Calculate the correlation coefficient between two variables.
+     *
+     * @param array $x The first variable (independent).
+     * @param array $y The second variable (dependent).
+     * @return float The correlation coefficient.
+     * @throws InvalidArgumentException if arrays are not of equal length.
+     */
+    public static function correlation(array $x, array $y) {
+        if (count($x) !== count($y)) {
+            throw new InvalidArgumentException('Arrays must be of equal length.');
+        }
+        
+        $n = count($x);
+        $meanX = self::mean($x);
+        $meanY = self::mean($y);
+        
+        $numerator = 0;
+        $denominatorX = 0;
+        $denominatorY = 0;
+
+        for ($i = 0; $i < $n; $i++) {
+            $numerator += ($x[$i] - $meanX) * ($y[$i] - $meanY);
+            $denominatorX += pow($x[$i] - $meanX, 2);
+            $denominatorY += pow($y[$i] - $meanY, 2);
+        }
+
+        return $numerator / sqrt($denominatorX * $denominatorY);
+    }
+
+    /**
+     * Perform multiple linear regression to calculate coefficients.
+     *
+     * @param array $X The independent variables (features).
+     * @param array $Y The dependent variable (target).
+     * @return array The coefficients of the regression model.
+     * @throws InvalidArgumentException if input arrays are empty or of unequal length.
+     */
+    public static function multipleLinearRegression(array $X, array $Y) {
+        if (count($X) === 0 || count($Y) === 0) {
+            throw new InvalidArgumentException('Input arrays cannot be empty.');
+        }
+        if (count($X) !== count($Y)) {
+            throw new InvalidArgumentException('Independent and dependent variable arrays must be of equal length.');
+        }
+
+        // Add a column of ones to X for the intercept term
+        $n = count($Y);
+        $X = array_map(function($row) {
+            return array_merge([1], $row); // Add intercept term
+        }, $X);
+
+        // Convert arrays to matrices
+        $X = self::transpose($X);
+        $Y = array_map(function($value) { return [$value]; }, $Y); // Convert to column matrix
+
+        // Calculate coefficients using the formula: (X'X)^-1 X'Y
+        $XTX = self::matrixMultiply($X, $X);
+        $XTX_inv = self::matrixInverse($XTX);
+        $XTY = self::matrixMultiply($X, $Y);
+        $coefficients = self::matrixMultiply($XTX_inv, $XTY);
+
+        return array_map(function($row) {
+            return $row[0]; // Flatten the result
+        }, $coefficients);
+    }
+
+    /**
+     * Calculate the normal distribution PDF.
+     *
+     * @param float $x The value for which to calculate the PDF.
+     * @param float $mean The mean of the distribution.
+     * @param float $stdDev The standard deviation of the distribution.
+     * @return float The PDF value.
+     */
+    public static function normalDistributionPDF($x, $mean, $stdDev) {
+        return (1 / (sqrt(2 * M_PI) * $stdDev)) * exp(-0.5 * pow(($x - $mean) / $stdDev, 2));
+    }
+
+    /**
+     * Calculate the normal distribution CDF.
+     *
+     * @param float $x The value for which to calculate the CDF.
+     * @param float $mean The mean of the distribution.
+     * @param float $stdDev The standard deviation of the distribution.
+     * @return float The CDF value.
+     */
+    public static function normalDistributionCDF($x, $mean, $stdDev) {
+        return 0.5 * (1 + self::erf(($x - $mean) / ($stdDev * sqrt(2))));
+    }
+
+    /**
+     * Calculate the error function used in CDF calculation.
+     *
+     * @param float $x The input value.
+     * @return float The error function value.
+     */
+    private static function erf($x) {
+        $a1 =  0.254829592;
+        $a2 = -0.284496736;
+        $a3 =  1.421413741;
+        $a4 = -1.453152027;
+        $a5 =  1.061405429;
+        $p  =  0.3275911;
+
+        $sign = ($x < 0) ? -1 : 1;
+        $x = abs($x);
+        $t = 1.0 / (1.0 + $p * $x);
+        $y = 1.0 - ((((((($a5 * $t) + $a4) * $t) + $a3) * $t) + $a2) * $t + $a1) * $t * exp(-$x * $x);
+        return $sign * $y;
+    }
+
+    /**
+     * Calculate the binomial probability.
+     *
+     * @param int $n The number of trials.
+     * @param int $k The number of successes.
+     * @param float $p The probability of success.
+     * @return float The binomial probability.
+     */
+    public static function binomialProbability($n, $k, $p) {
+        return self::combination($n, $k) * pow($p, $k) * pow((1 - $p), ($n - $k));
+    }
+
+    /**
+     * Calculate the combination (n choose k).
+     *
+     * @param int $n The total number of items.
+     * @param int $k The number of items to choose.
+     * @return int The number of combinations.
+     */
+    private static function combination($n, $k) {
+        if ($k > $n) return 0;
+        return self::factorial($n) / (self::factorial($k) * self::factorial($n - $k));
+    }
+
+    /**
+     * Calculate the factorial of a number.
+     *
+     * @param int $n The number to calculate the factorial for.
+     * @return int The factorial of the number.
+     */
+    private static function factorial($n) {
+        if ($n === 0) return 1;
+        $result = 1;
+        for ($i = 1; $i <= $n; $i++) {
+            $result *= $i;
+        }
+        return $result;
+    }
+
+    /**
+     * Calculate the Poisson distribution PDF.
+     *
+     * @param int $x The number of occurrences.
+     * @param float $lambda The expected number of occurrences.
+     * @return float The PDF value.
+     */
+    public static function poissonDistribution($x, $lambda) {
+        return (pow($lambda, $x) * exp(-$lambda)) / self::factorial($x);
+    }
+
+    /**
+     * Calculate the exponential distribution PDF.
+     *
+     * @param float $x The value for which to calculate the PDF.
+     * @param float $lambda The rate parameter.
+     * @return float The PDF value.
+     */
+    public static function exponentialDistributionPDF($x, $lambda) {
+        return $lambda * exp(-$lambda * $x);
+    }
+
+    /**
+     * Calculate the exponential distribution CDF.
+     *
+     * @param float $x The value for which to calculate the CDF.
+     * @param float $lambda The rate parameter.
+     * @return float The CDF value.
+     */
+    public static function exponentialDistributionCDF($x, $lambda) {
+        return 1 - exp(-$lambda * $x);
+    }
+
+    /**
+     * Calculate the uniform distribution PDF.
+     *
+     * @param float $x The value for which to calculate the PDF.
+     * @param float $a The lower bound of the distribution.
+     * @param float $b The upper bound of the distribution.
+     * @return float The PDF value.
+     */
+    public static function uniformDistributionPDF($x, $a, $b) {
+        return ($x >= $a && $x <= $b) ? (1 / ($b - $a)) : 0;
+    }
+
+    /**
+     * Calculate the uniform distribution CDF.
+     *
+     * @param float $x The value for which to calculate the CDF.
+     * @param float $a The lower bound of the distribution.
+     * @param float $b The upper bound of the distribution.
+     * @return float The CDF value.
+     */
+    public static function uniformDistributionCDF($x, $a, $b) {
+        if ($x < $a) return 0;
+        if ($x > $b) return 1;
+        return ($x - $a) / ($b - $a);
+    }
+
+    /**
+     * Calculate the sample skewness of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The skewness of the numbers.
+     */
+    public static function skewness(array $data) {
+        $mean = self::mean($data);
+        $n = count($data);
+        $stdDev = self::standardDeviation($data);
+        $m3 = array_sum(array_map(function($value) use ($mean) {
+            return pow($value - $mean, 3);
+        }, $data)) / $n;
+
+        return ($n * $m3) / pow($stdDev, 3);
+    }
+
+    /**
+     * Calculate the sample kurtosis of an array of numbers.
+     *
+     * @param array $data The input array of numbers.
+     * @return float The kurtosis of the numbers.
+     */
+    public static function kurtosis(array $data) {
+        $mean = self::mean($data);
+        $n = count($data);
+        $stdDev = self::standardDeviation($data);
+        $m4 = array_sum(array_map(function($value) use ($mean) {
+            return pow($value - $mean, 4);
+        }, $data)) / $n;
+
+        return ($n * ($n + 1) * $m4) / (pow($stdDev, 4) * ($n - 1) * ($n - 2) * ($n - 3)) - (3 * pow($n - 1, 2)) / (($n - 2) * ($n - 3));
+    }
+
+    /**
+     * Helper function to transpose a matrix.
+     *
+     * @param array $matrix The matrix to transpose.
+     * @return array The transposed matrix.
+     */
+    private static function transpose(array $matrix) {
+        return array_map(null, ...$matrix);
+    }
+
+    /**
+     * Multiply two matrices.
+     *
+     * @param array $A The first matrix.
+     * @param array $B The second matrix.
+     * @return array The product of the two matrices.
+     */
+    private static function matrixMultiply(array $A, array $B) {
+        $result = [];
+        foreach ($A as $rowA) {
+            $resultRow = [];
+            foreach (self::transpose($B) as $rowB) {
+                $resultRow[] = array_sum(array_map(function($a, $b) {
+                    return $a * $b;
+                }, $rowA, $rowB));
+            }
+            $result[] = $resultRow;
+        }
+        return $result;
+    }
+
+    /**
+     * Invert a matrix using Gauss-Jordan elimination.
+     *
+     * @param array $matrix The matrix to invert.
+     * @return array The inverted matrix.
+     */
+    private static function matrixInverse(array $matrix) {
+        $n = count($matrix);
+        $identity = array_map(function($i) use ($n) {
+            return array_map(function($j) use ($i) {
+                return $i === $j ? 1 : 0;
+            }, range(0, $n - 1));
+        }, range(0, $n - 1));
+
+        for ($i = 0; $i < $n; $i++) {
+            $matrix[$i] = array_merge($matrix[$i], $identity[$i]); // Augment the matrix
+        }
+
+        // Apply Gauss-Jordan elimination
+        for ($i = 0; $i < $n; $i++) {
+            // Make the diagonal contain all 1s
+            $divisor = $matrix[$i][$i];
+            for ($j = 0; $j < 2 * $n; $j++) {
+                $matrix[$i][$j] /= $divisor;
+            }
+
+            // Make the other rows contain 0s in the current column
+            for ($j = 0; $j < $n; $j++) {
+                if ($j != $i) {
+                    $factor = $matrix[$j][$i];
+                    for ($k = 0; $k < 2 * $n; $k++) {
+                        $matrix[$j][$k] -= $factor * $matrix[$i][$k];
+                    }
+                }
+            }
+        }
+
+        // Extract the inverse matrix
+        $inverse = [];
+        for ($i = 0; $i < $n; $i++) {
+            $inverse[] = array_slice($matrix[$i], $n); // Get the right half
+        }
+
+        return $inverse;
+    }
+
 }
