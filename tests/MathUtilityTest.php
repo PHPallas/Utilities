@@ -7,6 +7,91 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+    public function testAddVectors()
+    {
+        $vecA = [2, 3];
+        $vecB = [4, 5];
+        $result = MathUtility::addVectors($vecA, $vecB);
+        $this->assertEquals([6, 8], $result);
+    }
+
+    public function testAddVectorsDimensionMismatch()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        MathUtility::addVectors([1, 2], [3]);
+    }
+
+    public function testScalarMultiply()
+    {
+        $vector = [2, -3, 4];
+        $result = MathUtility::scalarMultiply($vector, 2);
+        $this->assertEquals([4, -6, 8], $result);
+    }
+
+    public function testNormalize()
+    {
+        $vector = [3, 4];
+        $normalized = MathUtility::normalize($vector);
+        $this->assertEqualsWithDelta([0.6, 0.8], $normalized, 0.001);
+    }
+  
+    public function testNormalizeZeroVector()
+    {
+        $this->expectException(RuntimeException::class);
+        MathUtility::normalize([0, 0, 0]);
+    }
+
+    public function testAngleBetweenOrthogonalVectors()
+    {
+        $vecA = [1, 0];
+        $vecB = [0, 1];
+        $angle = MathUtility::angleBetween($vecA, $vecB);
+        $this->assertEqualsWithDelta(M_PI / 2, $angle, 0.001);
+    }
+  
+    public function testProjection()
+    {
+        $vecA = [4, 3];
+        $vecB = [2, 0];
+        $proj = MathUtility::projection($vecA, $vecB);
+        $this->assertEquals([4, 0], $proj);
+    }
+
+    public function testVectorAppend()
+    {
+        $vector = [1, 2];
+        MathUtility::vectorAppend($vector, 3);
+        $this->assertEquals([1, 2, 3], $vector);
+    }
+  
+    public function testVectorReverse()
+    {
+        $original = [1, 2, 3];
+        $reversed = MathUtility::vectorReverse($original);
+        $this->assertEquals([3, 2, 1], $reversed);
+    }
+
+    public function testDotProductWithEmptyVectors()
+    {
+        $vecA = [];
+        $vecB = [];
+        $dot = MathUtility::dotProduct($vecA, $vecB);
+        $this->assertEquals(0, $dot);
+    }
+    public function testDotProduct()
+    {
+        $vecA = [2, 3];
+        $vecB = [4, 5];
+        $dot = MathUtility::dotProduct($vecA, $vecB);
+        $this->assertEquals(23, $dot);
+    }
+    public function testScalarMultiplyWithZeroVector()
+    {
+        $vector = [0, 0, 0];
+        $result = MathUtility::scalarMultiply($vector, 2);
+        $this->assertEquals([0, 0, 0], $result);
+    }
+    
     public function testEstimateSimpleInterest() {
         $this->assertEquals(150, MathUtility::estimateSimpleInterest(1000, 0.05, 3));
     }
