@@ -1889,6 +1889,96 @@ class MathUtility
         return $inverse;
     }
 
+    public static function differentiate($function, $x, $h = 1e-10) {
+        return ($function($x + $h) - $function($x - $h)) / (2 * $h);
+    }
+
+    public static function integrate(array $coefficients) {
+        $integral = [];
+        foreach ($coefficients as $power => $coefficient) {
+            $integral[$power + 1] = $coefficient / ($power + 1);
+        }
+        $integral[0] = 0; // Constant of integration
+        return $integral;
+    }
+
+    public static function evaluate(array $coefficients, $x) {
+        $result = 0;
+        foreach ($coefficients as $power => $coefficient) {
+            $result += $coefficient * pow($x, $power);
+        }
+        return $result;
+    }
+
+    public static function findQuadraticRoots($a, $b, $c) {
+        $discriminant = $b * $b - 4 * $a * $c;
+        if ($discriminant < 0) {
+            return []; // No real roots
+        }
+        $root1 = (-$b + sqrt($discriminant)) / (2 * $a);
+        $root2 = (-$b - sqrt($discriminant)) / (2 * $a);
+        return [$root1, $root2];
+    }
+
+    public static function limit($function, $x, $h = 1e-10) {
+        return $function($x); // Direct evaluation for simplicity
+    }
+
+    public static function taylorSeries($function, $x, $n) {
+        $result = 0;
+        for ($i = 0; $i < $n; $i++) {
+            $result += ($function(0) / self::factorial($i)) * pow($x, $i);
+            $function = function($x) use ($function) {
+                return self::differentiate($function, $x);
+            }; // Update function to its derivative
+        }
+        return $result;
+    }
+
+    private static function getCoefficients($function) {
+        // Placeholder for extracting coefficients from a polynomial function
+        return [0]; // Replace with actual coefficients based on function
+    }
+
+    public static function numericalIntegration($function, $a, $b, $n = 1000) {
+        $h = ($b - $a) / $n;
+        $sum = 0.5 * ($function($a) + $function($b));
+        for ($i = 1; $i < $n; $i++) {
+            $sum += $function($a + $i * $h);
+        }
+        return $sum * $h;
+    }
+
+    public static function partialDerivative($function, $varIndex, $point, $h = 1e-10) {
+        $pointPlusH = $point;
+        $pointPlusH[$varIndex] += $h;
+        return ($function(...$pointPlusH) - $function(...$point)) / $h;
+    }
+
+    public static function gradient($function, $point, $h = 1e-10) {
+        $grad = [];
+        for ($i = 0; $i < count($point); $i++) {
+            $grad[$i] = self::partialDerivative($function, $i, $point, $h);
+        }
+        return $grad;
+    }
+
+    public static function secondDerivative($function, $x, $h = 1e-10) {
+        return (self::evaluate([$function($x + $h)], $x) - 2 * $function($x) + self::evaluate([$function($x - $h)], $x)) / ($h * $h);
+    }
+
+    public static function findLocalExtrema($function, $x0, $h = 1e-10) {
+        $derivative = self::differentiate($function);
+        while (abs($derivative($x0)) > $h) {
+            $x0 -= $derivative($x0) * $h;
+        }
+        return $x0;
+    }
+    
+    public static function areaUnderCurve($function, $a, $b, $n = 1000) {
+        return self::numericalIntegration($function, $a, $b, $n);
+    }
+
     /**
      * Calculate the area of a circle.
      *
