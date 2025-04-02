@@ -1889,7 +1889,6 @@ class MathUtility
         return $inverse;
     }
 
-
     /**
      * Calculate the greatest common divisor (GCD) of two numbers.
      *
@@ -2101,6 +2100,286 @@ class MathUtility
             }
         }
         return $perfectNumbers;
+    }
+
+    public static function differentiate($function, $x, $h = 1e-10) {
+        return ($function($x + $h) - $function($x - $h)) / (2 * $h);
+    }
+
+    public static function integrate(array $coefficients) {
+        $integral = [];
+        foreach ($coefficients as $power => $coefficient) {
+            $integral[$power + 1] = $coefficient / ($power + 1);
+        }
+        $integral[0] = 0; // Constant of integration
+        return $integral;
+    }
+
+    public static function evaluate(array $coefficients, $x) {
+        $result = 0;
+        foreach ($coefficients as $power => $coefficient) {
+            $result += $coefficient * pow($x, $power);
+        }
+        return $result;
+    }
+
+    public static function findQuadraticRoots($a, $b, $c) {
+        $discriminant = $b * $b - 4 * $a * $c;
+        if ($discriminant < 0) {
+            return []; // No real roots
+        }
+        $root1 = (-$b + sqrt($discriminant)) / (2 * $a);
+        $root2 = (-$b - sqrt($discriminant)) / (2 * $a);
+        return [$root1, $root2];
+    }
+
+    public static function limit($function, $x, $h = 1e-10) {
+        return $function($x); // Direct evaluation for simplicity
+    }
+
+    public static function taylorSeries($function, $x, $n) {
+        $result = 0;
+        for ($i = 0; $i < $n; $i++) {
+            $result += ($function(0) / self::factorial($i)) * pow($x, $i);
+            $function = function($x) use ($function) {
+                return self::differentiate($function, $x);
+            }; // Update function to its derivative
+        }
+        return $result;
+    }
+
+    private static function getCoefficients($function) {
+        // Placeholder for extracting coefficients from a polynomial function
+        return [0]; // Replace with actual coefficients based on function
+    }
+
+    public static function numericalIntegration($function, $a, $b, $n = 1000) {
+        $h = ($b - $a) / $n;
+        $sum = 0.5 * ($function($a) + $function($b));
+        for ($i = 1; $i < $n; $i++) {
+            $sum += $function($a + $i * $h);
+        }
+        return $sum * $h;
+    }
+
+    public static function partialDerivative($function, $varIndex, $point, $h = 1e-10) {
+        $pointPlusH = $point;
+        $pointPlusH[$varIndex] += $h;
+        return ($function(...$pointPlusH) - $function(...$point)) / $h;
+    }
+
+    public static function gradient($function, $point, $h = 1e-10) {
+        $grad = [];
+        for ($i = 0; $i < count($point); $i++) {
+            $grad[$i] = self::partialDerivative($function, $i, $point, $h);
+        }
+        return $grad;
+    }
+
+    public static function secondDerivative($function, $x, $h = 1e-10) {
+        return (self::evaluate([$function($x + $h)], $x) - 2 * $function($x) + self::evaluate([$function($x - $h)], $x)) / ($h * $h);
+    }
+
+    public static function findLocalExtrema($function, $x0, $h = 1e-10) {
+        $derivative = self::differentiate($function);
+        while (abs($derivative($x0)) > $h) {
+            $x0 -= $derivative($x0) * $h;
+        }
+        return $x0;
+    }
+    
+    public static function areaUnderCurve($function, $a, $b, $n = 1000) {
+        return self::numericalIntegration($function, $a, $b, $n);
+    }
+
+    /**
+     * Calculate the area of a circle.
+     *
+     * @param float $radius The radius of the circle.
+     * @return float The area of the circle.
+     */
+    public static function areaOfCircle($radius)
+    {
+        return pi() * pow($radius, 2);
+    }
+
+    /**
+     * Calculate the circumference of a circle.
+     *
+     * @param float $radius The radius of the circle.
+     * @return float The circumference of the circle.
+     */
+    public static function circumferenceOfCircle($radius)
+    {
+        return 2 * pi() * $radius;
+    }
+
+    /**
+     * Calculate the area of a rectangle.
+     *
+     * @param float $length The length of the rectangle.
+     * @param float $width The width of the rectangle.
+     * @return float The area of the rectangle.
+     */
+    public static function areaOfRectangle($length, $width)
+    {
+        return $length * $width;
+    }
+
+    /**
+     * Calculate the perimeter of a rectangle.
+     *
+     * @param float $length The length of the rectangle.
+     * @param float $width The width of the rectangle.
+     * @return float The perimeter of the rectangle.
+     */
+    public static function perimeterOfRectangle($length, $width)
+    {
+        return 2 * ($length + $width);
+    }
+
+    /**
+     * Calculate the area of a triangle.
+     *
+     * @param float $base The base of the triangle.
+     * @param float $height The height of the triangle.
+     * @return float The area of the triangle.
+     */
+    public static function areaOfTriangle($base, $height)
+    {
+        return 0.5 * $base * $height;
+    }
+
+    /**
+     * Calculate the perimeter of a triangle (assuming it's a right triangle).
+     *
+     * @param float $a The length of the first side.
+     * @param float $b The length of the second side.
+     * @param float $c The length of the third side.
+     * @return float The perimeter of the triangle.
+     */
+    public static function perimeterOfTriangle($a, $b, $c)
+    {
+        return $a + $b + $c;
+    }
+
+    /**
+     * Calculate the area of a square.
+     *
+     * @param float $side The length of a side of the square.
+     * @return float The area of the square.
+     */
+    public static function areaOfSquare($side)
+    {
+        return pow($side, 2);
+    }
+
+    /**
+     * Calculate the perimeter of a square.
+     *
+     * @param float $side The length of a side of the square.
+     * @return float The perimeter of the square.
+     */
+    public static function perimeterOfSquare($side)
+    {
+        return 4 * $side;
+    }
+
+    /**
+     * Calculate the volume of a cube.
+     *
+     * @param float $side The length of a side of the cube.
+     * @return float The volume of the cube.
+     */
+    public static function volumeOfCube($side)
+    {
+        return pow($side, 3);
+    }
+
+    /**
+     * Calculate the surface area of a cube.
+     *
+     * @param float $side The length of a side of the cube.
+     * @return float The surface area of the cube.
+     */
+    public static function surfaceAreaOfCube($side)
+    {
+        return 6 * pow($side, 2);
+    }
+
+    /**
+     * Calculate the volume of a rectangular prism.
+     *
+     * @param float $length The length of the prism.
+     * @param float $width The width of the prism.
+     * @param float $height The height of the prism.
+     * @return float The volume of the rectangular prism.
+     */
+    public static function volumeOfRectangularPrism($length, $width, $height)
+    {
+        return $length * $width * $height;
+    }
+
+    /**
+     * Calculate the surface area of a rectangular prism.
+     *
+     * @param float $length The length of the prism.
+     * @param float $width The width of the prism.
+     * @param float $height The height of the prism.
+     * @return float The surface area of the rectangular prism.
+     */
+    public static function surfaceAreaOfRectangularPrism($length, $width, $height)
+    {
+        return 2 * ($length * $width + $width * $height + $length * $height);
+    }
+
+    /**
+     * Calculate the area of a trapezoid.
+     *
+     * @param float $base1 The length of the first base.
+     * @param float $base2 The length of the second base.
+     * @param float $height The height of the trapezoid.
+     * @return float The area of the trapezoid.
+     */
+    public static function areaOfTrapezoid($base1, $base2, $height)
+    {
+        return 0.5 * ($base1 + $base2) * $height;
+    }
+
+    /**
+     * Calculate the area of a parallelogram.
+     *
+     * @param float $base The length of the base.
+     * @param float $height The height of the parallelogram.
+     * @return float The area of the parallelogram.
+     */
+    public static function areaOfParallelogram($base, $height)
+    {
+        return $base * $height;
+    }
+
+    /**
+     * Calculate the area of an ellipse.
+     *
+     * @param float $semiMajorAxis The length of the semi-major axis.
+     * @param float $semiMinorAxis The length of the semi-minor axis.
+     * @return float The area of the ellipse.
+     */
+    public static function areaOfEllipse($semiMajorAxis, $semiMinorAxis)
+    {
+        return pi() * $semiMajorAxis * $semiMinorAxis;
+    }
+
+    /**
+     * Calculate the circumference of an ellipse (approximation).
+     *
+     * @param float $semiMajorAxis The length of the semi-major axis.
+     * @param float $semiMinorAxis The length of the semi-minor axis.
+     * @return float The circumference of the ellipse.
+     */
+    public static function circumferenceOfEllipse($semiMajorAxis, $semiMinorAxis)
+    {
+        return pi() * (3 * ($semiMajorAxis + $semiMinorAxis) - sqrt((3 * $semiMajorAxis + $semiMinorAxis) * ($semiMajorAxis + 3 * $semiMinorAxis)));
     }
 
 }

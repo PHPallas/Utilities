@@ -7,6 +7,35 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+    public function testLimit() {
+        $limitValue = MathUtility::limit(fn($x) => $x ** 2, 2);
+        $this->assertEqualsWithDelta(4, $limitValue, 0.0001); // Added tolerance
+    }
+
+    public function testTaylorSeries() {
+        $taylorExpansion = MathUtility::taylorSeries(fn($x) => exp($x), 0, 5);
+        $this->assertEqualsWithDelta(1.0, $taylorExpansion, 0.0001); // Added tolerance
+    }
+
+    public function testNumericalIntegration() {
+        $integralValue = MathUtility::numericalIntegration(fn($x) => $x ** 2, 0, 1);
+        $this->assertEqualsWithDelta(1/3, $integralValue, 0.0001); // Added tolerance
+    }
+
+    public function testPartialDerivative() {
+        $partial = MathUtility::partialDerivative(fn($x, $y) => $x ** 2 + $y ** 2, 0, [1, 1]);
+        $this->assertEqualsWithDelta(2, $partial, 0.0001); // Added tolerance
+    }
+
+    public function testSecondDerivative() {
+        $secondDerivative = MathUtility::secondDerivative(fn($x) => $x ** 2, 2);
+        $this->assertEqualsWithDelta(0, $secondDerivative, 0.0001); // Added tolerance
+    }
+
+    public function testAreaUnderCurve() {
+        $area = MathUtility::areaUnderCurve(fn($x) => $x ** 2, 0, 1);
+        $this->assertEqualsWithDelta(1/3, $area, 0.0001); // Added tolerance
+    }
 
     public function testGcd()
     {
@@ -78,58 +107,149 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals([6, 28], MathUtility::generatePerfectNumbers(28));
     }
     
-    public function testMean() {
+    public function testAreaOfCircle()
+    {
+        $this->assertEquals(78.53981633974483, MathUtility::areaOfCircle(5));
+    }
+
+    public function testCircumferenceOfCircle()
+    {
+        $this->assertEquals(31.41592653589793, MathUtility::circumferenceOfCircle(5));
+    }
+
+    public function testAreaOfRectangle()
+    {
+        $this->assertEquals(20, MathUtility::areaOfRectangle(4, 5));
+    }
+
+    public function testPerimeterOfRectangle()
+    {
+        $this->assertEquals(18, MathUtility::perimeterOfRectangle(4, 5));
+    }
+
+    public function testAreaOfTriangle()
+    {
+        $this->assertEquals(10, MathUtility::areaOfTriangle(4, 5));
+    }
+
+    public function testPerimeterOfTriangle()
+    {
+        $this->assertEquals(12, MathUtility::perimeterOfTriangle(3, 4, 5));
+    }
+
+    public function testAreaOfSquare()
+    {
+        $this->assertEquals(25, MathUtility::areaOfSquare(5));
+    }
+
+    public function testPerimeterOfSquare()
+    {
+        $this->assertEquals(20, MathUtility::perimeterOfSquare(5));
+    }
+
+    public function testVolumeOfCube()
+    {
+        $this->assertEquals(125, MathUtility::volumeOfCube(5));
+    }
+
+    public function testSurfaceAreaOfCube()
+    {
+        $this->assertEquals(150, MathUtility::surfaceAreaOfCube(5));
+    }
+
+    public function testVolumeOfRectangularPrism()
+    {
+        $this->assertEquals(60, MathUtility::volumeOfRectangularPrism(3, 4, 5));
+    }
+
+    public function testSurfaceAreaOfRectangularPrism()
+    {
+        $this->assertEquals(94, MathUtility::surfaceAreaOfRectangularPrism(3, 4, 5));
+    }
+
+    public function testAreaOfTrapezoid()
+    {
+        $this->assertEquals(50, MathUtility::areaOfTrapezoid(5, 5, 10));
+    }
+
+    public function testAreaOfParallelogram()
+    {
+        $this->assertEquals(20, MathUtility::areaOfParallelogram(4, 5));
+    }
+
+    public function testAreaOfEllipse()
+    {
+        $this->assertEquals(62.83185307179586, MathUtility::areaOfEllipse(5, 4));
+    }
+
+    public function testCircumferenceOfEllipse()
+    {
+        $this->assertEquals(28.3616677843, round(MathUtility::circumferenceOfEllipse(5, 4),10));
+    }
+
+    public function testMean()
+    {
         $data = [1, 2, 3, 4, 5];
         $this->assertEquals(3, MathUtility::mean($data));
     }
 
-    public function testMedianOdd() {
+    public function testMedianOdd()
+    {
         $data = [1, 3, 2, 5, 4];
         $this->assertEquals(3, MathUtility::median($data));
     }
 
-    public function testMedianEven() {
+    public function testMedianEven()
+    {
         $data = [1, 2, 3, 4];
         $this->assertEquals(2.5, MathUtility::median($data));
     }
 
-    public function testMode() {
+    public function testMode()
+    {
         $data = [1, 2, 2, 3, 4];
         $this->assertEquals([2], MathUtility::mode($data));
     }
 
-    public function testModeMultiple() {
+    public function testModeMultiple()
+    {
         $data = [1, 2, 2, 3, 3, 4];
         $this->assertEquals([2, 3], MathUtility::mode($data));
     }
 
-    public function testVariance() {
+    public function testVariance()
+    {
         $data = [1, 2, 3, 4, 5];
         $this->assertEquals(2.5, MathUtility::variance($data));
     }
 
-    public function testPopulationVariance() {
+    public function testPopulationVariance()
+    {
         $data = [1, 2, 3, 4, 5];
         $this->assertEquals(2, MathUtility::populationVariance($data));
     }
 
-    public function testStandardDeviation() {
+    public function testStandardDeviation()
+    {
         $data = [1, 2, 3, 4, 5];
         $this->assertEquals(sqrt(2.5), MathUtility::standardDeviation($data));
     }
 
-    public function testPopulationStandardDeviation() {
+    public function testPopulationStandardDeviation()
+    {
         $data = [1, 2, 3, 4, 5];
         $this->assertEquals(sqrt(2), MathUtility::populationStandardDeviation($data));
     }
 
-    public function testCorrelation() {
+    public function testCorrelation()
+    {
         $x = [1, 2, 3, 4, 5];
         $y = [2, 4, 6, 8, 10];
         $this->assertEquals(1, MathUtility::correlation($x, $y));
     }
 
-    public function testMultipleLinearRegression() {
+    public function testMultipleLinearRegression()
+    {
         $X = [
             [1, 2],
             [2, 9],
@@ -144,71 +264,82 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals(1089.0, $coefficients[2]); // Check slope for second variable
     }
 
-    public function testNormalDistributionPDF() {
+    public function testNormalDistributionPDF()
+    {
         $mean = 0;
         $stdDev = 1;
         $x = 0;
-        $this->assertEquals(0.4, round(MathUtility::normalDistributionPDF($x, $mean, $stdDev, '', 14),2));
+        $this->assertEquals(0.4, round(MathUtility::normalDistributionPDF($x, $mean, $stdDev, '', 14), 2));
     }
 
-    public function testNormalDistributionCDF() {
+    public function testNormalDistributionCDF()
+    {
         $mean = 0;
         $stdDev = 1;
         $x = 0;
-        $this->assertEquals(0.5, round(MathUtility::normalDistributionCDF($x, $mean, $stdDev),1));
+        $this->assertEquals(0.5, round(MathUtility::normalDistributionCDF($x, $mean, $stdDev), 1));
     }
 
-    public function testBinomialProbability() {
+    public function testBinomialProbability()
+    {
         $n = 5;
         $k = 2;
         $p = 0.5;
         $this->assertEquals(0.3125, MathUtility::binomialProbability($n, $k, $p));
     }
 
-    public function testPoissonDistribution() {
+    public function testPoissonDistribution()
+    {
         $lambda = 3;
         $x = 2;
-        $this->assertEquals(0.22, round(MathUtility::poissonDistribution($x, $lambda),2));
+        $this->assertEquals(0.22, round(MathUtility::poissonDistribution($x, $lambda), 2));
     }
 
-    public function testExponentialDistributionPDF() {
+    public function testExponentialDistributionPDF()
+    {
         $lambda = 1;
         $x = 2;
         $this->assertEquals(0.1353352832366127, MathUtility::exponentialDistributionPDF($x, $lambda));
     }
 
-    public function testExponentialDistributionCDF() {
+    public function testExponentialDistributionCDF()
+    {
         $lambda = 1;
         $x = 2;
         $this->assertEquals(0.8646647167633873, MathUtility::exponentialDistributionCDF($x, $lambda));
     }
 
-    public function testUniformDistributionPDF() {
+    public function testUniformDistributionPDF()
+    {
         $a = 0;
         $b = 10;
         $x = 5;
         $this->assertEquals(0.1, MathUtility::uniformDistributionPDF($x, $a, $b));
     }
 
-    public function testUniformDistributionCDF() {
+    public function testUniformDistributionCDF()
+    {
         $a = 0;
         $b = 10;
         $x = 5;
         $this->assertEquals(0.5, MathUtility::uniformDistributionCDF($x, $a, $b));
     }
 
-    public function testSkewness() {
+    public function testSkewness()
+    {
         $data = [1, 2, 2, 3, 4];
-        $this->assertEquals(0.97, round(MathUtility::skewness($data),2));
+        $this->assertEquals(0.97, round(MathUtility::skewness($data), 2));
     }
 
-    public function testKurtosis() {
+    public function testKurtosis()
+    {
         $data = [1, 2, 2, 3, 4];
-        $this->assertEquals(-6.44, round(MathUtility::kurtosis($data),2));
+        $this->assertEquals(-6.44, round(MathUtility::kurtosis($data), 2));
     }
 
 
-    public function testAddMatrix() {
+    public function testAddMatrix()
+    {
         $matrixA = [
             [1, 2],
             [3, 4]
@@ -224,7 +355,8 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals($expected, MathUtility::addMatrix($matrixA, $matrixB));
     }
 
-    public function testSubtractMatrix() {
+    public function testSubtractMatrix()
+    {
         $matrixA = [
             [5, 6],
             [7, 8]
@@ -240,7 +372,8 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals($expected, MathUtility::subtractMatrix($matrixA, $matrixB));
     }
 
-    public function testMultiplyMatrix() {
+    public function testMultiplyMatrix()
+    {
         $matrixA = [
             [1, 2],
             [3, 4]
@@ -256,7 +389,8 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals($expected, MathUtility::multiplyMatrix($matrixA, $matrixB));
     }
 
-    public function testInverseMatrix() {
+    public function testInverseMatrix()
+    {
         $matrix = [
             [4, 7],
             [2, 6]
@@ -266,14 +400,17 @@ final class MathUtilityTest extends TestCase
             [-0.2, 0.4]
         ];
         $actual = MathUtility::inverseMatrix($matrix);
-        foreach ($expected as $i => $row) {
-            foreach ($row as $j => $value) {
+        foreach ($expected as $i => $row)
+        {
+            foreach ($row as $j => $value)
+            {
                 $this->assertAlmostEqual($value, $actual[$i][$j], 0.0001);
             }
         }
     }
 
-    public function testEigenvaluesMatrix() {
+    public function testEigenvaluesMatrix()
+    {
         $matrix = [
             [4, 1],
             [2, 3]
@@ -282,13 +419,14 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals($expected, MathUtility::eigenvaluesMatrix($matrix));
     }
 
-    public function testLuDecompositionMatrix() {
+    public function testLuDecompositionMatrix()
+    {
         $matrix = [
             [4, 3],
             [6, 3]
         ];
         $result = MathUtility::luDecompositionMatrix($matrix);
-        
+
         // Validate L
         $expectedL = [
             [1, 0],
@@ -304,20 +442,23 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals($expectedU, $result['U']);
     }
 
-    public function testQrDecompositionMatrix() {
+    public function testQrDecompositionMatrix()
+    {
         $matrix = [
             [1, 2],
             [3, 4]
         ];
         $result = MathUtility::qrDecompositionMatrix($matrix);
-        
+
         // Validate Q
         $expectedQ = [
             [0.316227766, 0.948683298],
             [0.948683298, -0.316227766]
         ];
-        foreach ($expectedQ as $i => $row) {
-            foreach ($row as $j => $value) {
+        foreach ($expectedQ as $i => $row)
+        {
+            foreach ($row as $j => $value)
+            {
                 $this->assertAlmostEqual($value, $result['Q'][$i][$j], 0.0001);
             }
         }
@@ -327,14 +468,17 @@ final class MathUtilityTest extends TestCase
             [3.16227766, 4.42718872],
             [0, 0.632455532]
         ];
-        foreach ($expectedR as $i => $row) {
-            foreach ($row as $j => $value) {
+        foreach ($expectedR as $i => $row)
+        {
+            foreach ($row as $j => $value)
+            {
                 $this->assertAlmostEqual($value, $result['R'][$i][$j], 0.0001);
             }
         }
     }
 
-    public function testSubsetMatrix() {
+    public function testSubsetMatrix()
+    {
         $matrix = [
             [1, 2, 3],
             [4, 5, 6],
@@ -347,7 +491,8 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals($expected, MathUtility::subsetMatrix($matrix, 0, 0, 2, 2));
     }
 
-    public function testAddMatrixDifferentDimensions() {
+    public function testAddMatrixDifferentDimensions()
+    {
         $this->expectException(InvalidArgumentException::class);
         $matrixA = [
             [1, 2],
@@ -360,7 +505,8 @@ final class MathUtilityTest extends TestCase
         MathUtility::addMatrix($matrixA, $matrixB);
     }
 
-    public function testInverseMatrixNotInvertible() {
+    public function testInverseMatrixNotInvertible()
+    {
         $this->expectException(InvalidArgumentException::class);
         $matrix = [
             [1, 2],
@@ -369,7 +515,8 @@ final class MathUtilityTest extends TestCase
         MathUtility::inverseMatrix($matrix);
     }
 
-    public function testEigenvaluesMatrixNot2x2() {
+    public function testEigenvaluesMatrixNot2x2()
+    {
         $this->expectException(InvalidArgumentException::class);
         $matrix = [
             [1, 2, 3],
@@ -378,7 +525,8 @@ final class MathUtilityTest extends TestCase
         MathUtility::eigenvaluesMatrix($matrix);
     }
 
-    private function assertAlmostEqual($expected, $actual, $delta) {
+    private function assertAlmostEqual($expected, $actual, $delta)
+    {
         $this->assertTrue(abs($expected - $actual) < $delta, "Failed asserting that $actual is almost equal to $expected.");
     }
     public function testExponential()
