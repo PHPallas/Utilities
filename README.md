@@ -100,3 +100,19 @@ $result = StringUtility::transformToPascalSnakecase($result);
 $result => "Hello_World";
 */
 ```
+
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to get involved.
+
+## Changelog
+
+All notable changes to this project will be documented in the [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+---
+
+*Created with ❤️ and dedication by [PHPallas team](https://github.com/PHPallas)! 🌟*
