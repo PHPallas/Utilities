@@ -1423,13 +1423,14 @@ class MathUtility
         return $subset;
     }
 
-        /**
+    /**
      * Calculate the mean of an array of numbers.
      *
      * @param array $data The input array of numbers.
      * @return float The mean of the numbers.
      */
-    public static function mean(array $data) {
+    public static function mean(array $data)
+    {
         return array_sum($data) / count($data);
     }
 
@@ -1439,13 +1440,17 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The median of the numbers.
      */
-    public static function median(array $data) {
+    public static function median(array $data)
+    {
         sort($data);
         $count = count($data);
         $middle = floor(($count - 1) / 2);
-        if ($count % 2) {
+        if ($count % 2)
+        {
             return $data[$middle];
-        } else {
+        }
+        else
+        {
             return ($data[$middle] + $data[$middle + 1]) / 2;
         }
     }
@@ -1456,7 +1461,8 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return array The mode(s) of the numbers.
      */
-    public static function mode(array $data) {
+    public static function mode(array $data)
+    {
         $values = array_count_values($data);
         $maxCount = max($values);
         $modes = array_keys($values, $maxCount);
@@ -1469,9 +1475,11 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The sample variance of the numbers.
      */
-    public static function variance(array $data) {
+    public static function variance(array $data)
+    {
         $mean = self::mean($data);
-        $squaredDiffs = array_map(function($value) use ($mean) {
+        $squaredDiffs = array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 2);
         }, $data);
         return array_sum($squaredDiffs) / (count($data) - 1);
@@ -1483,9 +1491,11 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The population variance of the numbers.
      */
-    public static function populationVariance(array $data) {
+    public static function populationVariance(array $data)
+    {
         $mean = self::mean($data);
-        $squaredDiffs = array_map(function($value) use ($mean) {
+        $squaredDiffs = array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 2);
         }, $data);
         return array_sum($squaredDiffs) / count($data);
@@ -1497,7 +1507,8 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The sample standard deviation of the numbers.
      */
-    public static function standardDeviation(array $data) {
+    public static function standardDeviation(array $data)
+    {
         return sqrt(self::variance($data));
     }
 
@@ -1507,7 +1518,8 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The population standard deviation of the numbers.
      */
-    public static function populationStandardDeviation(array $data) {
+    public static function populationStandardDeviation(array $data)
+    {
         return sqrt(self::populationVariance($data));
     }
 
@@ -1519,20 +1531,23 @@ class MathUtility
      * @return float The correlation coefficient.
      * @throws InvalidArgumentException if arrays are not of equal length.
      */
-    public static function correlation(array $x, array $y) {
-        if (count($x) !== count($y)) {
+    public static function correlation(array $x, array $y)
+    {
+        if (count($x) !== count($y))
+        {
             throw new InvalidArgumentException('Arrays must be of equal length.');
         }
-        
+
         $n = count($x);
         $meanX = self::mean($x);
         $meanY = self::mean($y);
-        
+
         $numerator = 0;
         $denominatorX = 0;
         $denominatorY = 0;
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             $numerator += ($x[$i] - $meanX) * ($y[$i] - $meanY);
             $denominatorX += pow($x[$i] - $meanX, 2);
             $denominatorY += pow($y[$i] - $meanY, 2);
@@ -1549,23 +1564,29 @@ class MathUtility
      * @return array The coefficients of the regression model.
      * @throws InvalidArgumentException if input arrays are empty or of unequal length.
      */
-    public static function multipleLinearRegression(array $X, array $Y) {
-        if (count($X) === 0 || count($Y) === 0) {
+    public static function multipleLinearRegression(array $X, array $Y)
+    {
+        if (count($X) === 0 || count($Y) === 0)
+        {
             throw new InvalidArgumentException('Input arrays cannot be empty.');
         }
-        if (count($X) !== count($Y)) {
+        if (count($X) !== count($Y))
+        {
             throw new InvalidArgumentException('Independent and dependent variable arrays must be of equal length.');
         }
 
         // Add a column of ones to X for the intercept term
         $n = count($Y);
-        $X = array_map(function($row) {
+        $X = array_map(function ($row)
+        {
             return array_merge([1], $row); // Add intercept term
         }, $X);
 
         // Convert arrays to matrices
         $X = self::transpose($X);
-        $Y = array_map(function($value) { return [$value]; }, $Y); // Convert to column matrix
+        $Y = array_map(function ($value)
+        {
+            return [$value]; }, $Y); // Convert to column matrix
 
         // Calculate coefficients using the formula: (X'X)^-1 X'Y
         $XTX = self::matrixMultiply($X, $X);
@@ -1573,7 +1594,8 @@ class MathUtility
         $XTY = self::matrixMultiply($X, $Y);
         $coefficients = self::matrixMultiply($XTX_inv, $XTY);
 
-        return array_map(function($row) {
+        return array_map(function ($row)
+        {
             return $row[0]; // Flatten the result
         }, $coefficients);
     }
@@ -1586,7 +1608,8 @@ class MathUtility
      * @param float $stdDev The standard deviation of the distribution.
      * @return float The PDF value.
      */
-    public static function normalDistributionPDF($x, $mean, $stdDev) {
+    public static function normalDistributionPDF($x, $mean, $stdDev)
+    {
         return (1 / (sqrt(2 * M_PI) * $stdDev)) * exp(-0.5 * pow(($x - $mean) / $stdDev, 2));
     }
 
@@ -1598,7 +1621,8 @@ class MathUtility
      * @param float $stdDev The standard deviation of the distribution.
      * @return float The CDF value.
      */
-    public static function normalDistributionCDF($x, $mean, $stdDev) {
+    public static function normalDistributionCDF($x, $mean, $stdDev)
+    {
         return 0.5 * (1 + self::erf(($x - $mean) / ($stdDev * sqrt(2))));
     }
 
@@ -1608,13 +1632,14 @@ class MathUtility
      * @param float $x The input value.
      * @return float The error function value.
      */
-    private static function erf($x) {
-        $a1 =  0.254829592;
+    private static function erf($x)
+    {
+        $a1 = 0.254829592;
         $a2 = -0.284496736;
-        $a3 =  1.421413741;
+        $a3 = 1.421413741;
         $a4 = -1.453152027;
-        $a5 =  1.061405429;
-        $p  =  0.3275911;
+        $a5 = 1.061405429;
+        $p = 0.3275911;
 
         $sign = ($x < 0) ? -1 : 1;
         $x = abs($x);
@@ -1631,7 +1656,8 @@ class MathUtility
      * @param float $p The probability of success.
      * @return float The binomial probability.
      */
-    public static function binomialProbability($n, $k, $p) {
+    public static function binomialProbability($n, $k, $p)
+    {
         return self::combination($n, $k) * pow($p, $k) * pow((1 - $p), ($n - $k));
     }
 
@@ -1642,8 +1668,10 @@ class MathUtility
      * @param int $k The number of items to choose.
      * @return int The number of combinations.
      */
-    private static function combination($n, $k) {
-        if ($k > $n) return 0;
+    private static function combination($n, $k)
+    {
+        if ($k > $n)
+            return 0;
         return self::factorial($n) / (self::factorial($k) * self::factorial($n - $k));
     }
 
@@ -1653,10 +1681,13 @@ class MathUtility
      * @param int $n The number to calculate the factorial for.
      * @return int The factorial of the number.
      */
-    private static function factorial($n) {
-        if ($n === 0) return 1;
+    private static function factorial($n)
+    {
+        if ($n === 0)
+            return 1;
         $result = 1;
-        for ($i = 1; $i <= $n; $i++) {
+        for ($i = 1; $i <= $n; $i++)
+        {
             $result *= $i;
         }
         return $result;
@@ -1669,7 +1700,8 @@ class MathUtility
      * @param float $lambda The expected number of occurrences.
      * @return float The PDF value.
      */
-    public static function poissonDistribution($x, $lambda) {
+    public static function poissonDistribution($x, $lambda)
+    {
         return (pow($lambda, $x) * exp(-$lambda)) / self::factorial($x);
     }
 
@@ -1680,7 +1712,8 @@ class MathUtility
      * @param float $lambda The rate parameter.
      * @return float The PDF value.
      */
-    public static function exponentialDistributionPDF($x, $lambda) {
+    public static function exponentialDistributionPDF($x, $lambda)
+    {
         return $lambda * exp(-$lambda * $x);
     }
 
@@ -1691,7 +1724,8 @@ class MathUtility
      * @param float $lambda The rate parameter.
      * @return float The CDF value.
      */
-    public static function exponentialDistributionCDF($x, $lambda) {
+    public static function exponentialDistributionCDF($x, $lambda)
+    {
         return 1 - exp(-$lambda * $x);
     }
 
@@ -1703,7 +1737,8 @@ class MathUtility
      * @param float $b The upper bound of the distribution.
      * @return float The PDF value.
      */
-    public static function uniformDistributionPDF($x, $a, $b) {
+    public static function uniformDistributionPDF($x, $a, $b)
+    {
         return ($x >= $a && $x <= $b) ? (1 / ($b - $a)) : 0;
     }
 
@@ -1715,9 +1750,12 @@ class MathUtility
      * @param float $b The upper bound of the distribution.
      * @return float The CDF value.
      */
-    public static function uniformDistributionCDF($x, $a, $b) {
-        if ($x < $a) return 0;
-        if ($x > $b) return 1;
+    public static function uniformDistributionCDF($x, $a, $b)
+    {
+        if ($x < $a)
+            return 0;
+        if ($x > $b)
+            return 1;
         return ($x - $a) / ($b - $a);
     }
 
@@ -1727,11 +1765,13 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The skewness of the numbers.
      */
-    public static function skewness(array $data) {
+    public static function skewness(array $data)
+    {
         $mean = self::mean($data);
         $n = count($data);
         $stdDev = self::standardDeviation($data);
-        $m3 = array_sum(array_map(function($value) use ($mean) {
+        $m3 = array_sum(array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 3);
         }, $data)) / $n;
 
@@ -1744,11 +1784,13 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The kurtosis of the numbers.
      */
-    public static function kurtosis(array $data) {
+    public static function kurtosis(array $data)
+    {
         $mean = self::mean($data);
         $n = count($data);
         $stdDev = self::standardDeviation($data);
-        $m4 = array_sum(array_map(function($value) use ($mean) {
+        $m4 = array_sum(array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 4);
         }, $data)) / $n;
 
@@ -1761,7 +1803,8 @@ class MathUtility
      * @param array $matrix The matrix to transpose.
      * @return array The transposed matrix.
      */
-    private static function transpose(array $matrix) {
+    private static function transpose(array $matrix)
+    {
         return array_map(null, ...$matrix);
     }
 
@@ -1772,12 +1815,16 @@ class MathUtility
      * @param array $B The second matrix.
      * @return array The product of the two matrices.
      */
-    private static function matrixMultiply(array $A, array $B) {
+    private static function matrixMultiply(array $A, array $B)
+    {
         $result = [];
-        foreach ($A as $rowA) {
+        foreach ($A as $rowA)
+        {
             $resultRow = [];
-            foreach (self::transpose($B) as $rowB) {
-                $resultRow[] = array_sum(array_map(function($a, $b) {
+            foreach (self::transpose($B) as $rowB)
+            {
+                $resultRow[] = array_sum(array_map(function ($a, $b)
+                {
                     return $a * $b;
                 }, $rowA, $rowB));
             }
@@ -1792,31 +1839,40 @@ class MathUtility
      * @param array $matrix The matrix to invert.
      * @return array The inverted matrix.
      */
-    private static function matrixInverse(array $matrix) {
+    private static function matrixInverse(array $matrix)
+    {
         $n = count($matrix);
-        $identity = array_map(function($i) use ($n) {
-            return array_map(function($j) use ($i) {
+        $identity = array_map(function ($i) use ($n)
+        {
+            return array_map(function ($j) use ($i)
+            {
                 return $i === $j ? 1 : 0;
             }, range(0, $n - 1));
         }, range(0, $n - 1));
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             $matrix[$i] = array_merge($matrix[$i], $identity[$i]); // Augment the matrix
         }
 
         // Apply Gauss-Jordan elimination
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             // Make the diagonal contain all 1s
             $divisor = $matrix[$i][$i];
-            for ($j = 0; $j < 2 * $n; $j++) {
+            for ($j = 0; $j < 2 * $n; $j++)
+            {
                 $matrix[$i][$j] /= $divisor;
             }
 
             // Make the other rows contain 0s in the current column
-            for ($j = 0; $j < $n; $j++) {
-                if ($j != $i) {
+            for ($j = 0; $j < $n; $j++)
+            {
+                if ($j != $i)
+                {
                     $factor = $matrix[$j][$i];
-                    for ($k = 0; $k < 2 * $n; $k++) {
+                    for ($k = 0; $k < 2 * $n; $k++)
+                    {
                         $matrix[$j][$k] -= $factor * $matrix[$i][$k];
                     }
                 }
@@ -1825,11 +1881,202 @@ class MathUtility
 
         // Extract the inverse matrix
         $inverse = [];
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             $inverse[] = array_slice($matrix[$i], $n); // Get the right half
         }
 
         return $inverse;
+    }
+
+    /**
+     * Calculate the area of a circle.
+     *
+     * @param float $radius The radius of the circle.
+     * @return float The area of the circle.
+     */
+    public static function areaOfCircle($radius)
+    {
+        return pi() * pow($radius, 2);
+    }
+
+    /**
+     * Calculate the circumference of a circle.
+     *
+     * @param float $radius The radius of the circle.
+     * @return float The circumference of the circle.
+     */
+    public static function circumferenceOfCircle($radius)
+    {
+        return 2 * pi() * $radius;
+    }
+
+    /**
+     * Calculate the area of a rectangle.
+     *
+     * @param float $length The length of the rectangle.
+     * @param float $width The width of the rectangle.
+     * @return float The area of the rectangle.
+     */
+    public static function areaOfRectangle($length, $width)
+    {
+        return $length * $width;
+    }
+
+    /**
+     * Calculate the perimeter of a rectangle.
+     *
+     * @param float $length The length of the rectangle.
+     * @param float $width The width of the rectangle.
+     * @return float The perimeter of the rectangle.
+     */
+    public static function perimeterOfRectangle($length, $width)
+    {
+        return 2 * ($length + $width);
+    }
+
+    /**
+     * Calculate the area of a triangle.
+     *
+     * @param float $base The base of the triangle.
+     * @param float $height The height of the triangle.
+     * @return float The area of the triangle.
+     */
+    public static function areaOfTriangle($base, $height)
+    {
+        return 0.5 * $base * $height;
+    }
+
+    /**
+     * Calculate the perimeter of a triangle (assuming it's a right triangle).
+     *
+     * @param float $a The length of the first side.
+     * @param float $b The length of the second side.
+     * @param float $c The length of the third side.
+     * @return float The perimeter of the triangle.
+     */
+    public static function perimeterOfTriangle($a, $b, $c)
+    {
+        return $a + $b + $c;
+    }
+
+    /**
+     * Calculate the area of a square.
+     *
+     * @param float $side The length of a side of the square.
+     * @return float The area of the square.
+     */
+    public static function areaOfSquare($side)
+    {
+        return pow($side, 2);
+    }
+
+    /**
+     * Calculate the perimeter of a square.
+     *
+     * @param float $side The length of a side of the square.
+     * @return float The perimeter of the square.
+     */
+    public static function perimeterOfSquare($side)
+    {
+        return 4 * $side;
+    }
+
+    /**
+     * Calculate the volume of a cube.
+     *
+     * @param float $side The length of a side of the cube.
+     * @return float The volume of the cube.
+     */
+    public static function volumeOfCube($side)
+    {
+        return pow($side, 3);
+    }
+
+    /**
+     * Calculate the surface area of a cube.
+     *
+     * @param float $side The length of a side of the cube.
+     * @return float The surface area of the cube.
+     */
+    public static function surfaceAreaOfCube($side)
+    {
+        return 6 * pow($side, 2);
+    }
+
+    /**
+     * Calculate the volume of a rectangular prism.
+     *
+     * @param float $length The length of the prism.
+     * @param float $width The width of the prism.
+     * @param float $height The height of the prism.
+     * @return float The volume of the rectangular prism.
+     */
+    public static function volumeOfRectangularPrism($length, $width, $height)
+    {
+        return $length * $width * $height;
+    }
+
+    /**
+     * Calculate the surface area of a rectangular prism.
+     *
+     * @param float $length The length of the prism.
+     * @param float $width The width of the prism.
+     * @param float $height The height of the prism.
+     * @return float The surface area of the rectangular prism.
+     */
+    public static function surfaceAreaOfRectangularPrism($length, $width, $height)
+    {
+        return 2 * ($length * $width + $width * $height + $length * $height);
+    }
+
+    /**
+     * Calculate the area of a trapezoid.
+     *
+     * @param float $base1 The length of the first base.
+     * @param float $base2 The length of the second base.
+     * @param float $height The height of the trapezoid.
+     * @return float The area of the trapezoid.
+     */
+    public static function areaOfTrapezoid($base1, $base2, $height)
+    {
+        return 0.5 * ($base1 + $base2) * $height;
+    }
+
+    /**
+     * Calculate the area of a parallelogram.
+     *
+     * @param float $base The length of the base.
+     * @param float $height The height of the parallelogram.
+     * @return float The area of the parallelogram.
+     */
+    public static function areaOfParallelogram($base, $height)
+    {
+        return $base * $height;
+    }
+
+    /**
+     * Calculate the area of an ellipse.
+     *
+     * @param float $semiMajorAxis The length of the semi-major axis.
+     * @param float $semiMinorAxis The length of the semi-minor axis.
+     * @return float The area of the ellipse.
+     */
+    public static function areaOfEllipse($semiMajorAxis, $semiMinorAxis)
+    {
+        return pi() * $semiMajorAxis * $semiMinorAxis;
+    }
+
+    /**
+     * Calculate the circumference of an ellipse (approximation).
+     *
+     * @param float $semiMajorAxis The length of the semi-major axis.
+     * @param float $semiMinorAxis The length of the semi-minor axis.
+     * @return float The circumference of the ellipse.
+     */
+    public static function circumferenceOfEllipse($semiMajorAxis, $semiMinorAxis)
+    {
+        return pi() * (3 * ($semiMajorAxis + $semiMinorAxis) - sqrt((3 * $semiMajorAxis + $semiMinorAxis) * ($semiMajorAxis + 3 * $semiMinorAxis)));
     }
 
 }
