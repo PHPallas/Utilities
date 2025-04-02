@@ -7,6 +7,38 @@ use PHPUnit\Framework\TestCase;
 
 final class MathUtilityTest extends TestCase
 {
+    public function testLimit() {
+        $limitValue = MathUtility::limit(fn($x) => $x ** 2, 2);
+        $this->assertEqualsWithDelta(4, $limitValue, 0.0001); // Added tolerance
+    }
+
+    public function testTaylorSeries() {
+        $taylorExpansion = MathUtility::taylorSeries(fn($x) => exp($x), 0, 5);
+        $this->assertEqualsWithDelta(1.0, $taylorExpansion, 0.0001); // Added tolerance
+    }
+
+    public function testNumericalIntegration() {
+        $integralValue = MathUtility::numericalIntegration(fn($x) => $x ** 2, 0, 1);
+        $this->assertEqualsWithDelta(1/3, $integralValue, 0.0001); // Added tolerance
+    }
+
+    public function testPartialDerivative() {
+        $partial = MathUtility::partialDerivative(fn($x, $y) => $x ** 2 + $y ** 2, 0, [1, 1]);
+        $this->assertEqualsWithDelta(2, $partial, 0.0001); // Added tolerance
+    }
+
+    public function testSecondDerivative() {
+        $secondDerivative = MathUtility::secondDerivative(fn($x) => $x ** 2, 2);
+        $this->assertEqualsWithDelta(0, $secondDerivative, 0.0001); // Added tolerance
+    }
+
+    public function testAreaUnderCurve() {
+        $area = MathUtility::areaUnderCurve(fn($x) => $x ** 2, 0, 1);
+        $this->assertEqualsWithDelta(1/3, $area, 0.0001); // Added tolerance
+    }
+
+
+
 
     public function testMean() {
         $data = [1, 2, 3, 4, 5];
