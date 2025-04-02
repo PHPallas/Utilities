@@ -36,16 +36,6 @@ class SqlUtility
         "cross" => [3, 8, 9],
     ];
 
-    # --------------------------------------------------------------------------
-    # create Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to create a query.
-    #
-    #   Contributing Roles:
-    #   [1]. All creational methods MUST starts in create and follow a 
-    #        camelCase naming standard.
-    # --------------------------------------------------------------------------
-
     /**
      * selectQuery is a versatile function that dynamically builds a SQL SELECT 
      * statement based on the provided parameters. It handles various SQL syntax 
@@ -69,50 +59,62 @@ class SqlUtility
         if ($distinct)
             $select = "SELECT DISTINCT";
         $params = [];
-        if (is_array($table)) {
+        if (is_array($table))
+        {
             $tableName = $table["table"] ?? $table[0];
             $alias = $table["alias"] ?? $table[1] ?? null;
             $tablePhrase = $tableName;
             if ($alias)
                 $tablePhrase .= " AS $alias";
             $table = $tableName;
-        } else {
+        }
+        else
+        {
             $tablePhrase = $table;
         }
-        if (is_array($fields)) {
+        if (is_array($fields))
+        {
             $fields = static::buildFieldsClause($fields);
         }
-        if (null === $fields) {
+        if (null === $fields)
+        {
             $fields = "*";
         }
         $whereClause = "";
-        if (!ArrayUtility::isEmpty($where)) {
+        if (!ArrayUtility::isEmpty($where))
+        {
             $whereClause .= "WHERE ";
             $whereClause .= static::buildWhereClause($where, $params);
         }
         $havingClause = "";
-        if ($having && !ArrayUtility::isEmpty($having)) {
+        if ($having && !ArrayUtility::isEmpty($having))
+        {
             $havingClause .= "HAVING ";
             $havingClause .= static::buildWhereClause($having, $params);
         }
         $orderClause = "";
-        if ($order && !ArrayUtility::isEmpty($order)) {
+        if ($order && !ArrayUtility::isEmpty($order))
+        {
             $orderClause = "ORDER BY ";
             $orderClause .= static::buildOrderClause($order);
         }
         $groupClause = "";
-        if ($group && !ArrayUtility::isEmpty($group)) {
+        if ($group && !ArrayUtility::isEmpty($group))
+        {
             $groupClause = "GROUP BY ";
             $groupClause .= StringUtility::fromArray($group, ",");
         }
         $joinClause = "";
-        if (is_array($joins) && !ArrayUtility::isEmpty($joins)) {
-            foreach ($joins as $join) {
+        if (is_array($joins) && !ArrayUtility::isEmpty($joins))
+        {
+            foreach ($joins as $join)
+            {
                 $type = StringUtility::transformToUppercase((string) ($join["type"] ?? ""));
                 $jTable = $join["table"];
                 $jTableAlias = $join["alias"] ?? $jTable;
                 $jTablePhrase = $jTable;
-                if ($jTableAlias !== $jTable) {
+                if ($jTableAlias !== $jTable)
+                {
                     $jTablePhrase .= " AS $jTableAlias";
                 }
                 $joinClause .= " $type JOIN $jTablePhrase";
@@ -121,8 +123,10 @@ class SqlUtility
                 $joinClause .= " ON $onPhrase";
             }
         }
-        if ($limit) {
-            switch ($database) {
+        if ($limit)
+        {
+            switch ($database)
+            {
                 case static::DATABASE_MYSQL:
                 case static::DATABASE_MARIADB:
                 case static::DATABASE_POSTGRESQL:
@@ -145,13 +149,16 @@ class SqlUtility
                 case static::DATABASE_ORACLE:
                     $sql = "$select $fields FROM $tablePhrase $joinClause $whereClause $groupClause $havingClause $orderClause ROWNUM <= $limit";
                     break;
-                    default:
+                default:
                     $sql = "--------------------------------------";
             }
-        } else {
+        }
+        else
+        {
             $sql = "$select $fields FROM $tablePhrase $joinClause $whereClause $groupClause $havingClause $orderClause";
         }
-        for ($t = 0; $t < 10; $t++) {
+        for ($t = 0; $t < 10; $t++)
+        {
             $sql = str_replace("  ", " ", $sql);
         }
         $sql = StringUtility::dropFromSides($sql) . ";";
@@ -173,28 +180,34 @@ class SqlUtility
     {
         $params = [];
         $set = [];
-        foreach ($values as $name => $value) {
+        foreach ($values as $name => $value)
+        {
             $param = ":$name";
             $params[$param] = $value;
             $set[] = "$name = $param";
         }
         $setClause = StringUtility::fromArray($set, ", ");
         $whereClause = "";
-        if (!ArrayUtility::isEmpty($where)) {
+        if (!ArrayUtility::isEmpty($where))
+        {
             $whereClause .= "WHERE ";
             $whereClause .= static::buildWhereClause($where, $params);
         }
         $limitPhrase = "";
-        if ($limit && ArrayUtility::has([], $database)) {
+        if ($limit && ArrayUtility::has([], $database))
+        {
             $limitPhrase = "LIMIT $limit";
         }
         $outputPhrase = "";
         $returningPhrase = "";
-        if ($return) {
-            switch ($database) {
+        if ($return)
+        {
+            switch ($database)
+            {
                 case static::DATABASE_AZURE:
                 case static::DATABASE_SQLSERVER:
-                    $outputFields = ArrayUtility::transform(ArrayUtility::getKeys($set), function ($key, $value) {
+                    $outputFields = ArrayUtility::transform(ArrayUtility::getKeys($set), function ($key, $value)
+                    {
                         return [$key, "INSERTED.$value"];
                     });
                     $outputPhrase = "OUTPUT " . StringUtility::fromArray($outputFields, ",");
@@ -209,7 +222,8 @@ class SqlUtility
             }
         }
         $sql = "UPDATE $table SET $setClause $outputPhrase $whereClause $limitPhrase $returningPhrase";
-        for ($t = 0; $t < 100; $t++) {
+        for ($t = 0; $t < 100; $t++)
+        {
             $sql = str_replace("  ", " ", $sql);
         }
         $sql = StringUtility::dropFromSides($sql) . ";";
@@ -231,15 +245,19 @@ class SqlUtility
     {
         $params = [];
         $sql = "DELETE FROM $table";
-        if ($alias) {
+        if ($alias)
+        {
             $sql .= " AS $alias";
         }
-        if (!ArrayUtility::isEmpty($where)) {
+        if (!ArrayUtility::isEmpty($where))
+        {
             $sql .= " WHERE ";
             $sql .= static::buildWhereClause($where, $params);
         }
-        if (!ArrayUtility::isEmpty($order)) {
-            switch ($database) {
+        if (!ArrayUtility::isEmpty($order))
+        {
+            switch ($database)
+            {
                 case static::DATABASE_MYSQL:
                 case static::DATABASE_SQLITE:
                 case static::DATABASE_MARIADB:
@@ -249,8 +267,10 @@ class SqlUtility
                     break;
             }
         }
-        if ($limit) {
-            switch ($database) {
+        if ($limit)
+        {
+            switch ($database)
+            {
                 case static::DATABASE_MYSQL:
                 case static::DATABASE_MARIADB:
                 case static::DATABASE_POSTGRESQL:
@@ -279,34 +299,46 @@ class SqlUtility
         $fields = [];
         $params = [];
         $paramClauseStock = [];
-        if (ArrayUtility::isAssociative($values)) {
-            foreach ($values as $name => $value) {
+        if (ArrayUtility::isAssociative($values))
+        {
+            foreach ($values as $name => $value)
+            {
                 $param = ":$name";
                 $params[$param] = $value;
                 $fields[] = $name;
             }
             $paramClauseStock[] = "(" . StringUtility::fromArray(array_keys($params), ", ") . ")";
-        } else {
-            if (ArrayUtility::has([static::DATABASE_ORACLE . static::DATABASE_SYBASE], $database)) {
-                foreach ($values as $item) {
+        }
+        else
+        {
+            if (ArrayUtility::has([static::DATABASE_ORACLE . static::DATABASE_SYBASE], $database))
+            {
+                foreach ($values as $item)
+                {
                     $sql .= static::insertQuery($table, $item, $ignore, $return, $database);
                 }
                 $sql = StringUtility::dropFromSides($sql) . ";";
                 return static::responder($sql, $params);
-            } else {
+            }
+            else
+            {
                 $paramClauseStock = [];
-                foreach ($values as $item) {
+                foreach ($values as $item)
+                {
                     $iParams = [];
-                    foreach ($item as $name => $value) {
+                    foreach ($item as $name => $value)
+                    {
                         $i = 0;
                         $param = ":$name";
-                        while (ArrayUtility::hasKey($params, $param)) {
+                        while (ArrayUtility::hasKey($params, $param))
+                        {
                             $i++;
                             $param = ":$name$i";
                         }
                         $params[$param] = $value;
                         $iParams[] = $param;
-                        if (!ArrayUtility::has($fields, $name)) {
+                        if (!ArrayUtility::has($fields, $name))
+                        {
                             $fields[] = $name;
                         }
                     }
@@ -316,22 +348,28 @@ class SqlUtility
         }
         $paramClause = StringUtility::fromArray($paramClauseStock, ", ");
         $fieldClause = "(" . StringUtility::fromArray($fields, ", ") . ")";
-        if ($ignore and ArrayUtility::has([static::DATABASE_MYSQL, static::DATABASE_MARIADB, static::DATABASE_SQLITE], $database)) {
+        if ($ignore and ArrayUtility::has([static::DATABASE_MYSQL, static::DATABASE_MARIADB, static::DATABASE_SQLITE], $database))
+        {
             $ignorePhrase = "IGNORE";
             if (static::DATABASE_SQLITE === $database)
                 $ignorePhrase = "OR IGNORE";
             $sql = "INSERT $ignorePhrase INTO $table $fieldClause";
-        } else {
+        }
+        else
+        {
             $sql = "INSERT INTO $table $fieldClause";
         }
         $attachedSQL = "";
         $endSQL = "";
-        if ($return) {
-            switch ($database) {
+        if ($return)
+        {
+            switch ($database)
+            {
                 case static::DATABASE_SQLSERVER:
                 case static::DATABASE_SYBASE:
                 case static::DATABASE_AZURE:
-                    $outputFields = ArrayUtility::transform(($fields), function ($key, $value) {
+                    $outputFields = ArrayUtility::transform(($fields), function ($key, $value)
+                    {
                         return [$key, "INSERTED.$value"];
                     });
                     $sql .= " OUTPUT " . StringUtility::fromArray($outputFields, ",");
@@ -351,9 +389,10 @@ class SqlUtility
                     break;
             }
         }
-        //$paramClause = "(" . StringUtility::fromArray(array_keys($params), ", ") . ")";
+
         $sql .= " VALUES $paramClause$endSQL";
-        if ($ignore && static::DATABASE_POSTGRESQL === $database) {
+        if ($ignore && static::DATABASE_POSTGRESQL === $database)
+        {
             $sql .= " ON CONFLICT DO NOTHING";
         }
         $sql = StringUtility::dropFromSides($sql) . ";" . $attachedSQL;
@@ -364,7 +403,8 @@ class SqlUtility
     {
         $params = [];
         $sql = "";
-        foreach ($selects as $select) {
+        foreach ($selects as $select)
+        {
             [$sql, $params] = call_user_func_array([static::class, "insertQuery"], $select);
             $sql = StringUtility::dropFromEnd($sql, ";");
         }
@@ -372,26 +412,24 @@ class SqlUtility
         return static::responder($sql, $params);
     }
 
-    # --------------------------------------------------------------------------
-    # Internal Methods
-    # --------------------------------------------------------------------------
-    #   These methods considered to be used by intera-utility methods. So, All 
-    #   are private.
-    # --------------------------------------------------------------------------
-
     public static function buildOrderClause(array $order): string
     {
         $output = "";
-        if (ArrayUtility::isAssociative($order)) {
-            foreach ($order as $field => $type) {
-                if (is_int($field)) {
+        if (ArrayUtility::isAssociative($order))
+        {
+            foreach ($order as $field => $type)
+            {
+                if (is_int($field))
+                {
                     $field = $type;
                     $type = "asc";
                 }
                 $output .= "$field " . StringUtility::transformToUppercase($type) . ", ";
             }
             $output = StringUtility::dropFromEnd($output, ", ");
-        } else {
+        }
+        else
+        {
             $output = StringUtility::fromArray($order, " ASC, ");
             if ($output)
                 $output .= " ASC";
@@ -401,8 +439,10 @@ class SqlUtility
     public static function buildWhereClause(array $conditions, array &$params)
     {
         $sql = "";
-        if (ArrayUtility::isScalar($conditions)) {
-            if (3 === ArrayUtility::estimateSize($conditions)) {
+        if (ArrayUtility::isScalar($conditions))
+        {
+            if (3 === ArrayUtility::estimateSize($conditions))
+            {
                 $param = null;
                 $value = null;
                 $field = null;
@@ -411,37 +451,48 @@ class SqlUtility
                 $operation = StringUtility::transformToUppercase($conditions[1]);
                 $f2 = $conditions[2];
 
-                if (StringUtility::isStartedBy((string) $f1, "@p:")) {
+                if (StringUtility::isStartedBy((string) $f1, "@p:"))
+                {
                     $field = str_replace("@p:", "", $f1);
                     $param = ":$field";
                     $value = $f2;
                     $reverse = false;
-                } elseif (StringUtility::isStartedBy((string) $f2, "@p:")) {
+                }
+                elseif (StringUtility::isStartedBy((string) $f2, "@p:"))
+                {
                     $field = str_replace("@p:", "", $f2);
                     $param = ":$field";
                     $value = $f1;
                     $reverse = true;
-                } else {
+                }
+                else
+                {
                     $field = $f1;
                     $value = $f2;
                 }
 
-                if ($param) {
+                if ($param)
+                {
                     $i = 1;
-                    while (ArrayUtility::hasKey($params, $param)) {
+                    while (ArrayUtility::hasKey($params, $param))
+                    {
                         $i++;
                         $param = ":$field$i";
                     }
                     $params[$param] = $value;
-                } else {
+                }
+                else
+                {
                     $param = $value;
                 }
-                if ($reverse === true) {
+                if ($reverse === true)
+                {
                     $tmp = $param;
                     $param = $field;
                     $field = $tmp;
                 }
-                switch ($operation) {
+                switch ($operation)
+                {
                     case "=":
                         $sql .= "$field = $param";
                         break;
@@ -497,26 +548,31 @@ class SqlUtility
                         break;
                 }
 
-            } elseif (4 === ArrayUtility::estimateSize($conditions)) {
+            }
+            elseif (4 === ArrayUtility::estimateSize($conditions))
+            {
                 $field = $conditions[0];
                 $operation = StringUtility::transformToUppercase($conditions[1]);
                 $value1 = $conditions[2];
                 $value2 = $conditions[3];
                 $i = 1;
                 $param1 = ":$field";
-                while (ArrayUtility::hasKey($params, $param1)) {
+                while (ArrayUtility::hasKey($params, $param1))
+                {
                     $i++;
                     $param1 = ":$field$i";
                 }
                 $params[$param1] = $value1;
                 $param2 = ":$field";
                 $i = 1;
-                while (ArrayUtility::hasKey($params, $param2)) {
+                while (ArrayUtility::hasKey($params, $param2))
+                {
                     $i++;
                     $param2 = ":$field$i";
                 }
                 $params[$param2] = $value2;
-                switch ($operation) {
+                switch ($operation)
+                {
                     case "BETWEEN":
                         $sql .= "$field BETWEEN $param1 AND $param2";
                         break;
@@ -542,16 +598,20 @@ class SqlUtility
                         break;
 
                 }
-            } elseif (4 < ArrayUtility::estimateSize($conditions)) {
+            }
+            elseif (4 < ArrayUtility::estimateSize($conditions))
+            {
                 $field = $conditions[0];
                 $operation = StringUtility::transformToUppercase($conditions[1]);
                 $sql .= "$field $operation (";
                 $inside = "";
-                for ($i = 2; $i < count($conditions); $i++) {
+                for ($i = 2; $i < count($conditions); $i++)
+                {
                     $j = 1;
                     $value = $conditions[$i];
                     $param = ":$field";
-                    while (ArrayUtility::hasKey($params, $param)) {
+                    while (ArrayUtility::hasKey($params, $param))
+                    {
                         $j++;
                         $param = ":$field$j";
                     }
@@ -561,11 +621,17 @@ class SqlUtility
                 $inside = StringUtility::dropFromEnd($inside, ",");
                 $sql .= "$inside)";
             }
-        } else {
-            foreach ($conditions as $condition) {
-                if (is_array($condition)) {
+        }
+        else
+        {
+            foreach ($conditions as $condition)
+            {
+                if (is_array($condition))
+                {
                     $sql .= "(" . static::buildWhereClause($condition, $params) . ")";
-                } else {
+                }
+                else
+                {
                     $sql .= " " . StringUtility::transformToUppercase((string) $condition) . " ";
                 }
             }
@@ -574,34 +640,45 @@ class SqlUtility
     }
     private static function buildFieldsClause(array $fields): string
     {
-        if (ArrayUtility::isAssociative($fields)) {
+        if (ArrayUtility::isAssociative($fields))
+        {
             $fields = ArrayUtility::transform(
                 $fields,
-                function ($key, $value) {
-                    if (is_array($value)) {
+                function ($key, $value)
+                {
+                    if (is_array($value))
+                    {
                         $v = $key;
                         $expression = $value["expression"] ?? $value[0] ?? null;
-                        if ($expression) {
+                        if ($expression)
+                        {
                             $v = "$expression";
                         }
                         $function = $value["function"] ?? $value[1] ?? null;
-                        if ($function) {
+                        if ($function)
+                        {
                             $v = "$function($v)";
                         }
                         $alias = $value["alias"] ?? $value[2] ?? null;
-                        if ($alias) {
+                        if ($alias)
+                        {
                             $v = "($v) AS $alias";
                         }
                         return [$key, $v];
-                    } else {
+                    }
+                    else
+                    {
                         return [$key, "$key AS $value"];
                     }
                 }
             );
-        } else {
+        }
+        else
+        {
             $fields = ArrayUtility::transform(
                 $fields,
-                function ($key, $value) {
+                function ($key, $value)
+                {
                     return [$key, "$value"];
                 }
             );
@@ -609,7 +686,7 @@ class SqlUtility
         return StringUtility::fromArray($fields, ", ");
 
     }
-    private static function responder(string $sql, array $params): array
+    private static function responder($sql, array $params): array
     {
         return [
             "sql" => StringUtility::dropFromSides($sql, " "),

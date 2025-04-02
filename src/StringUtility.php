@@ -11,21 +11,6 @@
 
 namespace PHPallas\Utilities;
 
-# ------------------------------------------------------------------------------
-# Contribution Roles
-# ------------------------------------------------------------------------------
-# [1]. All methods MUST be named clearly to reflect their functionality, 
-#     following the camelCase naming standard.
-# [2]. Each method should handle edge cases, such as null or invalid inputs, 
-#      appropriately.
-# [3]. Ensure that all methods are well-documented with PHPDoc comments 
-#      and inline comments for clarity.
-# [4]. New methods should be tested thoroughly to ensure they work as expected
-#      across various scenarios, including edge cases.
-# [5]. Consider implementing additional methods for common string manipulation
-#      tasks based on user feedback or common use cases.
-# ------------------------------------------------------------------------------
-
 /**
  * Class StringUtility
  *
@@ -42,19 +27,6 @@ namespace PHPallas\Utilities;
  */
 class StringUtility
 {
-
-    # --------------------------------------------------------------------------
-    # Constants
-    # --------------------------------------------------------------------------
-    # provide a set of immutable values that can be reused throughout the 
-    # codebase. They enhance code readability and maintainability by avoiding 
-    # magic strings, making it clear what each constant represents. 
-    # Additionally, using constants helps prevent errors associated with typos 
-    # and inconsistencies, as they centralize commonly used values. This 
-    # practice promotes cleaner code and facilitates easier updates, as changes 
-    # to a constant only need to be made in one place.
-    # --------------------------------------------------------------------------
-
     /**
      * Represents an empty string.
      */
@@ -205,21 +177,6 @@ class StringUtility
      */
     const DS = DIRECTORY_SEPARATOR;
 
-    # --------------------------------------------------------------------------
-    # String Creation Utility
-    # --------------------------------------------------------------------------
-    #   This utility functions are a set of static methods for creating and
-    #   manipulating strings. It includes methods for generating strings filled 
-    #   with a specific character, creating random strings from a defined set 
-    #   of characters, and repeating a given string a specified number of times.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods are designed to facilitate various string creation 
-    #        scenarios, enhancing code reusability and readability.
-    #   [2]. Each method follows a consistent naming convention, starting with 
-    #        `create`, ensuring clarity in their purpose and functionality.
-    # --------------------------------------------------------------------------
-
     /**
      * Creates a string consisting of a specified character repeated to a given 
      * length.
@@ -298,18 +255,6 @@ class StringUtility
         // Use PHP's str_repeat function to create the repeated string
         return str_repeat($string, $times);
     }
-
-    # --------------------------------------------------------------------------
-    # Get Methods
-    # --------------------------------------------------------------------------
-    #   Use these methods to retrieve characters and substrings from a string.
-    #
-    #   Contributing Roles:
-    #   [1]. All get methods MUST start with 'get' and follow a 
-    #       camelCase naming standard.
-    #   [2]. The methods handle out-of-bounds indices gracefully, returning 
-    #       an empty string when necessary.
-    # --------------------------------------------------------------------------
 
     /**
      * Retrieves a character from a string at a specified index.
@@ -422,19 +367,6 @@ class StringUtility
         return static::getSubset($string, $startIndex, $length); // Retrieve the subset
     }
 
-    # --------------------------------------------------------------------------
-    # Set Methods
-    # --------------------------------------------------------------------------
-    #   Use these methods to modify strings by setting characters, replacing 
-    #   substrings, and padding strings.
-    #
-    #   Contributing Roles:
-    #   [1]. All set methods MUST start with 'set' and follow a 
-    #       camelCase naming standard.
-    #   [2]. Ensure that the methods handle edge cases, such as invalid indices 
-    #       or empty strings, appropriately.
-    # --------------------------------------------------------------------------
-
     /**
      * Sets a character at a specified index in the given string.
      *
@@ -520,27 +452,6 @@ class StringUtility
         return Polyfill::mb_str_pad($string, $length, $character, STR_PAD_RIGHT);
     }
 
-    # --------------------------------------------------------------------------
-    # Checking Method
-    # --------------------------------------------------------------------------
-    #   This method checks for the presence of a specified substring (needle) 
-    #   within a given string, with an option for case sensitivity.
-    #
-    #   Contributing Roles:
-    #   [1]. The method MUST be named 'hasPhrase' and follow the camelCase 
-    #       naming standard.
-    #   [2]. It accepts three parameters:
-    #       - `$string`: The input string in which to search.
-    #       - `$needle`: The substring to search for within the input string.
-    #       - `$caseSensitive`: A boolean flag indicating whether the search 
-    #         should be case-sensitive (default is true).
-    #   [3]. The method returns a boolean value:
-    #       - `true` if the needle is found within the string.
-    #       - `false` if the needle is not found.
-    #   [4]. Ensure that the method handles edge cases, such as empty strings 
-    #       or needles, appropriately.
-    # --------------------------------------------------------------------------
-
     /**
      * Checks if a specified phrase exists within a given string.
      *
@@ -571,28 +482,6 @@ class StringUtility
         // Perform a case-sensitive search
         return Polyfill::str_contains($string, $needle);
     }
-
-    # --------------------------------------------------------------------------
-    # String Add Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods to modify strings by adding 
-    #   specified values at various positions: the start, end, center, or 
-    #   evenly throughout the string.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. The methods include:
-    #       - `addToStart`: Adds a value to the beginning of the string.
-    #       - `addToEnd`: Adds a value to the end of the string.
-    #       - `addToCenter`: Inserts a value in the middle of the string.
-    #       - `addEvenly`: Inserts a value at regular intervals throughout 
-    #         the string based on a specified size.
-    #   [3]. Each method should handle edge cases, such as empty strings or 
-    #       values, appropriately.
-    #   [4]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    # --------------------------------------------------------------------------
 
     /**
      * Adds a specified value to the start of the given string.
@@ -679,21 +568,6 @@ class StringUtility
         // Trim any trailing instances of the inserted value
         return Polyfill::mb_trim($result, $value);
     }
-
-    # --------------------------------------------------------------------------
-    # Drop Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods to manipulate strings by dropping 
-    #   specified characters or elements from various positions within the string.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as empty strings or invalid 
-    #       indices, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    # --------------------------------------------------------------------------
 
     /**
      * Drops specified characters from the given string.
@@ -855,21 +729,6 @@ class StringUtility
         }
         return mb_substr($string, 0, $length) . '...'; // Truncate and append ellipsis
     }
-
-    # --------------------------------------------------------------------------
-    # Transform Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods to transform strings in various ways, 
-    #   including changing cases, removing tags, and manipulating string formats.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as empty strings or invalid 
-    #       inputs, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    # --------------------------------------------------------------------------
 
     /**
      * Transforms the given string to its reverse.
@@ -1244,21 +1103,6 @@ class StringUtility
         return soundex($string); // Get the soundex representation
     }
 
-    # --------------------------------------------------------------------------
-    # Is Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods to compare strings in various ways, 
-    #   including equality checks and prefix/suffix evaluations.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as empty strings or 
-    #       null values, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    # --------------------------------------------------------------------------
-
     /**
      * Checks if two strings are equal.
      *
@@ -1333,23 +1177,6 @@ class StringUtility
         return $cleanedString === strrev($cleanedString); // Check if cleaned string is the same forwards and backwards
     }
 
-    # --------------------------------------------------------------------------
-    # Estimate Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods to estimate string lengths and 
-    #   character counts, accommodating different string handling functions.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as empty strings or 
-    #       null values, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    #   [4]. Consider implementing additional methods for string manipulations 
-    #       or enhancements based on common use cases.
-    # --------------------------------------------------------------------------
-
     /**
      * Estimates the length of a string.
      *
@@ -1407,23 +1234,6 @@ class StringUtility
         return $percent / 100; // Return similarity as a value between 0 and 1
     }
 
-    # --------------------------------------------------------------------------
-    # Merge Methods
-    # --------------------------------------------------------------------------
-    #   This functions are utility methods to merge multiple strings into a 
-    #   single string with a specified separator.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as empty input or 
-    #       null values, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    #   [4]. Consider implementing additional methods for different merging 
-    #       strategies or formats based on common use cases.
-    # --------------------------------------------------------------------------
-
     /**
      * Merges multiple strings into a single string using a specified separator.
      *
@@ -1440,23 +1250,6 @@ class StringUtility
         array_shift($strings); // Remove the first argument (separator)
         return implode($separator, $strings); // Merge the remaining strings with the separator
     }
-
-    # --------------------------------------------------------------------------
-    # Split Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods to split strings into segments or 
-    #   based on a specified separator.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as empty strings or 
-    #       invalid segment lengths, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    #   [4]. Consider implementing additional methods for other splitting 
-    #       strategies or formats based on common use cases.
-    # --------------------------------------------------------------------------
 
     /**
      * Splits a string into segments of specified length.
@@ -1487,23 +1280,6 @@ class StringUtility
     {
         return explode($separator, $string); // Split the string by the specified separator
     }
-
-    # --------------------------------------------------------------------------
-    # Export/Import/Convert Methods
-    # --------------------------------------------------------------------------
-    #   This functions provides utility methods to convert between various data 
-    #   formats, including string, hexadecimal, ASCII, and numeric types.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as invalid inputs or 
-    #       unexpected data types, appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    #   [4]. Consider implementing additional methods for other conversion 
-    #       strategies or formats based on common use cases.
-    # --------------------------------------------------------------------------
 
     /**
      * Converts a string to its hexadecimal representation.
@@ -1696,24 +1472,6 @@ class StringUtility
         return $boolean ? "true" : "false"; // Convert boolean to string
     }
 
-    # --------------------------------------------------------------------------
-    # Encode/Decode Methods
-    # --------------------------------------------------------------------------
-    #   This function provide utility methods to transform strings using various 
-    #   encoding and decoding techniques, including ROT13, slashes, UU encoding, 
-    #   and HTML entities.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as null or invalid inputs, 
-    #       appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    #   [4]. Consider implementing additional methods for other transformation 
-    #       strategies or formats based on common use cases.
-    # --------------------------------------------------------------------------
-
     /**
      * Encodes a string using ROT13.
      *
@@ -1823,23 +1581,6 @@ class StringUtility
     {
         return html_entity_decode($string, ENT_QUOTES); // Decode HTML entities back to characters
     }
-
-    # --------------------------------------------------------------------------
-    # Hashing Methods
-    # --------------------------------------------------------------------------
-    #   This class provides utility methods for hashing strings using various 
-    #   algorithms, including MD5, SHA-1, and checksum validation.
-    #
-    #   Contributing Roles:
-    #   [1]. All methods MUST be named clearly to reflect their functionality, 
-    #       following the camelCase naming standard.
-    #   [2]. Each method should handle edge cases, such as null or empty strings, 
-    #       appropriately.
-    #   [3]. Ensure that all methods are well-documented with PHPDoc comments 
-    #       and inline comments for clarity.
-    #   [4]. Consider implementing additional methods for other hashing algorithms 
-    #       or validation strategies based on common use cases.
-    # --------------------------------------------------------------------------
 
     /**
      * Generates an MD5 hash of a given string.

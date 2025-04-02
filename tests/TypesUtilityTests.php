@@ -23,50 +23,57 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame("null", TypesUtility::getType(null));
         $this->assertSame("object", TypesUtility::getType((object) []));
     }
+
     public function testIsArray()
     {
         $this->assertSame(true, TypesUtility::isArray([]));
         $this->assertSame(false, TypesUtility::isArray(110));
     }
+
     public function testIsBoolean()
     {
         $this->assertSame(true, TypesUtility::isBoolean(true));
         $this->assertSame(false, TypesUtility::isBoolean(1));
         $this->assertSame(false, TypesUtility::isBoolean("true"));
     }
+
     public function testIsCallable()
     {
-        $this->assertSame(true, TypesUtility::isCallable(function ()
-        {}));
+        $this->assertSame(true, TypesUtility::isCallable(function (){}));
         $this->assertSame(false, TypesUtility::isCallable(1));
         $this->assertSame(false, TypesUtility::isCallable("true"));
     }
+
     public function testIsCountable()
     {
-        $this->assertSame(false, TypesUtility::isCountable(function ()
-        {}));
+        $this->assertSame(false, TypesUtility::isCountable(function (){}));
         $this->assertSame(false, TypesUtility::isCountable(1));
         $this->assertSame(true, TypesUtility::isCountable([]));
     }
+
     public function testIsFloat()
     {
         $this->assertSame(true, TypesUtility::isFloat(1.2));
         $this->assertSame(false, TypesUtility::isFloat(1));
         $this->assertSame(false, TypesUtility::isFloat("true"));
     }
+
     public function testIsInteger()
     {
         $this->assertSame(true, TypesUtility::isInteger(15));
         $this->assertSame(false, TypesUtility::isInteger(1.0));
         $this->assertSame(false, TypesUtility::isInteger("true"));
     }
+
     public function testIsIterable()
     {
         $this->assertSame(false, TypesUtility::isIterable(function ()
-        {}));
+        {
+        }));
         $this->assertSame(false, TypesUtility::isIterable(1));
         $this->assertSame(true, TypesUtility::isIterable([]));
     }
+
     public function testIsNull()
     {
         $this->assertSame(false, TypesUtility::isNull(""));
@@ -74,6 +81,7 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(false, TypesUtility::isNull([]));
         $this->assertSame(true, TypesUtility::isNull(null));
     }
+
     public function testIsNumeric()
     {
         $this->assertSame(false, TypesUtility::isNumeric(""));
@@ -82,6 +90,7 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(true, TypesUtility::isNumeric("1.2"));
         $this->assertSame(true, TypesUtility::isNumeric(1.2));
     }
+
     public function testIsObject()
     {
         $this->assertSame(false, TypesUtility::isObject(""));
@@ -89,6 +98,7 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(false, TypesUtility::isObject([]));
         $this->assertSame(true, TypesUtility::isObject((object) []));
     }
+
     public function testIsResource()
     {
         $this->assertSame(false, TypesUtility::isResource(""));
@@ -98,6 +108,7 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(true, TypesUtility::isResource($fp));
         fclose($fp);
     }
+
     public function testIsScalar()
     {
         $this->assertSame(true, TypesUtility::isScalar(""));
@@ -113,6 +124,7 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(false, TypesUtility::isString([]));
         $this->assertSame(false, TypesUtility::isString(null));
     }
+
     public function testConvert()
     {
         $variable = "text";

@@ -600,7 +600,7 @@ class MathUtility
      */
     public static function dotProduct($vec1, $vec2)
     {
-        self::checkDimensions($vec1, $vec2);
+        static::checkDimensions($vec1, $vec2);
         $sum = 0;
         foreach ($vec1 as $i => $val)
         {
@@ -1134,7 +1134,7 @@ class MathUtility
      */
     public static function addMatrix($matrixA, $matrixB)
     {
-        self::validateDimensions($matrixA, $matrixB);
+        static::validateDimensions($matrixA, $matrixB);
         $result = [];
         for ($i = 0; $i < count($matrixA); $i++)
         {
@@ -1156,7 +1156,7 @@ class MathUtility
      */
     public static function subtractMatrix($matrixA, $matrixB)
     {
-        self::validateDimensions($matrixA, $matrixB);
+        static::validateDimensions($matrixA, $matrixB);
         $result = [];
         for ($i = 0; $i < count($matrixA); $i++)
         {
@@ -1477,7 +1477,7 @@ class MathUtility
      */
     public static function variance(array $data)
     {
-        $mean = self::mean($data);
+        $mean = static::mean($data);
         $squaredDiffs = array_map(function ($value) use ($mean)
         {
             return pow($value - $mean, 2);
@@ -1493,7 +1493,7 @@ class MathUtility
      */
     public static function populationVariance(array $data)
     {
-        $mean = self::mean($data);
+        $mean = static::mean($data);
         $squaredDiffs = array_map(function ($value) use ($mean)
         {
             return pow($value - $mean, 2);
@@ -1509,7 +1509,7 @@ class MathUtility
      */
     public static function standardDeviation(array $data)
     {
-        return sqrt(self::variance($data));
+        return sqrt(static::variance($data));
     }
 
     /**
@@ -1520,7 +1520,7 @@ class MathUtility
      */
     public static function populationStandardDeviation(array $data)
     {
-        return sqrt(self::populationVariance($data));
+        return sqrt(static::populationVariance($data));
     }
 
     /**
@@ -1539,8 +1539,8 @@ class MathUtility
         }
 
         $n = count($x);
-        $meanX = self::mean($x);
-        $meanY = self::mean($y);
+        $meanX = static::mean($x);
+        $meanY = static::mean($y);
 
         $numerator = 0;
         $denominatorX = 0;
@@ -1583,16 +1583,17 @@ class MathUtility
         }, $X);
 
         // Convert arrays to matrices
-        $X = self::transpose($X);
+        $X = static::transpose($X);
         $Y = array_map(function ($value)
         {
-            return [$value]; }, $Y); // Convert to column matrix
+            return [$value];
+        }, $Y); // Convert to column matrix
 
         // Calculate coefficients using the formula: (X'X)^-1 X'Y
-        $XTX = self::matrixMultiply($X, $X);
-        $XTX_inv = self::matrixInverse($XTX);
-        $XTY = self::matrixMultiply($X, $Y);
-        $coefficients = self::matrixMultiply($XTX_inv, $XTY);
+        $XTX = static::matrixMultiply($X, $X);
+        $XTX_inv = static::matrixInverse($XTX);
+        $XTY = static::matrixMultiply($X, $Y);
+        $coefficients = static::matrixMultiply($XTX_inv, $XTY);
 
         return array_map(function ($row)
         {
@@ -1623,7 +1624,7 @@ class MathUtility
      */
     public static function normalDistributionCDF($x, $mean, $stdDev)
     {
-        return 0.5 * (1 + self::erf(($x - $mean) / ($stdDev * sqrt(2))));
+        return 0.5 * (1 + static::erf(($x - $mean) / ($stdDev * sqrt(2))));
     }
 
     /**
@@ -1658,7 +1659,7 @@ class MathUtility
      */
     public static function binomialProbability($n, $k, $p)
     {
-        return self::combination($n, $k) * pow($p, $k) * pow((1 - $p), ($n - $k));
+        return static::combination($n, $k) * pow($p, $k) * pow((1 - $p), ($n - $k));
     }
 
     /**
@@ -1672,7 +1673,7 @@ class MathUtility
     {
         if ($k > $n)
             return 0;
-        return self::factorial($n) / (self::factorial($k) * self::factorial($n - $k));
+        return static::factorial($n) / (static::factorial($k) * static::factorial($n - $k));
     }
 
     /**
@@ -1702,7 +1703,7 @@ class MathUtility
      */
     public static function poissonDistribution($x, $lambda)
     {
-        return (pow($lambda, $x) * exp(-$lambda)) / self::factorial($x);
+        return (pow($lambda, $x) * exp(-$lambda)) / static::factorial($x);
     }
 
     /**
@@ -1767,9 +1768,9 @@ class MathUtility
      */
     public static function skewness(array $data)
     {
-        $mean = self::mean($data);
+        $mean = static::mean($data);
         $n = count($data);
-        $stdDev = self::standardDeviation($data);
+        $stdDev = static::standardDeviation($data);
         $m3 = array_sum(array_map(function ($value) use ($mean)
         {
             return pow($value - $mean, 3);
@@ -1786,9 +1787,9 @@ class MathUtility
      */
     public static function kurtosis(array $data)
     {
-        $mean = self::mean($data);
+        $mean = static::mean($data);
         $n = count($data);
-        $stdDev = self::standardDeviation($data);
+        $stdDev = static::standardDeviation($data);
         $m4 = array_sum(array_map(function ($value) use ($mean)
         {
             return pow($value - $mean, 4);
@@ -1821,7 +1822,7 @@ class MathUtility
         foreach ($A as $rowA)
         {
             $resultRow = [];
-            foreach (self::transpose($B) as $rowB)
+            foreach (static::transpose($B) as $rowB)
             {
                 $resultRow[] = array_sum(array_map(function ($a, $b)
                 {
@@ -1916,7 +1917,7 @@ class MathUtility
      */
     public static function lcm($a, $b)
     {
-        return abs($a * $b) / self::gcd($a, $b);
+        return abs($a * $b) / static::gcd($a, $b);
     }
 
     /**
@@ -1952,7 +1953,7 @@ class MathUtility
         $primes = [];
         for ($i = 2; $i <= $limit; $i++)
         {
-            if (self::isPrime($i))
+            if (static::isPrime($i))
             {
                 $primes[] = $i;
             }
@@ -1980,7 +1981,7 @@ class MathUtility
         {
             return 1;
         }
-        return self::fibonacci($n - 1) + self::fibonacci($n - 2);
+        return static::fibonacci($n - 1) + static::fibonacci($n - 2);
     }
 
     /**
@@ -2080,7 +2081,7 @@ class MathUtility
      */
     public static function areCoprime($a, $b)
     {
-        return self::gcd($a, $b) === 1;
+        return static::gcd($a, $b) === 1;
     }
 
     /**
@@ -2094,7 +2095,7 @@ class MathUtility
         $perfectNumbers = [];
         for ($num = 1; $num <= $limit; $num++)
         {
-            if (self::sumOfDivisors($num) === 2 * $num)
+            if (static::sumOfDivisors($num) === 2 * $num)
             {
                 $perfectNumbers[] = $num;
             }
@@ -2102,30 +2103,37 @@ class MathUtility
         return $perfectNumbers;
     }
 
-    public static function differentiate($function, $x, $h = 1e-10) {
+    public static function differentiate($function, $x, $h = 1e-10)
+    {
         return ($function($x + $h) - $function($x - $h)) / (2 * $h);
     }
 
-    public static function integrate(array $coefficients) {
+    public static function integrate(array $coefficients)
+    {
         $integral = [];
-        foreach ($coefficients as $power => $coefficient) {
+        foreach ($coefficients as $power => $coefficient)
+        {
             $integral[$power + 1] = $coefficient / ($power + 1);
         }
         $integral[0] = 0; // Constant of integration
         return $integral;
     }
 
-    public static function evaluate(array $coefficients, $x) {
+    public static function evaluate(array $coefficients, $x)
+    {
         $result = 0;
-        foreach ($coefficients as $power => $coefficient) {
+        foreach ($coefficients as $power => $coefficient)
+        {
             $result += $coefficient * pow($x, $power);
         }
         return $result;
     }
 
-    public static function findQuadraticRoots($a, $b, $c) {
+    public static function findQuadraticRoots($a, $b, $c)
+    {
         $discriminant = $b * $b - 4 * $a * $c;
-        if ($discriminant < 0) {
+        if ($discriminant < 0)
+        {
             return []; // No real roots
         }
         $root1 = (-$b + sqrt($discriminant)) / (2 * $a);
@@ -2133,63 +2141,77 @@ class MathUtility
         return [$root1, $root2];
     }
 
-    public static function limit($function, $x, $h = 1e-10) {
+    public static function limit($function, $x, $h = 1e-10)
+    {
         return $function($x); // Direct evaluation for simplicity
     }
 
-    public static function taylorSeries($function, $x, $n) {
+    public static function taylorSeries($function, $x, $n)
+    {
         $result = 0;
-        for ($i = 0; $i < $n; $i++) {
-            $result += ($function(0) / self::factorial($i)) * pow($x, $i);
-            $function = function($x) use ($function) {
-                return self::differentiate($function, $x);
+        for ($i = 0; $i < $n; $i++)
+        {
+            $result += ($function(0) / static::factorial($i)) * pow($x, $i);
+            $function = function ($x) use ($function)
+            {
+                return static::differentiate($function, $x);
             }; // Update function to its derivative
         }
         return $result;
     }
 
-    private static function getCoefficients($function) {
+    private static function getCoefficients($function)
+    {
         // Placeholder for extracting coefficients from a polynomial function
         return [0]; // Replace with actual coefficients based on function
     }
 
-    public static function numericalIntegration($function, $a, $b, $n = 1000) {
+    public static function numericalIntegration($function, $a, $b, $n = 1000)
+    {
         $h = ($b - $a) / $n;
         $sum = 0.5 * ($function($a) + $function($b));
-        for ($i = 1; $i < $n; $i++) {
+        for ($i = 1; $i < $n; $i++)
+        {
             $sum += $function($a + $i * $h);
         }
         return $sum * $h;
     }
 
-    public static function partialDerivative($function, $varIndex, $point, $h = 1e-10) {
+    public static function partialDerivative($function, $varIndex, $point, $h = 1e-10)
+    {
         $pointPlusH = $point;
         $pointPlusH[$varIndex] += $h;
         return ($function(...$pointPlusH) - $function(...$point)) / $h;
     }
 
-    public static function gradient($function, $point, $h = 1e-10) {
+    public static function gradient($function, $point, $h = 1e-10)
+    {
         $grad = [];
-        for ($i = 0; $i < count($point); $i++) {
-            $grad[$i] = self::partialDerivative($function, $i, $point, $h);
+        for ($i = 0; $i < count($point); $i++)
+        {
+            $grad[$i] = static::partialDerivative($function, $i, $point, $h);
         }
         return $grad;
     }
 
-    public static function secondDerivative($function, $x, $h = 1e-10) {
-        return (self::evaluate([$function($x + $h)], $x) - 2 * $function($x) + self::evaluate([$function($x - $h)], $x)) / ($h * $h);
+    public static function secondDerivative($function, $x, $h = 1e-10)
+    {
+        return (static::evaluate([$function($x + $h)], $x) - 2 * $function($x) + static::evaluate([$function($x - $h)], $x)) / ($h * $h);
     }
 
-    public static function findLocalExtrema($function, $x0, $h = 1e-10) {
-        $derivative = self::differentiate($function);
-        while (abs($derivative($x0)) > $h) {
+    public static function findLocalExtrema($function, $x0, $h = 1e-10)
+    {
+        $derivative = static::differentiate($function);
+        while (abs($derivative($x0)) > $h)
+        {
             $x0 -= $derivative($x0) * $h;
         }
         return $x0;
     }
-    
-    public static function areaUnderCurve($function, $a, $b, $n = 1000) {
-        return self::numericalIntegration($function, $a, $b, $n);
+
+    public static function areaUnderCurve($function, $a, $b, $n = 1000)
+    {
+        return static::numericalIntegration($function, $a, $b, $n);
     }
 
     /**

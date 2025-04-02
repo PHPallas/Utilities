@@ -1,7 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
+/*
+ * This file is part of the PHPallas package.
+ *
+ * (c) Sina Kuhestani <sinakuhestani@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 use PHPallas\Utilities\MathUtility;
 use PHPUnit\Framework\TestCase;
 
@@ -823,22 +829,16 @@ final class MathUtilityTest extends TestCase
         $this->assertEquals("Loan 2 is cheaper by 273.86. (Total Cost: 22371.62)", MathUtility::compareLoans(20000, 0.05, 60, 20000, 0.045, 60));
     }
 
-    /**
-     * Test normal case where loan can be paid off with given monthly payment.
-     */
     public function testEstimateLoanPayoffTime()
     {
-        $principal = 10000; // Loan amount
-        $monthlyPayment = 300; // Monthly payment amount
-        $annualRate = 0.05; // Annual interest rate (5%)
+        $principal = 10000;
+        $monthlyPayment = 300;
+        $annualRate = 0.05;
 
         $result = MathUtility::estimateLoanPayoffTime($principal, $monthlyPayment, $annualRate);
-        $this->assertEquals(36, $result); // Expected months to pay off the loan
+        $this->assertEquals(36, $result);
     }
 
-    /**
-     * Test case where the monthly payment is exactly equal to the interest.
-     */
     public function testEstimateLoanPayoffTimeInsufficientPayment()
     {
         $this->expectException(\RuntimeException::class);
@@ -851,24 +851,17 @@ final class MathUtilityTest extends TestCase
         MathUtility::estimateLoanPayoffTime($principal, $monthlyPayment, $annualRate);
     }
 
-    /**
-     * Test case where the monthly payment is zero.
-     */
     public function testEstimateLoanPayoffTimeZeroMonthlyPayment()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Monthly payment must be greater than zero and annual rate cannot be negative.");
-
         $principal = 10000;
-        $monthlyPayment = 0; // Invalid monthly payment
+        $monthlyPayment = 0;
         $annualRate = 0.05;
 
         MathUtility::estimateLoanPayoffTime($principal, $monthlyPayment, $annualRate);
     }
 
-    /**
-     * Test case where the annual rate is negative.
-     */
     public function testEstimateLoanPayoffTimeNegativeAnnualRate()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -876,21 +869,16 @@ final class MathUtilityTest extends TestCase
 
         $principal = 10000;
         $monthlyPayment = 300;
-        $annualRate = -0.05; // Negative annual rate
+        $annualRate = -0.05;
 
         MathUtility::estimateLoanPayoffTime($principal, $monthlyPayment, $annualRate);
     }
 
-    /**
-     * Test case where the loan is paid off in the last month.
-     */
     public function testEstimateLoanPayoffTimeExactLastPayment()
     {
         $principal = 10000;
-        $monthlyPayment = 300; // Monthly payment amount
+        $monthlyPayment = 300;
         $annualRate = 0.05;
-
-        // This scenario should result in 34 months, with the last payment covering the remaining balance
         $result = MathUtility::estimateLoanPayoffTime($principal, $monthlyPayment, $annualRate);
         $this->assertEquals(36, $result);
     }

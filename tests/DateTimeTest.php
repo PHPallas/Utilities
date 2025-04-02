@@ -1,7 +1,15 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+/*
+ * This file is part of the PHPallas package.
+ *
+ * (c) Sina Kuhestani <sinakuhestani@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+use PHPUnit\Framework\TestCase;
 use PHPallas\Utilities\DateTime;
 
 final class DateTimeTest extends TestCase
@@ -11,6 +19,7 @@ final class DateTimeTest extends TestCase
         $this->assertSame(["y" => 2025, "m" => 3, "d" => 31], DateTime::getComponents(1743457259, 0));
         $this->assertSame(["y" => 1404, "m" => 1, "d" => 12],DateTime::getComponents(1743457259, 1));
     }
+    
     public function testHijriLeap()
     {
         $leaps = [

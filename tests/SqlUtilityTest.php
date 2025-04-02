@@ -1,18 +1,26 @@
-<?php declare(strict_types=1);
+<?php
+
+/*
+ * This file is part of the PHPallas package.
+ *
+ * (c) Sina Kuhestani <sinakuhestani@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 use PHPallas\Utilities\SqlUtility;
 use PHPallas\Utilities\StringUtility;
 use PHPUnit\Framework\TestCase;
 
-
 final class SqlUtilityTest extends TestCase
 {
     public function testDelete()
     {
-        $tables = ["users", "customers"];
-        $datbases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+        $tables = ["users", "customers",];
+        $datbases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,];
         $aliases = [null, "tableAlias"];
-        $limits = [null, 100];
+        $limits = [null, 100,];
         $orders = [
             [],
             [
@@ -40,7 +48,7 @@ final class SqlUtilityTest extends TestCase
                     ["@p:name", "!l", "rob%"],
                     "or",
                     [18, "<", "@p:age"]
-                ]
+                ],
             ],
             [
                 ["@p:id", "<", 120],
@@ -51,7 +59,7 @@ final class SqlUtilityTest extends TestCase
                     [18, "<", "@p:age"],
                     "or",
                     [48, ">", "@p:age"],
-                ]
+                ],
             ],
             [
                 ["@p:id", "<", 120],
@@ -60,7 +68,7 @@ final class SqlUtilityTest extends TestCase
                     ["@p:name", "!l", "rob%"],
                     "or",
                     ["age", "between", 18, 48],
-                ]
+                ],
             ],
             [
                 ["@p:id", "<", 120],
@@ -69,41 +77,56 @@ final class SqlUtilityTest extends TestCase
                     ["@p:name", "not like", "rob%"],
                     "or",
                     ["age", "in", 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32],
-                ]
+                ],
             ]
         ];
-        foreach ($wheres as $whereIndex => $where) {
-            foreach ($orders as $orderIndex => $order) {
-                foreach ($limits as $limit) {
-                    foreach ($aliases as $alias) {
-                        foreach ($datbases as $database) {
-                            foreach ($tables as $table) {
+        foreach ($wheres as $whereIndex => $where)
+        {
+            foreach ($orders as $orderIndex => $order)
+            {
+                foreach ($limits as $limit)
+                {
+                    foreach ($aliases as $alias)
+                    {
+                        foreach ($datbases as $database)
+                        {
+                            foreach ($tables as $table)
+                            {
                                 $params = [];
                                 $limitText = "";
                                 $aliasText = "";
                                 $orderText = "";
                                 $whereText = "";
-                                if (1 === $whereIndex) {
+                                if (1 === $whereIndex)
+                                {
                                     $whereText = " WHERE (id < :id)";
                                     $params[":id"] = 120;
-                                } elseif (2 === $whereIndex) {
+                                }
+                                elseif (2 === $whereIndex)
+                                {
                                     $whereText = " WHERE (id < :id) AND ((name NOT LIKE :name) OR (:age < age))";
                                     $params[":id"] = 120;
                                     $params[":name"] = "rob%";
                                     $params[":age"] = 18;
-                                } elseif (3 === $whereIndex) {
+                                }
+                                elseif (3 === $whereIndex)
+                                {
                                     $whereText = " WHERE (id < :id) AND ((name NOT LIKE :name) OR (:age < age) OR (:age2 > age))";
                                     $params[":id"] = 120;
                                     $params[":name"] = "rob%";
                                     $params[":age"] = 18;
                                     $params[":age2"] = 48;
-                                } elseif (4 === $whereIndex) {
+                                }
+                                elseif (4 === $whereIndex)
+                                {
                                     $whereText = " WHERE (id < :id) AND ((name NOT LIKE :name) OR (age BETWEEN :age AND :age2))";
                                     $params[":id"] = 120;
                                     $params[":name"] = "rob%";
                                     $params[":age"] = 18;
                                     $params[":age2"] = 48;
-                                } elseif (5 === $whereIndex) {
+                                }
+                                elseif (5 === $whereIndex)
+                                {
                                     $whereText = " WHERE (id < :id) AND ((name NOT LIKE :name) OR (age IN (:age,:age2,:age3,:age4,:age5,:age6,:age7,:age8,:age9,:age10,:age11,:age12,:age13,:age14,:age15)))";
                                     $params[":id"] = 120;
                                     $params[":name"] = "rob%";
@@ -123,8 +146,10 @@ final class SqlUtilityTest extends TestCase
                                     $params[":age14"] = 31;
                                     $params[":age15"] = 32;
                                 }
-                                if (null !== $order && in_array($database, [8, 9, 11, 12])) {
-                                    switch ($orderIndex) {
+                                if (null !== $order && in_array($database, [8, 9, 11, 12]))
+                                {
+                                    switch ($orderIndex)
+                                    {
                                         case 1:
                                             $orderText = " ORDER BY name ASC, id DESC";
                                             break;
@@ -136,22 +161,14 @@ final class SqlUtilityTest extends TestCase
                                             break;
                                     }
                                 }
-                                if (null !== $limit && in_array($database, [7, 8, 9, 11, 12])) {
+                                if (null !== $limit && in_array($database, [7, 8, 9, 11, 12]))
+                                {
                                     $limitText = " LIMIT $limit";
                                 }
-                                if (null !== $alias) {
+                                if (null !== $alias)
+                                {
                                     $aliasText = " AS $alias";
                                 }
-                                // echo <<<EOT
-                                // ========================================================
-                                // table = $table
-                                // database = $database
-                                // alias = $alias
-                                // limit = $limit
-                                // order = $orderIndex
-                                // where = $whereIndex
-
-                                // EOT;
                                 $sql = "DELETE FROM " . $table . $aliasText . $whereText . $orderText . $limitText;
                                 $sql = StringUtility::dropFromEnd($sql, " ");
                                 $expected = [
@@ -167,40 +184,46 @@ final class SqlUtilityTest extends TestCase
             }
         }
     }
+
     public function testInsert()
     {
-        $tables = ["users", "customers"];
-        $databases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-        $ignores = [false, true];
+        $tables = ["users", "customers",];
+        $databases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,];
+        $ignores = [false, true,];
         $valueCases = [
             [
                 "name" => "john",
-                "surname" => "doe"
+                "surname" => "doe",
             ],
             [
                 [
                     "id" => 1,
-                    "job" => "teacher"
+                    "job" => "teacher",
                 ],
                 [
                     "id" => 2,
-                    "job" => "student"
-                ]
+                    "job" => "student",
+                ],
             ]
         ];
-        $returns = [true, false];
-        foreach ($returns as $return) {
-            foreach ($databases as $database) {
-
-                foreach ($ignores as $ignore) {
+        $returns = [true, false,];
+        foreach ($returns as $return)
+        {
+            foreach ($databases as $database)
+            {
+                foreach ($ignores as $ignore)
+                {
                     $insert = "INSERT INTO";
-                    if (true === $ignore && in_array($database, [8, 9, 12])) {
+                    if (true === $ignore && in_array($database, [8, 9, 12,]))
+                    {
                         $insert = "INSERT IGNORE INTO";
                         if (12 === $database)
                             $insert = "INSERT OR IGNORE INTO";
                     }
-                    foreach ($valueCases as $valueIndex => $values) {
-                        switch ($valueIndex) {
+                    foreach ($valueCases as $valueIndex => $values)
+                    {
+                        switch ($valueIndex)
+                        {
                             case 0:
                                 $valuesList = "(:name, :surname)";
                                 $fieldNames = "(name, surname)";
@@ -220,33 +243,50 @@ final class SqlUtilityTest extends TestCase
                                 ];
                                 break;
                         }
-                        foreach ($tables as $table) {
+                        foreach ($tables as $table)
+                        {
                             $outputPhrase = "";
                             $returnPhrase = "";
                             $attachedSQL = "";
-                            if (true === $return) {
-                                if (in_array($database, [3, 4, 14])) {
-                                    if (0 === $valueIndex) {
+                            if (true === $return)
+                            {
+                                if (in_array($database, [3, 4, 14]))
+                                {
+                                    if (0 === $valueIndex)
+                                    {
                                         $outputPhrase = " OUTPUT INSERTED.name,INSERTED.surname";
-                                    } else if (1 === $valueIndex) {
+                                    }
+                                    else if (1 === $valueIndex)
+                                    {
                                         $outputPhrase = " OUTPUT INSERTED.id,INSERTED.job";
                                     }
-                                } elseif (in_array($database, [5, 6, 7, 11, 12])) {
-                                    if (0 === $valueIndex) {
+                                }
+                                elseif (in_array($database, [5, 6, 7, 11, 12]))
+                                {
+                                    if (0 === $valueIndex)
+                                    {
                                         $returnPhrase = " RETURNING name, surname";
-                                    } else if (1 === $valueIndex) {
+                                    }
+                                    else if (1 === $valueIndex)
+                                    {
                                         $returnPhrase = " RETURNING id, job";
                                     }
-                                } elseif (in_array($database, [8, 9])) {
-                                    if (0 === $valueIndex) {
+                                }
+                                elseif (in_array($database, [8, 9]))
+                                {
+                                    if (0 === $valueIndex)
+                                    {
                                         $attachedSQL = " SELECT name, surname FROM $table WHERE id = LAST_INSERT_ID();";
-                                    } else if (1 === $valueIndex) {
+                                    }
+                                    else if (1 === $valueIndex)
+                                    {
                                         $attachedSQL = " SELECT id, job FROM $table WHERE id = LAST_INSERT_ID();";
                                     }
                                 }
                             }
                             $sql = "$insert $table $fieldNames$outputPhrase VALUES $valuesList$returnPhrase";
-                            if ($ignore && 11 === $database) {
+                            if ($ignore && 11 === $database)
+                            {
                                 $sql .= " ON CONFLICT DO NOTHING";
                             }
                             $expected = [
@@ -260,16 +300,11 @@ final class SqlUtilityTest extends TestCase
                 }
             }
         }
-
-
-
-
     }
+
     public function testUpdate()
     {
         $tables = ["users", "customers"];
-        $databases = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-        $ignores = [false, true];
         $valueCases = [
             [
                 "name" => "john",
@@ -280,7 +315,6 @@ final class SqlUtilityTest extends TestCase
                 "job" => "teacher"
             ]
         ];
-        $returns = [true, false];
         $wheres = [
             [],
             [
@@ -293,7 +327,7 @@ final class SqlUtilityTest extends TestCase
                     ["@p:name", "!l", "rob%"],
                     "or",
                     [18, "<", "@p:age"]
-                ]
+                ],
             ],
             [
                 ["@p:id", "<", 120],
@@ -304,7 +338,7 @@ final class SqlUtilityTest extends TestCase
                     [18, "<", "@p:age"],
                     "or",
                     [48, ">", "@p:age"],
-                ]
+                ],
             ],
             [
                 ["@p:id", "<", 120],
@@ -313,7 +347,7 @@ final class SqlUtilityTest extends TestCase
                     ["@p:name", "!l", "rob%"],
                     "or",
                     ["age", "between", 18, 48],
-                ]
+                ],
             ],
             [
                 ["@p:id", "<", 120],
@@ -322,21 +356,27 @@ final class SqlUtilityTest extends TestCase
                     ["@p:name", "not like", "rob%"],
                     "or",
                     ["age", "in", 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32],
-                ]
+                ],
             ]
         ];
-        foreach ($wheres as $whereIndex => $where) {
-            foreach ($valueCases as $valueIndex => $values) {
-                foreach ($tables as $table) {
+        foreach ($wheres as $whereIndex => $where)
+        {
+            foreach ($valueCases as $valueIndex => $values)
+            {
+                foreach ($tables as $table)
+                {
                     $setPhrase = "";
                     $params = [];
-                    if (0 === $valueIndex) {
+                    if (0 === $valueIndex)
+                    {
                         $setPhrase = "SET name = :name, surname = :surname";
                         $params = [
                             ":name" => "john",
                             ":surname" => "doe"
                         ];
-                    } else if (1 === $valueIndex) {
+                    }
+                    else if (1 === $valueIndex)
+                    {
                         $setPhrase = "SET id = :id, job = :job";
                         $params = [
                             ":id" => 1,
@@ -345,26 +385,33 @@ final class SqlUtilityTest extends TestCase
                     }
                     $wherePhrase = "";
                     $whereParams = [];
-                    switch ($whereIndex) {
+                    switch ($whereIndex)
+                    {
                         case 0:
                             $wherePhrase = "";
                             break;
                         case 1:
-                            if (0 === $valueIndex) {
+                            if (0 === $valueIndex)
+                            {
                                 $whereParams[":id"] = 120;
                                 $wherePhrase = " WHERE (id < :id)";
-                            } else if (1 === $valueIndex) {
+                            }
+                            else if (1 === $valueIndex)
+                            {
                                 $whereParams[":id2"] = 120;
                                 $wherePhrase = " WHERE (id < :id2)";
                             }
                             break;
                         case 2:
-                            if (0 === $valueIndex) {
+                            if (0 === $valueIndex)
+                            {
                                 $whereParams[":id"] = 120;
                                 $whereParams[":name2"] = "rob%";
                                 $whereParams[":age"] = 18;
                                 $wherePhrase = " WHERE (id < :id) AND ((name NOT LIKE :name2) OR (:age < age))";
-                            } else if (1 === $valueIndex) {
+                            }
+                            else if (1 === $valueIndex)
+                            {
                                 $whereParams[":id2"] = 120;
                                 $whereParams[":name"] = "rob%";
                                 $whereParams[":age"] = 18;
@@ -372,13 +419,16 @@ final class SqlUtilityTest extends TestCase
                             }
                             break;
                         case 3:
-                            if (0 === $valueIndex) {
+                            if (0 === $valueIndex)
+                            {
                                 $whereParams[":id"] = 120;
                                 $whereParams[":name2"] = "rob%";
                                 $whereParams[":age"] = 18;
                                 $whereParams[":age2"] = 48;
                                 $wherePhrase = " WHERE (id < :id) AND ((name NOT LIKE :name2) OR (:age < age) OR (:age2 > age))";
-                            } else if (1 === $valueIndex) {
+                            }
+                            else if (1 === $valueIndex)
+                            {
                                 $whereParams[":id2"] = 120;
                                 $whereParams[":name"] = "rob%";
                                 $whereParams[":age"] = 18;
@@ -387,13 +437,16 @@ final class SqlUtilityTest extends TestCase
                             }
                             break;
                         case 4:
-                            if (0 === $valueIndex) {
+                            if (0 === $valueIndex)
+                            {
                                 $whereParams[":id"] = 120;
                                 $whereParams[":name2"] = "rob%";
                                 $whereParams[":age"] = 18;
                                 $whereParams[":age2"] = 48;
                                 $wherePhrase = " WHERE (id < :id) AND ((name NOT LIKE :name2) OR (age BETWEEN :age AND :age2))";
-                            } else if (1 === $valueIndex) {
+                            }
+                            else if (1 === $valueIndex)
+                            {
                                 $whereParams[":id2"] = 120;
                                 $whereParams[":name"] = "rob%";
                                 $whereParams[":age"] = 18;
@@ -402,7 +455,8 @@ final class SqlUtilityTest extends TestCase
                             }
                             break;
                         case 5:
-                            if (0 === $valueIndex) {
+                            if (0 === $valueIndex)
+                            {
                                 $whereParams[":id"] = 120;
                                 $whereParams[":name2"] = "rob%";
                                 $whereParams[":age"] = 18;
@@ -421,7 +475,9 @@ final class SqlUtilityTest extends TestCase
                                 $whereParams[":age14"] = 31;
                                 $whereParams[":age15"] = 32;
                                 $wherePhrase = " WHERE (id < :id) AND ((name NOT LIKE :name2) OR (age IN (:age,:age2,:age3,:age4,:age5,:age6,:age7,:age8,:age9,:age10,:age11,:age12,:age13,:age14,:age15)))";
-                            } else if (1 === $valueIndex) {
+                            }
+                            else if (1 === $valueIndex)
+                            {
                                 $whereParams[":id2"] = 120;
                                 $whereParams[":name"] = "rob%";
                                 $whereParams[":age"] = 18;
@@ -454,9 +510,8 @@ final class SqlUtilityTest extends TestCase
                 }
             }
         }
-
-
     }
+
     public function testSelect()
     {
         $fieldsSet = [
@@ -608,24 +663,35 @@ final class SqlUtilityTest extends TestCase
             "",
             " HAVING (COUNT(CustomerID) > 5)"
         ];
-        foreach ($havings as $havingIndex => $having) {
+        foreach ($havings as $havingIndex => $having)
+        {
             $havingPhrase = $havingPhrases[$havingIndex];
-            foreach ($joinsSet as $joinIndex => $joins) {
+            foreach ($joinsSet as $joinIndex => $joins)
+            {
                 $joinPhrase = $joinPhrases[$joinIndex];
-                foreach ($groups as $groupIndex => $group) {
+                foreach ($groups as $groupIndex => $group)
+                {
                     $groupingPhrase = $groupPhrases[$groupIndex];
-                    foreach ($orders as $orderIndex => $order) {
+                    foreach ($orders as $orderIndex => $order)
+                    {
                         $orderPhrase = $orderPhrases[$orderIndex];
-                        foreach ($fieldsSet as $fieldsIndex => $fields) {
+                        foreach ($fieldsSet as $fieldsIndex => $fields)
+                        {
                             $fieldsPhrase = $fieldsPhrases[$fieldsIndex];
-                            foreach ($tables as $table) {
-                                foreach ($wheres as $whereIndex => $where) {
-                                    foreach ($limits as $limit) {
-                                        foreach ($databases as $database) {
-                                            foreach ($distincts as $distinct) {
+                            foreach ($tables as $table)
+                            {
+                                foreach ($wheres as $whereIndex => $where)
+                                {
+                                    foreach ($limits as $limit)
+                                    {
+                                        foreach ($databases as $database)
+                                        {
+                                            foreach ($distincts as $distinct)
+                                            {
                                                 $params = [];
                                                 $whereClause = "";
-                                                switch ($whereIndex) {
+                                                switch ($whereIndex)
+                                                {
                                                     case 0;
                                                         $whereClause = "";
                                                         $params = [];
@@ -684,14 +750,19 @@ final class SqlUtilityTest extends TestCase
                                                             ':age15' => 32,
                                                         ];
                                                         break;
-
                                                 }
+
                                                 $select = "SELECT";
-                                                if (true === $distinct) {
+
+                                                if (true === $distinct)
+                                                {
                                                     $select = "SELECT DISTINCT";
                                                 }
-                                                if ($limit) {
-                                                    switch ($database) {
+
+                                                if ($limit)
+                                                {
+                                                    switch ($database)
+                                                    {
                                                         case 1:
                                                         case 5:
                                                         case 7:
@@ -718,7 +789,9 @@ final class SqlUtilityTest extends TestCase
                                                             $sql = "$select $fieldsPhrase FROM $table$joinPhrase$whereClause$groupingPhrase$havingPhrase$orderPhrase;";
                                                             break;
                                                     }
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     $sql = "$select $fieldsPhrase FROM $table$joinPhrase$whereClause$groupingPhrase$havingPhrase$orderPhrase;";
                                                 }
 
