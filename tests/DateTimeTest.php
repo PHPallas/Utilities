@@ -18,6 +18,10 @@ final class DateTimeTest extends TestCase
     {
         $this->assertSame(["y" => 2025, "m" => 3, "d" => 31], DateTime::getComponents(1743457259, 0));
         $this->assertSame(["y" => 1404, "m" => 1, "d" => 12],DateTime::getComponents(1743457259, 1));
+        $this->assertSame(["y" => 1446, "m" => 10, "d" => 4],DateTime::getComponents(1743457259, 2));
+        $this->assertSame(["y" => 1446, "m" => 9, "d" => 30],DateTime::getComponents(1743111659, 2));
+        $this->assertSame(["y" => 1404, "m" => 1, "d" => 8],DateTime::getComponents(1743111659, 1));
+        $this->assertSame(["y" => 2025, "m" => 3, "d" => 27],DateTime::getComponents(1743111659, 0));
     }
     
     public function testHijriLeap()
