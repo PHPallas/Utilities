@@ -480,6 +480,1576 @@ $result => "Hello_World";
 | [TypesUtility::toObject](dddddd#TypesUtilitytoObject) | Convert a variable to an object. |
 
 
+## ArrayUtility
+
+
+
+
+
+* Full name: \PHPallas\Utilities\ArrayUtility
+
+
+### ArrayUtility::create
+
+Creates an array of given elements
+
+```php
+ArrayUtility::create(  ): array
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createRandom
+
+Creates an array of randon numbers between 1 and 100.
+
+```php
+ArrayUtility::createRandom( int size ): int[]
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `size` | **int** | Length of array |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createRange
+
+Creates an array containing a range of float or integer numericals
+
+```php
+ArrayUtility::createRange( float|int min, float|int max, float|int step = 1 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **float\|int** | The minimum value in the array |
+| `max` | **float\|int** | The maximum value in the array |
+| `step` | **float\|int** | Indicates by how much is the produced sequence
+progressed between values of the sequence. step may be negative for
+decreasing sequences |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createByValue
+
+Creates an one dimension array of given size includes elements with
+similar value
+
+```php
+ArrayUtility::createByValue( int size, mixed value ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `size` | **int** | Count of array elements |
+| `value` | **mixed** | value of array elements |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createZeroArray
+
+Creates an one dimension array of given size that all elements are zero.
+
+```php
+ArrayUtility::createZeroArray( int size ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `size` | **int** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createNullArray
+
+Createss an one dimension array of given size that all elements are null.
+
+```php
+ArrayUtility::createNullArray( int size ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `size` | **int** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createEmpty
+
+Creates an empty array
+
+```php
+ArrayUtility::createEmpty(  ): array
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createByKeys
+
+Creates an array with given keys, all elements have similar value
+
+```php
+ArrayUtility::createByKeys( array keys, mixed value ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `keys` | **array** |  |
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createMatrixArray
+
+Creates a two dimension array of given rows and columns that all elements
+are equal to given value.
+
+```php
+ArrayUtility::createMatrixArray( int columnsCount, int rowsCount, mixed value ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `columnsCount` | **int** | Number of matrix columns |
+| `rowsCount` | **int** | Number of matrix rows |
+| `value` | **mixed** | Value of matrix elements |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createTableArray
+
+Creates a two dimension array of given rows and column names that all
+elements  are of equal value.
+
+```php
+ArrayUtility::createTableArray( array columns, int rowsCount, mixed value ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `columns` | **array** | An array of table head keys |
+| `rowsCount` | **int** | Number of rows |
+| `value` | **mixed** | Value of cells |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::createPairs
+
+Creates an `array` by using the values from the `keys` array as keys and
+the values from the `values` array as the corresponding values.
+
+```php
+ArrayUtility::createPairs( array keys, array values ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `keys` | **array** |  |
+| `values` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::get
+
+Get array items, supporting dot notation
+
+```php
+ArrayUtility::get( array &array, string path, mixed default = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `path` | **string** |  |
+| `default` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getKeys
+
+Get all keys of an array
+
+```php
+ArrayUtility::getKeys( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getFirstKey
+
+Gets the first key of an array
+
+```php
+ArrayUtility::getFirstKey( array array ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getLastKey
+
+Gets the last key of an array
+
+```php
+ArrayUtility::getLastKey( array array ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getFirst
+
+Gets the first element of an array
+
+```php
+ArrayUtility::getFirst( array array ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getLast
+
+Gets the last element of an array
+
+```php
+ArrayUtility::getLast( array array ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getSubset
+
+Get a subset of an array by giving keys
+
+```php
+ArrayUtility::getSubset( array array, array keys ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `keys` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getColumns
+
+Get a subset of two-dimensions array by keys
+
+```php
+ArrayUtility::getColumns( array array, array columns ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `columns` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::getFiltered
+
+Get a subset of array elements using a callback filter function
+
+```php
+ArrayUtility::getFiltered( array array, callable function ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `function` | **callable** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::set
+
+Set array items, supporting dot notation
+
+```php
+ArrayUtility::set( array &array, string path, mixed value ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `path` | **string** |  |
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::has
+
+Check if an array includes a given value
+
+```php
+ArrayUtility::has( array array, mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::hasKey
+
+Checks if the given key or index exists in the array
+
+```php
+ArrayUtility::hasKey( array array, int|string key ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `key` | **int\|string** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::add
+
+An acronym to addToEnd()
+
+```php
+ArrayUtility::add(  ): array
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::addToEnd
+
+Append elements into the end of an array
+
+```php
+ArrayUtility::addToEnd( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::addToStart
+
+Prepend elements into the start of an array
+
+```php
+ArrayUtility::addToStart( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::dropFromStart
+
+Drop n first element(s) of an array
+
+```php
+ArrayUtility::dropFromStart( array array, int count = 1 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `count` | **int** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::dropFirst
+
+Drop the forst element of an array
+
+```php
+ArrayUtility::dropFirst( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::dropFromEnd
+
+Drop n last element(s) of an array
+
+```php
+ArrayUtility::dropFromEnd( array array, int count = 1 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `count` | **int** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::dropLast
+
+Drops the last element from an array
+
+```php
+ArrayUtility::dropLast( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::dropKey
+
+Drops an element from an array by key, supporting dot notation
+
+```php
+ArrayUtility::dropKey( array &array, mixed key, bool reIndex = true ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `key` | **mixed** |  |
+| `reIndex` | **bool** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::drop
+
+Drops all elements of an array that has a value equal to the given value
+
+```php
+ArrayUtility::drop( array array, mixed value, bool reIndex = true ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `value` | **mixed** |  |
+| `reIndex` | **bool** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::transform
+
+Applies a transform callable to all elements of an array
+
+```php
+ArrayUtility::transform( array array, callable function ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `function` | **callable** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::transformToUppercaseKeys
+
+Transform the case of all keys in an array to the UPPER_CASE
+
+```php
+ArrayUtility::transformToUppercaseKeys( mixed array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::transformToLowercaseKeys
+
+Transform the case of all keys in an array to lower_case
+
+```php
+ArrayUtility::transformToLowercaseKeys( mixed array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::transformToLowercase
+
+Transform all elements of an array to lower_case
+
+```php
+ArrayUtility::transformToLowercase( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::transformToUppercase
+
+Transform all elements of an array to UPPER_CASE
+
+```php
+ArrayUtility::transformToUppercase( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::transformFlip
+
+Exchanges all keys with their associated values in an array
+
+```php
+ArrayUtility::transformFlip( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isAssociative
+
+Checks if an array is associative
+
+```php
+ArrayUtility::isAssociative( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isEmpty
+
+Checks if an array is empty
+
+```php
+ArrayUtility::isEmpty( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isSameAs
+
+Compare two arrays and check if are same
+
+```php
+ArrayUtility::isSameAs( array array1, array array2, bool strict = false ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array1` | **array** |  |
+| `array2` | **array** |  |
+| `strict` | **bool** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isEligibleTo
+
+Checks a condition against all element of an array
+
+```php
+ArrayUtility::isEligibleTo( array array, callable function ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `function` | **callable** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isString
+
+Checks if an array elements all are string
+
+```php
+ArrayUtility::isString( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isBoolean
+
+Checks if an array elements all are boolean
+
+```php
+ArrayUtility::isBoolean( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isCallable
+
+Checks if an array elements all are callable
+
+```php
+ArrayUtility::isCallable( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isCountable
+
+Checks if an array elements all are countable
+
+```php
+ArrayUtility::isCountable( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isIterable
+
+Checks if an array elements all are iterable
+
+```php
+ArrayUtility::isIterable( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isNumeric
+
+Checks if an array elements all are numeric
+
+```php
+ArrayUtility::isNumeric( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isScalar
+
+Checks if an array elements all are scalar
+
+```php
+ArrayUtility::isScalar( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isFloat
+
+Checks if an array elements all are float
+
+```php
+ArrayUtility::isFloat( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isNull
+
+Checks if an array elements all are null
+
+```php
+ArrayUtility::isNull( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isObject
+
+Checks if an array elements all are object
+
+```php
+ArrayUtility::isObject( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isArray
+
+Checks if an array elements all are array
+
+```php
+ArrayUtility::isArray( array array ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::isInstanceOf
+
+Checks if an array elements all are of given class
+
+```php
+ArrayUtility::isInstanceOf( array array, mixed class ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `class` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::estimateSize
+
+Get total number of elements inside an array
+
+```php
+ArrayUtility::estimateSize( array array ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::estimateCounts
+
+Get count of distinct values inside an array
+
+```php
+ArrayUtility::estimateCounts( array array ): int[]
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::estimateSum
+
+Calculate the sum of values in an array
+
+```php
+ArrayUtility::estimateSum( array array ): float|int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::merge
+
+Merge one or more arrays
+
+```php
+ArrayUtility::merge(  ): array
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::mergeInDepth
+
+Merge one or more arrays recursively
+
+```php
+ArrayUtility::mergeInDepth(  ): array
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::split
+
+Split an array into chunks
+
+```php
+ArrayUtility::split( array array, int size, bool isAssoc = false ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `size` | **int** |  |
+| `isAssoc` | **bool** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::sort
+
+Sort elements of an array
+
+```php
+ArrayUtility::sort( array array, mixed sortByKeys = false, mixed descending = false, mixed isAssoc = false ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+| `sortByKeys` | **mixed** |  |
+| `descending` | **mixed** |  |
+| `isAssoc` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### ArrayUtility::sortRandom
+
+Shuffles (randomizes the order of the elements in) an array.
+
+```php
+ArrayUtility::sortRandom( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+
 ## Contributing
 
 We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to get involved.
