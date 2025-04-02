@@ -27,7 +27,7 @@ class TypesUtility
      */
     public static function getType($value)
     {
-        return gettype($value);
+        return StringUtility::transformToLowercase(gettype($value));
     }
 
     /**
@@ -71,13 +71,18 @@ class TypesUtility
      */
     public static function isCountable($value)
     {
-        if (function_exists("is_countable")) {
+        if (function_exists("is_countable"))
+        {
             return is_countable($value); // Since PHP 7.3.0
-        } else {
-            if (is_array($value)) {
+        }
+        else
+        {
+            if (is_array($value))
+            {
                 return true;
             }
-            if (is_object($value)) {
+            if (is_object($value))
+            {
                 return method_exists($value, 'count');
             }
             return false;
@@ -114,13 +119,18 @@ class TypesUtility
      */
     public static function isIterable($value)
     {
-        if (function_exists("is_iterable")) {
+        if (function_exists("is_iterable"))
+        {
             return is_iterable($value); // Since PHP 7.1.0
-        } else {
-            if (is_array($value)) {
+        }
+        else
+        {
+            if (is_array($value))
+            {
                 return true;
             }
-            if (is_object($value)) {
+            if (is_object($value))
+            {
                 return method_exists($value, 'rewind') &&
                     method_exists($value, 'current') &&
                     method_exists($value, 'key') &&
@@ -207,9 +217,11 @@ class TypesUtility
     public static function to($variable, $targetType)
     {
         $currentType = StringUtility::transformToLowercase(static::getType($variable));
-        switch (StringUtility::transformToLowercase($targetType)) {
+        switch (StringUtility::transformToLowercase($targetType))
+        {
             case "string":
-                switch ($currentType) {
+                switch ($currentType)
+                {
                     case "int":
                     case "long":
                     case "integer":
@@ -231,7 +243,8 @@ class TypesUtility
             case "int":
             case "long":
             case "integer":
-                switch ($currentType) {
+                switch ($currentType)
+                {
                     case "string":
                     case "float":
                     case "double":
@@ -244,7 +257,8 @@ class TypesUtility
                 }
             case "float":
             case "double":
-                switch ($currentType) {
+                switch ($currentType)
+                {
                     case "string":
                     case "int":
                     case "integer":
@@ -258,7 +272,8 @@ class TypesUtility
                 }
             case "bool":
             case "boolean":
-                switch ($currentType) {
+                switch ($currentType)
+                {
                     case "string":
                         return "" === $variable ? false : true;
                     case "int":
@@ -271,7 +286,8 @@ class TypesUtility
                         return $variable;
                 }
             case "array":
-                switch ($currentType) {
+                switch ($currentType)
+                {
                     case "int":
                     case "long":
                     case "integer":
@@ -279,6 +295,7 @@ class TypesUtility
                     case "double":
                     case "bool":
                     case "boolean":
+                    case "string":
                         return [$variable];
                     case "object":
                         if (method_exists($variable, "toArray"))

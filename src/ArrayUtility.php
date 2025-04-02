@@ -14,16 +14,6 @@ namespace PHPallas\Utilities;
 class ArrayUtility
 {
 
-    # --------------------------------------------------------------------------
-    # Creational Methods
-    # --------------------------------------------------------------------------
-    #   Use this methods to create an array.
-    #
-    #   Contributing Roles:
-    #   [1]. All creational methods MUST starts in create and follow a camelCase
-    #        naming standard.
-    # --------------------------------------------------------------------------
-
     /**
      * Creates an array of given elements
      * @param mixed[] $elements The elements of the array
@@ -158,7 +148,6 @@ class ArrayUtility
         $value
     ) {
         return static::createByValue($rowsCount, static::createByKeys($columns, $value));
-
     }
 
     /**
@@ -1019,53 +1008,4 @@ class ArrayUtility
         shuffle($array);
         return $array;
     }
-
-    /**
-     * Export an array to a csv format
-     * @param array $array
-     * @return string
-     */
-    // public static function toCSV($array, string $delimiter = ","): string
-    // {
-    //     $csv = implode($delimiter,static::getKeys($array));
-    //     foreach ($array as $row)
-    //     {
-    //         $csv .= "\n" . implode($delimiter, $row);
-    //     }
-    //     return $csv;
-    // }
-
-    /**
-     * Import a CSV data into an array
-     * @param string $csv
-     * @return bool|string[]
-     */
-    // public static function fromCSV(string $csv, string $separator)
-    // {
-    //     $array = explode("\n", $csv);
-    //     foreach ($array as &$row) {
-    //         $row = explode($separator, $row);
-    //     }
-    //     return $array;
-    // }
-
-    /**
-     * Export an  array into a Json
-     * @param array $array
-     * @return bool|string
-     */
-    // public static function toJson($array): string
-    // {
-    //     return json_encode($array);
-    // }
-
-    /**
-     * Import a json string data into an array
-     * @param string $json
-     * @return array
-     */
-    // public static function fromJson(string $json)
-    // {
-    //     return json_decode($json, true, 2147483647, JSON_OBJECT_AS_ARRAY);
-    // }
 }
