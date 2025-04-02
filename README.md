@@ -6954,6 +6954,3034 @@ Polyfill::password_hash( mixed password, mixed algo = PASSWORD_DEFAULT, array op
 
 ---
 
+
+## SqlUtility
+
+
+
+
+
+* Full name: \PHPallas\Utilities\SqlUtility
+
+
+### SqlUtility::selectQuery
+
+selectQuery is a versatile function that dynamically builds a SQL SELECT
+statement based on the provided parameters. It handles various SQL syntax
+differences across multiple database systems, ensuring that the correct
+syntax is used for limiting results, grouping, ordering, and filtering
+data. The method is designed to be flexible and reusable for different
+database interactions.
+
+```php
+SqlUtility::selectQuery( string|array table, string|array|null fields = "*", mixed joins = [], array where = [], array order = [], array group = [], array having = [], mixed limit = null, int database = 9, mixed distinct = false ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `table` | **string\|array** |  |
+| `fields` | **string\|array\|null** |  |
+| `joins` | **mixed** |  |
+| `where` | **array** |  |
+| `order` | **array** |  |
+| `group` | **array** |  |
+| `having` | **array** |  |
+| `limit` | **mixed** |  |
+| `database` | **int** |  |
+| `distinct` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::updateQuery
+
+The updateQuery method is a flexible function that constructs a SQL
+UPDATE statement dynamically based on the provided parameters. It handles
+the creation of the SET and WHERE clauses, ensuring proper parameter
+binding to prevent SQL injection. This method is designed to be reusable
+for updating rows in different tables with varying conditions.
+
+```php
+SqlUtility::updateQuery( string table, array values, array where, mixed return = false, mixed limit = null, mixed database = 9 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `table` | **string** |  |
+| `values` | **array** |  |
+| `where` | **array** |  |
+| `return` | **mixed** |  |
+| `limit` | **mixed** |  |
+| `database` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::deleteQuery
+
+The deleteQuery method is a straightforward function that constructs a
+SQL DELETE statement dynamically based on the provided parameters. It
+builds the WHERE clause to specify which rows to delete, ensuring proper
+parameter binding to prevent SQL injection. This method is designed to be
+reusable for deleting records from different tables based on various
+conditions.
+
+```php
+SqlUtility::deleteQuery( string table, array where = [], mixed order = [], mixed limit = null, mixed alias = null, mixed database = 9 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `table` | **string** |  |
+| `where` | **array** |  |
+| `order` | **mixed** |  |
+| `limit` | **mixed** |  |
+| `alias` | **mixed** |  |
+| `database` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::insertQuery
+
+This function is designed to handle both single-row and multi-row
+inserts into a database table. It dynamically constructs the SQL query
+and ensures that parameter names are unique to prevent conflicts during
+execution.
+
+```php
+SqlUtility::insertQuery( string table, array values, mixed ignore = false, mixed return = false, mixed database = 9 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `table` | **string** |  |
+| `values` | **array** |  |
+| `ignore` | **mixed** |  |
+| `return` | **mixed** |  |
+| `database` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::unionQuery
+
+
+
+```php
+SqlUtility::unionQuery( mixed selects, mixed full = false ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `selects` | **mixed** |  |
+| `full` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::buildOrderClause
+
+
+
+```php
+SqlUtility::buildOrderClause( mixed order ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `order` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::buildWhereClause
+
+
+
+```php
+SqlUtility::buildWhereClause( mixed conditions, mixed &params ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `conditions` | **mixed** |  |
+| `params` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+## StringUtility
+
+Class StringUtility
+
+A comprehensive utility class designed to facilitate various string
+manipulations and transformations. This class provides methods for
+creating, modifying, encoding, decoding, hashing, and checking strings
+in a consistent and reusable manner. It includes functionalities such as
+string creation, substring retrieval, character manipulation,
+phrase checking, and various encoding/decoding techniques.
+
+The utility also supports different string formats and transformations,
+making it a versatile tool for developers working with string data
+in PHP applications.
+
+* Full name: \PHPallas\Utilities\StringUtility
+
+
+### StringUtility::create
+
+Creates a string consisting of a specified character repeated to a given
+length.
+
+```php
+StringUtility::create( string character, int length ): string
+```
+
+This method generates a string where the specified character is repeated
+until the desired length is achieved. If the length is less than or equal
+to zero, an empty string is returned.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `character` | **string** | The character to repeat. |
+| `length` | **int** | The total length of the resulting string. |
+
+
+**Return Value:**
+
+The resulting string filled with the specified character.
+
+
+
+---
+### StringUtility::createRandom
+
+Generates a random string of a specified length using the provided
+characters.
+
+```php
+StringUtility::createRandom( int length = 8, string characters = "abcdefghijklmnopqrstuvwxyz" ): string
+```
+
+This method creates a random string by selecting characters from the
+provided set. If the length is not specified, it defaults to 8. The
+characters can be customized to include any valid characters.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the random string to create. Default is
+8. |
+| `characters` | **string** | The characters to use for generating the random
+string. Default is lowercase letters. |
+
+
+**Return Value:**
+
+The generated random string.
+
+
+
+---
+### StringUtility::createByRepeat
+
+Repeats a given string a specified number of times.
+
+```php
+StringUtility::createByRepeat( string string, int times ): string
+```
+
+This method takes an input string and repeats it the specified number of
+times. If the times parameter is less than or equal to zero, an empty
+string is returned.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The string to repeat. |
+| `times` | **int** | The number of times to repeat the string. |
+
+
+**Return Value:**
+
+The resulting string after repetition.
+
+
+
+---
+### StringUtility::get
+
+Retrieves a character from a string at a specified index.
+
+```php
+StringUtility::get( string string, int index ): string
+```
+
+This method splits the given string into an array of characters and
+returns the character at the specified index. If the index is out of
+bounds, it returns an empty string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string from which to retrieve the character. |
+| `index` | **int** | The index of the character to retrieve. |
+
+
+**Return Value:**
+
+The character at the specified index, or an empty string if not found.
+
+
+
+---
+### StringUtility::getSubset
+
+Retrieves a subset of a string starting from a given index.
+
+```php
+StringUtility::getSubset( string string, int startIndex, int|null length, string encoding = 'UTF-8' ): string
+```
+
+This method extracts a substring from the input string, starting at
+the specified index and continuing for the specified length. It uses
+the multibyte string function if available, falling back to standard
+string functions otherwise.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string from which to extract the subset. |
+| `startIndex` | **int** | The starting index for the substring. |
+| `length` | **int\|null** | The length of the substring. If null, the substring extends to the end of the string. |
+| `encoding` | **string** | The character encoding. Default is &#039;UTF-8&#039;. |
+
+
+**Return Value:**
+
+The extracted substring.
+
+
+
+---
+### StringUtility::getSegment
+
+Retrieves a segment of a string between two specified indices.
+
+```php
+StringUtility::getSegment( string string, int startIndex, int endIndex ): string
+```
+
+This method extracts a substring from the input string starting at
+the specified start index and ending at the specified end index.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string from which to extract the segment. |
+| `startIndex` | **int** | The starting index of the segment. |
+| `endIndex` | **int** | The ending index of the segment. |
+
+
+**Return Value:**
+
+The extracted segment of the string.
+
+
+
+---
+### StringUtility::set
+
+Sets a character at a specified index in the given string.
+
+```php
+StringUtility::set( string string, int index, string value ): string
+```
+
+This method splits the string into an array of characters, replaces
+the character at the specified index with the provided value, and
+then reconstructs the string from the modified array.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `index` | **int** | The index at which to set the new character. |
+| `value` | **string** | The character to set at the specified index. |
+
+
+**Return Value:**
+
+The modified string with the character set at the index.
+
+
+
+---
+### StringUtility::setReplace
+
+Replaces occurrences of a substring within a string.
+
+```php
+StringUtility::setReplace( string string, string needle, string replace, bool caseSensitive = false ): string
+```
+
+This method replaces all instances of the specified needle with the
+replacement value. It can perform case-sensitive or case-insensitive
+replacements based on the provided flag.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string in which to perform the replacement. |
+| `needle` | **string** | The substring to be replaced. |
+| `replace` | **string** | The substring to replace with. |
+| `caseSensitive` | **bool** | Indicates whether the replacement should be
+case-sensitive. Default is false. |
+
+
+**Return Value:**
+
+The modified string with replacements made.
+
+
+
+---
+### StringUtility::setInStart
+
+Pads the string on the left with a specified character to a given length.
+
+```php
+StringUtility::setInStart( string string, string character, int length ): string
+```
+
+This method adds the specified character to the start of the string
+until the desired length is reached.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to pad. |
+| `character` | **string** | The character to use for padding. |
+| `length` | **int** | The total length of the resulting string after padding. |
+
+
+**Return Value:**
+
+The left-padded string.
+
+
+
+---
+### StringUtility::setInEnd
+
+Pads the string on the right with a specified character to a given length.
+
+```php
+StringUtility::setInEnd( string string, string character, int length ): string
+```
+
+This method adds the specified character to the end of the string
+until the desired length is reached.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to pad. |
+| `character` | **string** | The character to use for padding. |
+| `length` | **int** | The total length of the resulting string after padding. |
+
+
+**Return Value:**
+
+The right-padded string.
+
+
+
+---
+### StringUtility::hasPhrase
+
+Checks if a specified phrase exists within a given string.
+
+```php
+StringUtility::hasPhrase( string string, string needle, bool caseSensitive = true ): bool
+```
+
+This method determines whether the needle (substring) is present in the
+string, with an option for case sensitivity. If case sensitivity is
+disabled, both the string and the needle are transformed to lowercase
+before the check.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to search within. |
+| `needle` | **string** | The substring to search for. |
+| `caseSensitive` | **bool** | Indicates whether the search should be
+case-sensitive. Default is true. |
+
+
+**Return Value:**
+
+Returns true if the needle is found in the string, false otherwise.
+
+
+
+---
+### StringUtility::addToStart
+
+Adds a specified value to the start of the given string.
+
+```php
+StringUtility::addToStart( string string, string value ): string
+```
+
+This method concatenates the value with the input string, placing
+the value at the beginning.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `value` | **string** | The value to add to the start of the string. |
+
+
+**Return Value:**
+
+The modified string with the value added at the start.
+
+
+
+---
+### StringUtility::addToEnd
+
+Adds a specified value to the end of the given string.
+
+```php
+StringUtility::addToEnd( string string, string value ): string
+```
+
+This method concatenates the input string with the value, placing
+the value at the end.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `value` | **string** | The value to add to the end of the string. |
+
+
+**Return Value:**
+
+The modified string with the value added at the end.
+
+
+
+---
+### StringUtility::addToCenter
+
+Adds a specified value to the center of the given string.
+
+```php
+StringUtility::addToCenter( string string, string value ): string
+```
+
+This method calculates the middle of the input string and inserts
+the value at that position.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `value` | **string** | The value to add to the center of the string. |
+
+
+**Return Value:**
+
+The modified string with the value added at the center.
+
+
+
+---
+### StringUtility::addEvenly
+
+Adds a specified value evenly throughout the given string.
+
+```php
+StringUtility::addEvenly( string string, string value, int size ): string
+```
+
+This method inserts the value at regular intervals defined by the
+specified size within the string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `value` | **string** | The value to insert into the string. |
+| `size` | **int** | The interval size at which to insert the value. |
+
+
+**Return Value:**
+
+The modified string with the value added evenly.
+
+
+
+---
+### StringUtility::drop
+
+Drops specified characters from the given string.
+
+```php
+StringUtility::drop( string string, string characters = " 
+
+	 " ): string
+```
+
+This method removes all occurrences of the specified characters
+from the input string. By default, it drops whitespace and control
+characters.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `characters` | **string** | The characters to drop from the string. |
+
+
+**Return Value:**
+
+The modified string with the specified characters removed.
+
+
+
+---
+### StringUtility::dropFirst
+
+Drops the first character from the given string.
+
+```php
+StringUtility::dropFirst( string string ): string
+```
+
+This method removes the first character of the input string and
+returns the modified string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+
+
+**Return Value:**
+
+The modified string with the first character removed.
+
+
+
+---
+### StringUtility::dropLast
+
+Drops the last character from the given string.
+
+```php
+StringUtility::dropLast( string string ): string
+```
+
+This method removes the last character of the input string and
+returns the modified string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+
+
+**Return Value:**
+
+The modified string with the last character removed.
+
+
+
+---
+### StringUtility::dropNth
+
+Drops the character at the specified index from the given string.
+
+```php
+StringUtility::dropNth( string string, int index ): string
+```
+
+This method removes the character at the specified index and
+returns the modified string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `index` | **int** | The index of the character to drop. |
+
+
+**Return Value:**
+
+The modified string with the character at the specified index removed.
+
+
+
+---
+### StringUtility::dropFromSides
+
+Drops specified characters from both ends of the given string.
+
+```php
+StringUtility::dropFromSides( string string, string characters = " 
+
+	 " ): string
+```
+
+This method trims the specified characters from the start and end
+of the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `characters` | **string** | The characters to drop from both ends. |
+
+
+**Return Value:**
+
+The modified string with specified characters trimmed from both ends.
+
+
+
+---
+### StringUtility::dropFromStart
+
+Drops specified characters from the start of the given string.
+
+```php
+StringUtility::dropFromStart( string string, string characters = " 
+
+	 " ): string
+```
+
+This method removes all occurrences of the specified characters
+from the beginning of the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `characters` | **string** | The characters to drop from the start. |
+
+
+**Return Value:**
+
+The modified string with specified characters removed from the start.
+
+
+
+---
+### StringUtility::dropFromEnd
+
+Drops specified characters from the end of the given string.
+
+```php
+StringUtility::dropFromEnd( string string, string characters = " 
+
+	 " ): string
+```
+
+This method removes all occurrences of the specified characters
+from the end of the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+| `characters` | **string** | The characters to drop from the end. |
+
+
+**Return Value:**
+
+The modified string with specified characters removed from the end.
+
+
+
+---
+### StringUtility::dropSeparator
+
+Drops specified separators from the given string.
+
+```php
+StringUtility::dropSeparator( string string ): string
+```
+
+This method removes dashes and underscores from the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+
+
+**Return Value:**
+
+The modified string with specified separators removed.
+
+
+
+---
+### StringUtility::dropSpace
+
+Drops all spaces from the given string.
+
+```php
+StringUtility::dropSpace( string string ): string
+```
+
+This method removes all space characters from the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to modify. |
+
+
+**Return Value:**
+
+The modified string with all spaces removed.
+
+
+
+---
+### StringUtility::dropExtras
+
+Truncates a string to a specified length and appends ellipsis if needed.
+
+```php
+StringUtility::dropExtras( string string, int length ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to truncate. |
+| `length` | **int** | The maximum length of the resulting string. |
+
+
+**Return Value:**
+
+The truncated string with ellipsis.
+
+
+
+---
+### StringUtility::transformToReverse
+
+Transforms the given string to its reverse.
+
+```php
+StringUtility::transformToReverse( string string ): string
+```
+
+This method returns the input string reversed.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The reversed string.
+
+
+
+---
+### StringUtility::transformToShuffle
+
+Transforms the given string by shuffling its characters.
+
+```php
+StringUtility::transformToShuffle( string string ): string
+```
+
+This method returns a new string with the characters of the input string
+shuffled randomly.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The shuffled string.
+
+
+
+---
+### StringUtility::transformToNoTag
+
+Transforms the given string by stripping HTML and PHP tags.
+
+```php
+StringUtility::transformToNoTag( string string, string|null allowedTags = null ): string
+```
+
+This method removes all tags from the input string, optionally allowing
+specified tags.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+| `allowedTags` | **string\|null** | Tags that should not be stripped. |
+
+
+**Return Value:**
+
+The string with tags stripped.
+
+
+
+---
+### StringUtility::transformToLowercase
+
+Transforms the given string to lowercase.
+
+```php
+StringUtility::transformToLowercase( string string, bool removeSeparators = false, bool dropSpace = false ): string
+```
+
+This method converts the input string to lowercase, with options to
+remove separators and spaces.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+| `removeSeparators` | **bool** | Whether to remove separators. |
+| `dropSpace` | **bool** | Whether to remove spaces. |
+
+
+**Return Value:**
+
+The lowercase string.
+
+
+
+---
+### StringUtility::transformToUppercase
+
+Transforms the given string to uppercase.
+
+```php
+StringUtility::transformToUppercase( string string, bool removeSeparators = false, bool removeSpace = false ): string
+```
+
+This method converts the input string to uppercase, with options to
+remove separators and spaces.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+| `removeSeparators` | **bool** | Whether to remove separators. |
+| `removeSpace` | **bool** | Whether to remove spaces. |
+
+
+**Return Value:**
+
+The uppercase string.
+
+
+
+---
+### StringUtility::transformToLowercaseFirst
+
+Transforms the given string to lowercase, capitalizing the first character.
+
+```php
+StringUtility::transformToLowercaseFirst( string string, bool removeSeparators = false, bool removeSpace = false ): string
+```
+
+This method converts the input string to lowercase, with options to
+remove separators and spaces.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+| `removeSeparators` | **bool** | Whether to remove separators. |
+| `removeSpace` | **bool** | Whether to remove spaces. |
+
+
+**Return Value:**
+
+The string with the first character in lowercase.
+
+
+
+---
+### StringUtility::transformToUppercaseFirst
+
+Transforms the given string to uppercase, capitalizing the first character.
+
+```php
+StringUtility::transformToUppercaseFirst( string string, bool removeSeparators = false, bool removeSpace = false ): string
+```
+
+This method converts the input string to uppercase, with options to
+remove separators and spaces.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+| `removeSeparators` | **bool** | Whether to remove separators. |
+| `removeSpace` | **bool** | Whether to remove spaces. |
+
+
+**Return Value:**
+
+The string with the first character in uppercase.
+
+
+
+---
+### StringUtility::transformToCapital
+
+Capitalizes the first letter of each word in the string.
+
+```php
+StringUtility::transformToCapital( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to capitalize. |
+
+
+**Return Value:**
+
+The capitalized string.
+
+
+
+---
+### StringUtility::transformToFlatcase
+
+Transforms the given string to flatcase.
+
+```php
+StringUtility::transformToFlatcase( string string ): string
+```
+
+This method replaces dashes and underscores with spaces, converts
+each word to lowercase, and removes spaces.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The flatcase string.
+
+
+
+---
+### StringUtility::transformToPascalCase
+
+Transforms the given string to PascalCase.
+
+```php
+StringUtility::transformToPascalCase( string string ): string
+```
+
+This method replaces dashes and underscores with spaces, capitalizes
+each word, and joins them together.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The PascalCase string.
+
+
+
+---
+### StringUtility::transformToCamelcase
+
+Transforms the given string to camelCase.
+
+```php
+StringUtility::transformToCamelcase( string string ): string
+```
+
+This method converts the input string to PascalCase and then lowers
+the first character.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The camelCase string.
+
+
+
+---
+### StringUtility::transformToSnakecase
+
+Transforms the given string to snake_case.
+
+```php
+StringUtility::transformToSnakecase( string string ): string
+```
+
+This method replaces dashes and underscores with spaces, converts
+each word to lowercase, and joins them with underscores.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The snake_case string.
+
+
+
+---
+### StringUtility::transformToMacrocase
+
+Transforms the given string to MACROCASE.
+
+```php
+StringUtility::transformToMacrocase( string string ): string
+```
+
+This method converts the input string to snake_case and then converts
+it to uppercase.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The MACROCASE string.
+
+
+
+---
+### StringUtility::transformToPascalSnakecase
+
+Transforms the given string to Pascal_Snake_Case.
+
+```php
+StringUtility::transformToPascalSnakecase( string string ): string
+```
+
+This method converts the input string to PascalCase and joins them
+with underscores.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The Pascal_Snake_Case string.
+
+
+
+---
+### StringUtility::transformToCamelSnakecase
+
+Transforms the given string to camel_snake_case.
+
+```php
+StringUtility::transformToCamelSnakecase( string string ): string
+```
+
+This method converts the input string to Pascal_Snake_Case and then
+lowers the first character.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The camel_snake_case string.
+
+
+
+---
+### StringUtility::transformToKebabcase
+
+Transforms the given string to kebab-case.
+
+```php
+StringUtility::transformToKebabcase( string string ): string
+```
+
+This method converts the input string to snake_case and replaces
+underscores with dashes.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The kebab-case string.
+
+
+
+---
+### StringUtility::transformToCobolcase
+
+Transforms the given string to COBOLCASE.
+
+```php
+StringUtility::transformToCobolcase( string string ): string
+```
+
+This method converts the input string to kebab-case and then
+converts it to uppercase.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The COBOLCASE string.
+
+
+
+---
+### StringUtility::transformToTraincase
+
+Transforms the given string to train-case.
+
+```php
+StringUtility::transformToTraincase( string string ): string
+```
+
+This method converts the input string to Pascal_Snake_Case and
+replaces underscores with dashes.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The train-case string.
+
+
+
+---
+### StringUtility::transformToMetaphone
+
+Transforms the given string to its metaphone representation.
+
+```php
+StringUtility::transformToMetaphone( string string ): string
+```
+
+This method returns the metaphone key for the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The metaphone representation of the string.
+
+
+
+---
+### StringUtility::transformToSoundex
+
+Transforms the given string to its soundex representation.
+
+```php
+StringUtility::transformToSoundex( string string ): string
+```
+
+This method returns the soundex key for the input string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The soundex representation of the string.
+
+
+
+---
+### StringUtility::isEqualTo
+
+Checks if two strings are equal.
+
+```php
+StringUtility::isEqualTo( string string1, string string2 ): bool
+```
+
+This method compares two strings for strict equality.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string1` | **string** | The first string to compare. |
+| `string2` | **string** | The second string to compare. |
+
+
+**Return Value:**
+
+Returns true if the strings are equal, false otherwise.
+
+
+
+---
+### StringUtility::isSameAs
+
+Checks if two strings are equal, ignoring case.
+
+```php
+StringUtility::isSameAs( string string1, string string2 ): bool
+```
+
+This method converts both strings to lowercase and then compares them
+for equality.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string1` | **string** | The first string to compare. |
+| `string2` | **string** | The second string to compare. |
+
+
+**Return Value:**
+
+Returns true if the strings are equal (case-insensitive), false otherwise.
+
+
+
+---
+### StringUtility::isStartedBy
+
+Checks if a string starts with a given substring.
+
+```php
+StringUtility::isStartedBy( string string, string starting ): bool
+```
+
+This method checks if the input string begins with the specified starting
+substring.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The string to check. |
+| `starting` | **string** | The substring to look for at the start. |
+
+
+**Return Value:**
+
+Returns true if the string starts with the specified substring, false otherwise.
+
+
+
+---
+### StringUtility::isEndedWith
+
+Checks if a string ends with a given substring.
+
+```php
+StringUtility::isEndedWith( string string, string ending ): bool
+```
+
+This method checks if the input string ends with the specified ending
+substring.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The string to check. |
+| `ending` | **string** | The substring to look for at the end. |
+
+
+**Return Value:**
+
+Returns true if the string ends with the specified substring, false otherwise.
+
+
+
+---
+### StringUtility::isPalindrome
+
+Checks if a string is a palindrome.
+
+```php
+StringUtility::isPalindrome( string string ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to check. |
+
+
+**Return Value:**
+
+True if the string is a palindrome, false otherwise.
+
+
+
+---
+### StringUtility::estimateLength
+
+Estimates the length of a string.
+
+```php
+StringUtility::estimateLength( string string ): int
+```
+
+This method uses `mb_strlen` if available, otherwise falls back to
+`strlen` for length estimation.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to estimate the length of. |
+
+
+**Return Value:**
+
+The estimated length of the string.
+
+
+
+---
+### StringUtility::estimateCounts
+
+Estimates the counts of each character in a string.
+
+```php
+StringUtility::estimateCounts( string string ): array
+```
+
+This method converts the string to an array of characters and counts
+the occurrences of each character.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to estimate character counts. |
+
+
+**Return Value:**
+
+An associative array where keys are characters and values
+are their respective counts.
+
+
+
+---
+### StringUtility::estimateSimilarity
+
+Compares two strings and returns a similarity score.
+
+```php
+StringUtility::estimateSimilarity( string string1, string string2 ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string1` | **string** | The first string to compare. |
+| `string2` | **string** | The second string to compare. |
+
+
+**Return Value:**
+
+A similarity score between 0 and 1, where 1 means identical.
+
+
+
+---
+### StringUtility::merge
+
+Merges multiple strings into a single string using a specified separator.
+
+```php
+StringUtility::merge( string separator ): string
+```
+
+This method takes a variable number of string arguments, removes the
+first argument (the separator), and concatenates the remaining strings
+with the specified separator.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `separator` | **string** | The separator to use between the strings. |
+
+
+**Return Value:**
+
+The merged string with the specified separator.
+
+
+
+---
+### StringUtility::split
+
+Splits a string into segments of specified length.
+
+```php
+StringUtility::split( string string, int segmentLength ): array
+```
+
+This method uses `mb_str_split` from the Polyfill to handle multibyte
+characters properly.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to be split. |
+| `segmentLength` | **int** | The length of each segment. |
+
+
+**Return Value:**
+
+An array of string segments.
+
+
+
+---
+### StringUtility::splitBy
+
+Splits a string by a specified separator.
+
+```php
+StringUtility::splitBy( string string, string separator ): array
+```
+
+This method uses `explode` to divide the string into an array based on
+the provided separator.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to be split. |
+| `separator` | **string** | The separator to split the string by. |
+
+
+**Return Value:**
+
+An array of substrings created by splitting the input string.
+
+
+
+---
+### StringUtility::toHex
+
+Converts a string to its hexadecimal representation.
+
+```php
+StringUtility::toHex( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The hexadecimal representation of the input string.
+
+
+
+---
+### StringUtility::fromHex
+
+Converts a hexadecimal string back to its original form.
+
+```php
+StringUtility::fromHex( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The hexadecimal string to convert. |
+
+
+**Return Value:**
+
+The original string represented by the hexadecimal input.
+
+
+
+---
+### StringUtility::toAscii
+
+Converts a character to its ASCII value.
+
+```php
+StringUtility::toAscii( string character ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `character` | **string** | The character to convert. |
+
+
+**Return Value:**
+
+The ASCII value of the character.
+
+
+
+---
+### StringUtility::fromAscii
+
+Converts an ASCII value back to its corresponding character.
+
+```php
+StringUtility::fromAscii( int ascii ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `ascii` | **int** | The ASCII value to convert. |
+
+
+**Return Value:**
+
+The character represented by the ASCII value.
+
+
+
+---
+### StringUtility::toFormat
+
+Formats values into a string according to a specified format.
+
+```php
+StringUtility::toFormat( string format ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `format` | **string** | The format string. |
+
+
+**Return Value:**
+
+The formatted string.
+
+
+
+---
+### StringUtility::fromFormat
+
+Parses a string according to a specified format.
+
+```php
+StringUtility::fromFormat( string string, string format ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to parse. |
+| `format` | **string** | The format string. |
+
+
+**Return Value:**
+
+An array of parsed values.
+
+
+
+---
+### StringUtility::toArray
+
+Converts a string into an array of its characters.
+
+```php
+StringUtility::toArray( string string ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+An array of characters from the string.
+
+
+
+---
+### StringUtility::toArrayWithSeparator
+
+Converts a string into an array using a custom separator.
+
+```php
+StringUtility::toArrayWithSeparator( string string, string separator ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+| `separator` | **string** | The separator to use for splitting the string. |
+
+
+**Return Value:**
+
+An array of substrings created by splitting the input string.
+
+
+
+---
+### StringUtility::fromArray
+
+Converts an array of strings back into a single string.
+
+```php
+StringUtility::fromArray( array array, string separator = "" ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** | The array of strings to join. |
+| `separator` | **string** | The separator to use when joining. |
+
+
+**Return Value:**
+
+The joined string.
+
+
+
+---
+### StringUtility::toInteger
+
+Converts a string to an integer.
+
+```php
+StringUtility::toInteger( string string ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The integer value of the string.
+
+
+
+---
+### StringUtility::fromInteger
+
+Converts an integer back to a string.
+
+```php
+StringUtility::fromInteger( int integer ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `integer` | **int** | The integer to convert. |
+
+
+**Return Value:**
+
+The string representation of the integer.
+
+
+
+---
+### StringUtility::toFloat
+
+Converts a string to a float.
+
+```php
+StringUtility::toFloat( string string ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The float value of the string.
+
+
+
+---
+### StringUtility::fromFloat
+
+Converts a float back to a string.
+
+```php
+StringUtility::fromFloat( float float ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `float` | **float** | The float to convert. |
+
+
+**Return Value:**
+
+The string representation of the float.
+
+
+
+---
+### StringUtility::toBoolean
+
+Converts a string to a boolean value.
+
+```php
+StringUtility::toBoolean( string string ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The boolean value represented by the string.
+
+
+
+---
+### StringUtility::fromBoolean
+
+Converts a boolean value to its string representation.
+
+```php
+StringUtility::fromBoolean( bool boolean ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean` | **bool** | The boolean to convert. |
+
+
+**Return Value:**
+
+"true" or "false" based on the boolean value.
+
+
+
+---
+### StringUtility::inRot
+
+Encodes a string using ROT13.
+
+```php
+StringUtility::inRot( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to encode. |
+
+
+**Return Value:**
+
+The ROT13 encoded string.
+
+
+
+---
+### StringUtility::ofRot
+
+Decodes a string using ROT13.
+
+```php
+StringUtility::ofRot( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to decode. |
+
+
+**Return Value:**
+
+The ROT13 decoded string.
+
+
+
+---
+### StringUtility::inSlashes
+
+Escapes special characters in a string using slashes.
+
+```php
+StringUtility::inSlashes( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to escape. |
+
+
+**Return Value:**
+
+The escaped string with slashes.
+
+
+
+---
+### StringUtility::ofSlashes
+
+Unescapes special characters in a string.
+
+```php
+StringUtility::ofSlashes( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to unescape. |
+
+
+**Return Value:**
+
+The unescaped string.
+
+
+
+---
+### StringUtility::inUU
+
+Encodes a string using UU encoding.
+
+```php
+StringUtility::inUU( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to encode. |
+
+
+**Return Value:**
+
+The UU encoded string.
+
+
+
+---
+### StringUtility::ofUU
+
+Decodes a UU encoded string.
+
+```php
+StringUtility::ofUU( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The UU encoded string to decode. |
+
+
+**Return Value:**
+
+The decoded string.
+
+
+
+---
+### StringUtility::inSafeCharacters
+
+Converts special characters to HTML entities.
+
+```php
+StringUtility::inSafeCharacters( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The string with special characters converted to HTML entities.
+
+
+
+---
+### StringUtility::ofSafeCharacters
+
+Converts HTML entities back to their corresponding characters.
+
+```php
+StringUtility::ofSafeCharacters( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string with HTML entities. |
+
+
+**Return Value:**
+
+The decoded string with HTML entities converted back.
+
+
+
+---
+### StringUtility::inHtmlEntities
+
+Converts special characters to HTML entities with quotes.
+
+```php
+StringUtility::inHtmlEntities( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The string with special characters converted to HTML entities.
+
+
+
+---
+### StringUtility::ofHtmlEntities
+
+Converts HTML entities back to their corresponding characters with quotes.
+
+```php
+StringUtility::ofHtmlEntities( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string with HTML entities. |
+
+
+**Return Value:**
+
+The decoded string with HTML entities converted back.
+
+
+
+---
+### StringUtility::hashMD5
+
+Generates an MD5 hash of a given string.
+
+```php
+StringUtility::hashMD5( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to hash. |
+
+
+**Return Value:**
+
+The MD5 hash of the input string.
+
+
+
+---
+### StringUtility::hashSHA
+
+Generates a SHA-1 hash of a given string.
+
+```php
+StringUtility::hashSHA( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to hash. |
+
+
+**Return Value:**
+
+The SHA-1 hash of the input string.
+
+
+
+---
+### StringUtility::hashChecksum
+
+Generates a checksum for a given string using SHA-1.
+
+```php
+StringUtility::hashChecksum( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to hash. |
+
+
+**Return Value:**
+
+The hashed checksum of the input string.
+
+
+
+---
+### StringUtility::validateChecksum
+
+Validates a given string against a provided checksum.
+
+```php
+StringUtility::validateChecksum( string string, string checksum ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to validate. |
+| `checksum` | **string** | The checksum to verify against. |
+
+
+**Return Value:**
+
+True if the string matches the checksum, false otherwise.
+
+
+
+---
+## TypesUtility
+
+Class TypesUtility
+
+A utility class for type checking and conversion.
+
+* Full name: \PHPallas\Utilities\TypesUtility
+
+
+### TypesUtility::getType
+
+Get the type of a variable.
+
+```php
+TypesUtility::getType( mixed value ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+The type of the variable.
+
+
+
+---
+### TypesUtility::isArray
+
+Check if the variable is an array.
+
+```php
+TypesUtility::isArray( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is an array, false otherwise.
+
+
+
+---
+### TypesUtility::isBoolean
+
+Check if the variable is a boolean.
+
+```php
+TypesUtility::isBoolean( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is a boolean, false otherwise.
+
+
+
+---
+### TypesUtility::isCallable
+
+Check if the variable is callable.
+
+```php
+TypesUtility::isCallable( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is callable, false otherwise.
+
+
+
+---
+### TypesUtility::isCountable
+
+Check if the variable is countable.
+
+```php
+TypesUtility::isCountable( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is countable, false otherwise.
+
+
+
+---
+### TypesUtility::isFloat
+
+Check if the variable is a float.
+
+```php
+TypesUtility::isFloat( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is a float, false otherwise.
+
+
+
+---
+### TypesUtility::isInteger
+
+Check if the variable is an integer.
+
+```php
+TypesUtility::isInteger( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is an integer, false otherwise.
+
+
+
+---
+### TypesUtility::isIterable
+
+Check if the variable is iterable.
+
+```php
+TypesUtility::isIterable( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is iterable, false otherwise.
+
+
+
+---
+### TypesUtility::isNull
+
+Check if the variable is null.
+
+```php
+TypesUtility::isNull( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is null, false otherwise.
+
+
+
+---
+### TypesUtility::isNumeric
+
+Check if the variable is numeric.
+
+```php
+TypesUtility::isNumeric( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is numeric, false otherwise.
+
+
+
+---
+### TypesUtility::isObject
+
+Check if the variable is an object.
+
+```php
+TypesUtility::isObject( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is an object, false otherwise.
+
+
+
+---
+### TypesUtility::isResource
+
+Check if the variable is a resource.
+
+```php
+TypesUtility::isResource( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is a resource, false otherwise.
+
+
+
+---
+### TypesUtility::isScalar
+
+Check if the variable is a scalar.
+
+```php
+TypesUtility::isScalar( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is a scalar, false otherwise.
+
+
+
+---
+### TypesUtility::isString
+
+Check if the variable is a string.
+
+```php
+TypesUtility::isString( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is a string, false otherwise.
+
+
+
+---
+### TypesUtility::to
+
+Convert a variable to a specified target type.
+
+```php
+TypesUtility::to( mixed variable, string targetType ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+| `targetType` | **string** | The target type to convert to (string, int, float, bool, array, object). |
+
+
+**Return Value:**
+
+The converted variable.
+
+
+
+---
+### TypesUtility::toString
+
+Convert a variable to a string.
+
+```php
+TypesUtility::toString( mixed variable ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+
+
+**Return Value:**
+
+The converted string.
+
+
+
+---
+### TypesUtility::toInteger
+
+Convert a variable to an integer.
+
+```php
+TypesUtility::toInteger( mixed variable ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+
+
+**Return Value:**
+
+The converted integer.
+
+
+
+---
+### TypesUtility::toFloat
+
+Convert a variable to a float.
+
+```php
+TypesUtility::toFloat( mixed variable ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+
+
+**Return Value:**
+
+The converted float.
+
+
+
+---
+### TypesUtility::toBoolean
+
+Convert a variable to a boolean.
+
+```php
+TypesUtility::toBoolean( mixed variable ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+
+
+**Return Value:**
+
+The converted boolean.
+
+
+
+---
+### TypesUtility::toArray
+
+Convert a variable to an array.
+
+```php
+TypesUtility::toArray( mixed variable ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+
+
+**Return Value:**
+
+The converted array.
+
+
+
+---
+### TypesUtility::toObject
+
+Convert a variable to an object.
+
+```php
+TypesUtility::toObject( mixed variable ): object
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** | The variable to convert. |
+
+
+**Return Value:**
+
+The converted object.
+
+---
+
 ## Contributing
 
 We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to get involved.
