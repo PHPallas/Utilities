@@ -26,9 +26,9 @@ class DateTime
      */
     public static function getComponents($timestamp,$calendar = 0)
     {
-        $year = (int) date("Y");
-        $month = (int) date("m");
-        $day = (int) date("d");
+        $year = (int) date("Y", $timestamp);
+        $month = (int) date("m", $timestamp);
+        $day = (int) date("d", $timestamp);
         $jdn = (int) gregoriantojd($month, $day, $year);
         $output = [];
         if (TypesUtility::isInteger($timestamp))

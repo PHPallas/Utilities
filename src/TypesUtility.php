@@ -27,7 +27,7 @@ class TypesUtility
      */
     public static function getType($value)
     {
-        return gettype($value);
+        return StringUtility::transformToLowercase(gettype($value));
     }
 
     /**
@@ -279,6 +279,7 @@ class TypesUtility
                     case "double":
                     case "bool":
                     case "boolean":
+                    case "string":
                         return [$variable];
                     case "object":
                         if (method_exists($variable, "toArray"))
