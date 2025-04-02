@@ -53,7 +53,7 @@ class SqlUtility
      * @param int $database
      * @return array
      */
-    public static function selectQuery(string|array $table, string|array|null $fields = "*", ?array $joins = [], array $where = [], ?array $order = [], ?array $group = [], ?array $having = [], ?int $limit = null, int $database = 9, bool $distinct = false): array
+    public static function selectQuery($table, $fields = "*", $joins = [], array $where = [], $order = [], $group = [], $having = [], $limit = null, $database = 9, $distinct = false)
     {
         $select = "SELECT";
         if ($distinct)
@@ -176,7 +176,7 @@ class SqlUtility
      * @param array $where
      * @return array
      */
-    public static function updateQuery(string $table, array $values, array $where, bool $return = false, ?int $limit = null, int $database = 9): array
+    public static function updateQuery($table, $values, $where, $return = false, $limit = null, $database = 9)
     {
         $params = [];
         $set = [];
@@ -241,7 +241,7 @@ class SqlUtility
      * @param array $where
      * @return array
      */
-    public static function deleteQuery(string $table, array $where = [], array $order = [], ?int $limit = null, ?string $alias = null, int $database = 9): array
+    public static function deleteQuery($table, $where = [], $order = [], $limit = null, $alias = null, $database = 9)
     {
         $params = [];
         $sql = "DELETE FROM $table";
@@ -293,7 +293,7 @@ class SqlUtility
      * @param array $values
      * @return array
      */
-    public static function insertQuery(string $table, array $values, bool $ignore = false, bool $return = false, int $database = 9): array
+    public static function insertQuery($table, $values, $ignore = false, $return = false, $database = 9)
     {
         $sql = "";
         $fields = [];
@@ -399,7 +399,7 @@ class SqlUtility
         return static::responder($sql, $params);
     }
 
-    public static function unionQuery(array $selects, bool $full = false): array
+    public static function unionQuery($selects, $full = false)
     {
         $params = [];
         $sql = "";
@@ -412,7 +412,7 @@ class SqlUtility
         return static::responder($sql, $params);
     }
 
-    public static function buildOrderClause(array $order): string
+    public static function buildOrderClause($order)
     {
         $output = "";
         if (ArrayUtility::isAssociative($order))
@@ -436,7 +436,7 @@ class SqlUtility
         }
         return $output;
     }
-    public static function buildWhereClause(array $conditions, array &$params)
+    public static function buildWhereClause($conditions, &$params)
     {
         $sql = "";
         if (ArrayUtility::isScalar($conditions))
@@ -638,7 +638,7 @@ class SqlUtility
         }
         return $sql;
     }
-    private static function buildFieldsClause(array $fields): string
+    private static function buildFieldsClause(array $fields)
     {
         if (ArrayUtility::isAssociative($fields))
         {
@@ -686,7 +686,7 @@ class SqlUtility
         return StringUtility::fromArray($fields, ", ");
 
     }
-    private static function responder($sql, array $params): array
+    private static function responder($sql, $params)
     {
         return [
             "sql" => StringUtility::dropFromSides($sql, " "),
