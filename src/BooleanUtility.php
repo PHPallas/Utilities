@@ -85,7 +85,7 @@ class BooleanUtility
             return static::FALSE;
         }
 
-        return self::DEFAULT_BOOL;
+        return static::DEFAULT_BOOL;
         ; // Return null for unrecognized strings
     }
 
@@ -331,7 +331,7 @@ class BooleanUtility
      */
     public static function nor($boolean1, $boolean2)
     {
-        return static::not(self::or($boolean1, $boolean2)); // Return the negation of OR
+        return static::not(static::or($boolean1, $boolean2)); // Return the negation of OR
     }
 
     /**
@@ -470,12 +470,16 @@ class BooleanUtility
     /**
      * Alias for gxnor
      */
-
     public static function gxand($boolean)
     {
         return static::gxnor($boolean);
     }
 
+    /**
+     * Internal method to throw error InvalidArgumentException
+     * @throws \InvalidArgumentException
+     * @return never
+     */
     private static function throwError()
     {
         throw new \InvalidArgumentException("Invalid Argument");

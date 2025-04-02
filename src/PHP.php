@@ -21,6 +21,7 @@ class PHP
     {
         return phpversion();
     }
+
     /**
      * Get PHP version as a number
      * @return int
@@ -31,6 +32,7 @@ class PHP
         $value = 10000 * (int) $version[0] + 100 * (int) $version[1] + (int) $version[2];
         return $value;
     }
+
     /**
      * Get PHP major version
      * @return int|string
@@ -40,6 +42,7 @@ class PHP
         $version = explode(".", phpversion());
         return isset($version[0]) ? $version[0] : 0;
     }
+
     /**
      * Get PHP minor Version
      * @return int|string
@@ -49,6 +52,7 @@ class PHP
         $version = explode(".", phpversion());
         return isset($version[1]) ? $version[1] : 0;
     }
+    
     /**
      * Get PHP release version
      * @return int|string
