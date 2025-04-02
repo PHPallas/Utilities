@@ -1889,6 +1889,219 @@ class MathUtility
         return $inverse;
     }
 
+    /**
+     * Calculate the greatest common divisor (GCD) of two numbers.
+     *
+     * @param int $a First number
+     * @param int $b Second number
+     * @return int GCD of the two numbers
+     */
+    public static function gcd($a, $b)
+    {
+        while ($b != 0)
+        {
+            $temp = $b;
+            $b = $a % $b;
+            $a = $temp;
+        }
+        return abs($a);
+    }
+
+    /**
+     * Calculate the least common multiple (LCM) of two numbers.
+     *
+     * @param int $a First number
+     * @param int $b Second number
+     * @return int LCM of the two numbers
+     */
+    public static function lcm($a, $b)
+    {
+        return abs($a * $b) / self::gcd($a, $b);
+    }
+
+    /**
+     * Check if a number is prime.
+     *
+     * @param int $n The number to check
+     * @return bool True if the number is prime, false otherwise
+     */
+    public static function isPrime($n)
+    {
+        if ($n <= 1)
+        {
+            return false;
+        }
+        for ($i = 2; $i <= sqrt($n); $i++)
+        {
+            if ($n % $i == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Generate a list of prime numbers up to a given limit.
+     *
+     * @param int $limit The upper limit
+     * @return array An array of prime numbers
+     */
+    public static function generatePrimes($limit)
+    {
+        $primes = [];
+        for ($i = 2; $i <= $limit; $i++)
+        {
+            if (self::isPrime($i))
+            {
+                $primes[] = $i;
+            }
+        }
+        return $primes;
+    }
+
+    /**
+     * Calculate the Fibonacci number at a given position.
+     *
+     * @param int $n The position in the Fibonacci sequence
+     * @return int The Fibonacci number at that position
+     */
+    public static function fibonacci($n)
+    {
+        if ($n < 0)
+        {
+            throw new InvalidArgumentException("Position must be a non-negative integer.");
+        }
+        if ($n === 0)
+        {
+            return 0;
+        }
+        if ($n === 1)
+        {
+            return 1;
+        }
+        return self::fibonacci($n - 1) + self::fibonacci($n - 2);
+    }
+
+    /**
+     * Check if a number is a perfect square.
+     *
+     * @param int $n The number to check
+     * @return bool True if the number is a perfect square, false otherwise
+     */
+    public static function isPerfectSquare($n)
+    {
+        $sqrt = sqrt($n);
+        return ($sqrt * $sqrt == $n);
+    }
+
+    /**
+     * Find the prime factorization of a number.
+     *
+     * @param int $n The number to factor
+     * @return array An array of prime factors
+     */
+    public static function primeFactorization($n)
+    {
+        $factors = [];
+        for ($i = 2; $i <= sqrt($n); $i++)
+        {
+            while ($n % $i == 0)
+            {
+                $factors[] = $i;
+                $n /= $i;
+            }
+        }
+        if ($n > 1)
+        {
+            $factors[] = $n;
+        }
+        return $factors;
+    }
+
+    /**
+     * Calculate the sum of divisors of a number.
+     *
+     * @param int $n The number to calculate the sum of divisors for
+     * @return int The sum of divisors of the number
+     */
+    public static function sumOfDivisors($n)
+    {
+        $sum = 0;
+        for ($i = 1; $i <= $n; $i++)
+        {
+            if ($n % $i == 0)
+            {
+                $sum += $i;
+            }
+        }
+        return $sum;
+    }
+
+    /**
+     * Calculate Euler's Totient function for a given number.
+     *
+     * @param int $n The number to calculate the Totient for
+     * @return int The value of Euler's Totient function
+     */
+    public static function eulerTotient($n)
+    {
+        if ($n < 1)
+        {
+            throw new InvalidArgumentException("Input must be a positive integer.");
+        }
+        $result = $n; // Initialize result as n
+        for ($p = 2; $p * $p <= $n; $p++)
+        {
+            if ($n % $p == 0)
+            {
+                // If p is a prime factor of n, subtract multiples of p
+                while ($n % $p == 0)
+                {
+                    $n /= $p;
+                }
+                $result -= $result / $p;
+            }
+        }
+        // If n has a prime factor greater than sqrt(n)
+        if ($n > 1)
+        {
+            $result -= $result / $n;
+        }
+        return (int) $result;
+    }
+
+    /**
+     * Check if two numbers are coprime (i.e., their GCD is 1).
+     *
+     * @param int $a First number
+     * @param int $b Second number
+     * @return bool True if the numbers are coprime, false otherwise
+     */
+    public static function areCoprime($a, $b)
+    {
+        return self::gcd($a, $b) === 1;
+    }
+
+    /**
+     * Generate a list of perfect numbers up to a given limit.
+     *
+     * @param int $limit The upper limit
+     * @return array An array of perfect numbers
+     */
+    public static function generatePerfectNumbers($limit)
+    {
+        $perfectNumbers = [];
+        for ($num = 1; $num <= $limit; $num++)
+        {
+            if (self::sumOfDivisors($num) === 2 * $num)
+            {
+                $perfectNumbers[] = $num;
+            }
+        }
+        return $perfectNumbers;
+    }
+
     public static function differentiate($function, $x, $h = 1e-10) {
         return ($function($x + $h) - $function($x - $h)) / (2 * $h);
     }

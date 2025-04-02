@@ -37,9 +37,76 @@ final class MathUtilityTest extends TestCase
         $this->assertEqualsWithDelta(1/3, $area, 0.0001); // Added tolerance
     }
 
+    public function testGcd()
+    {
+        $this->assertEquals(6, MathUtility::gcd(48, 18));
+        $this->assertEquals(1, MathUtility::gcd(8, 9));
+        $this->assertEquals(0, MathUtility::gcd(0, 0));
+    }
 
+    public function testLcm()
+    {
+        $this->assertEquals(20, MathUtility::lcm(4, 5));
+        $this->assertEquals(24, MathUtility::lcm(6, 8));
+        $this->assertEquals(0, MathUtility::lcm(0, 5));
+    }
 
+    public function testIsPrime()
+    {
+        $this->assertTrue(MathUtility::isPrime(17));
+        $this->assertFalse(MathUtility::isPrime(4));
+        $this->assertFalse(MathUtility::isPrime(1));
+    }
 
+    public function testGeneratePrimes()
+    {
+        $this->assertEquals([2, 3, 5, 7, 11, 13, 17, 19, 23, 29], MathUtility::generatePrimes(30));
+        $this->assertEquals([], MathUtility::generatePrimes(1));
+    }
+
+    public function testFibonacci()
+    {
+        $this->assertEquals(0, MathUtility::fibonacci(0));
+        $this->assertEquals(1, MathUtility::fibonacci(1));
+        $this->assertEquals(55, MathUtility::fibonacci(10));
+    }
+
+    public function testIsPerfectSquare()
+    {
+        $this->assertTrue(MathUtility::isPerfectSquare(16));
+        $this->assertFalse(MathUtility::isPerfectSquare(15));
+    }
+
+    public function testPrimeFactorization()
+    {
+        $this->assertEquals([2, 2, 7], MathUtility::primeFactorization(28));
+        $this->assertEquals([3, 3, 5], MathUtility::primeFactorization(45));
+    }
+
+    public function testSumOfDivisors()
+    {
+        $this->assertEquals(28, MathUtility::sumOfDivisors(12));
+        $this->assertEquals(1, MathUtility::sumOfDivisors(1));
+    }
+
+    public function testEulerTotient()
+    {
+        $this->assertEquals(6, MathUtility::eulerTotient(9));
+        $this->assertEquals(4, MathUtility::eulerTotient(10));
+    }
+
+    public function testAreCoprime()
+    {
+        $this->assertTrue(MathUtility::areCoprime(8, 9));
+        $this->assertFalse(MathUtility::areCoprime(6, 9));
+    }
+
+    public function testGeneratePerfectNumbers()
+    {
+        $this->assertEquals([], MathUtility::generatePerfectNumbers(1));
+        $this->assertEquals([6, 28], MathUtility::generatePerfectNumbers(28));
+    }
+    
     public function testAreaOfCircle()
     {
         $this->assertEquals(78.53981633974483, MathUtility::areaOfCircle(5));
