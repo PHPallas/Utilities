@@ -1,8 +1,8 @@
-# PHPallas Utilities
+# PHPallas Utilities 
 
 Welcome to **PHPallas Utilities**! This application is designed to provide a comprehensive set of utility functions that simplify common programming tasks across various domains. Whether you're manipulating arrays, performing mathematical operations, or constructing SQL queries, our library offers a robust solution to enhance your development experience. With a focus on usability and efficiency, **PHPallas Utilities** aims to empower developers with powerful tools that streamline their workflows and improve productivity. 
 
-## Features
+## Features 
 
 - **ArrayUtility**: Over 60 functions for array manipulation.
 - **BooleanUtility**: More than 20 functions for handling boolean values.
@@ -11,7 +11,7 @@ Welcome to **PHPallas Utilities**! This application is designed to provide a com
 - **StringUtility**: More than 80 functions for string manipulation.
 - **TypesUtility**: Over 20 functions for type manipulation, including conversions.
 
-## Installation
+## Installation 
 
 To install this application, clone the repository and run the following command:
 
