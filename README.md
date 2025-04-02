@@ -2050,6 +2050,4910 @@ ArrayUtility::sortRandom( array array ): array
 
 ---
 
+
+## BooleanUtility
+
+Class BooleanUtility
+
+A utility class providing methods for boolean manipulations, including
+a set of immutable constants for commonly used boolean values.
+
+* Full name: \PHPallas\Utilities\BooleanUtility
+
+
+### BooleanUtility::fromString
+
+Converts a string to a boolean value.
+
+```php
+BooleanUtility::fromString( string string ): bool
+```
+
+This method interprets specific string values as true or false.
+Recognized true values include: "true", "1", "yes", "on".
+Recognized false values include: "false", "0", "no", "off".
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The boolean value represented by the string.
+
+
+
+---
+### BooleanUtility::toString
+
+Converts a boolean value to its string representation.
+
+```php
+BooleanUtility::toString( bool boolean ): string
+```
+
+This method returns "true" or "false" based on the boolean value.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean` | **bool** | The boolean value to convert. |
+
+
+**Return Value:**
+
+"true" or "false" based on the boolean value.
+
+
+
+---
+### BooleanUtility::areEqual
+
+Checks if two boolean values are equal.
+
+```php
+BooleanUtility::areEqual( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean to compare. |
+| `boolean2` | **bool** | The second boolean to compare. |
+
+
+**Return Value:**
+
+Returns true if both booleans are equal, false otherwise.
+
+
+
+---
+### BooleanUtility::isTrue
+
+Checks if a boolean is TRUE.
+
+```php
+BooleanUtility::isTrue( bool boolean ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean` | **bool** | The boolean to check. |
+
+
+**Return Value:**
+
+Returns true if both booleans are equal, false otherwise.
+
+
+
+---
+### BooleanUtility::isFalse
+
+Checks if a boolean is FALSE.
+
+```php
+BooleanUtility::isFalse( bool boolean ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean` | **bool** | The boolean to check. |
+
+
+**Return Value:**
+
+Returns true if both booleans are equal, false otherwise.
+
+
+
+---
+### BooleanUtility::not
+
+Negates a boolean value.
+
+```php
+BooleanUtility::not( bool boolean ): bool
+```
+
+This method returns the opposite of the provided boolean value.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean` | **bool** | The boolean value to negate. |
+
+
+**Return Value:**
+
+The negated boolean value.
+
+
+
+---
+### BooleanUtility::gnot
+
+Performs a logical NOT operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gnot( mixed booleans ): array
+```
+
+This function negates each boolean value in the input array or the provided arguments and returns an array of the results.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+An array containing the negated boolean values.
+
+
+
+---
+### BooleanUtility::and
+
+Performs a logical AND operation on two boolean values.
+
+```php
+BooleanUtility::and( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean value. |
+| `boolean2` | **bool** | The second boolean value. |
+
+
+**Return Value:**
+
+The result of the logical AND operation.
+
+
+
+---
+### BooleanUtility::gand
+
+Performs a logical AND operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gand( mixed booleans ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+The result of the logical AND operation.
+
+
+
+---
+### BooleanUtility::nand
+
+Performs a logical NAND operation on two boolean values.
+
+```php
+BooleanUtility::nand( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean value. |
+| `boolean2` | **bool** | The second boolean value. |
+
+
+**Return Value:**
+
+The result of the logical NAND operation.
+
+
+
+---
+### BooleanUtility::gnand
+
+Performs a logical NAND operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gnand( mixed booleans ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+The result of the logical NAND operation.
+
+
+
+---
+### BooleanUtility::or
+
+Performs a logical OR operation on two boolean values.
+
+```php
+BooleanUtility::or( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean value. |
+| `boolean2` | **bool** | The second boolean value. |
+
+
+**Return Value:**
+
+The result of the logical OR operation.
+
+
+
+---
+### BooleanUtility::gor
+
+Performs a logical OR operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gor( mixed booleans ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+The result of the logical OR operation.
+
+
+
+---
+### BooleanUtility::nor
+
+Performs a logical NOR operation on two boolean values.
+
+```php
+BooleanUtility::nor( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean value. |
+| `boolean2` | **bool** | The second boolean value. |
+
+
+**Return Value:**
+
+The result of the logical NOR operation.
+
+
+
+---
+### BooleanUtility::gnor
+
+Performs a logical NOR operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gnor( mixed booleans ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+The result of the logical NOR operation.
+
+
+
+---
+### BooleanUtility::xor
+
+Performs a logical XOR operation on two boolean values.
+
+```php
+BooleanUtility::xor( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean value. |
+| `boolean2` | **bool** | The second boolean value. |
+
+
+**Return Value:**
+
+The result of the logical XOR operation.
+
+
+
+---
+### BooleanUtility::gxor
+
+Performs a logical XOR operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gxor( mixed booleans ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+The result of the logical XOR operation.
+
+
+
+---
+### BooleanUtility::xnor
+
+Performs a logical XNOR operation on two boolean values.
+
+```php
+BooleanUtility::xnor( bool boolean1, bool boolean2 ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **bool** | The first boolean value. |
+| `boolean2` | **bool** | The second boolean value. |
+
+
+**Return Value:**
+
+The result of the logical XNOR operation.
+
+
+
+---
+### BooleanUtility::gxnor
+
+Performs a logical XNOR operation on an array of boolean values or a variable number of boolean arguments.
+
+```php
+BooleanUtility::gxnor( mixed booleans ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** | Either an array of boolean values or a list of boolean arguments. |
+
+
+**Return Value:**
+
+The result of the logical XNOR operation.
+
+
+
+---
+### BooleanUtility::nxor
+
+Alias for xnor
+
+```php
+BooleanUtility::nxor( mixed boolean1, mixed boolean2 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **mixed** |  |
+| `boolean2` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### BooleanUtility::xand
+
+Alias for xnor
+
+```php
+BooleanUtility::xand( mixed boolean1, mixed boolean2 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean1` | **mixed** |  |
+| `boolean2` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### BooleanUtility::gnxor
+
+Alias for gxnor
+
+```php
+BooleanUtility::gnxor( mixed booleans ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `booleans` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### BooleanUtility::gxand
+
+Alias for gxnor
+
+```php
+BooleanUtility::gxand( mixed boolean ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `boolean` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+## DateTime
+
+
+
+
+
+* Full name: \PHPallas\Utilities\DateTime
+
+
+### DateTime::getComponents
+
+Summary of toString
+
+```php
+DateTime::getComponents( int timestamp, int calendar ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `timestamp` | **int** |  |
+| `calendar` | **int** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### DateTime::isLeapSolarHijri
+
+Checks if a Solar Hijri year is leap year
+
+```php
+DateTime::isLeapSolarHijri( mixed year ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `year` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+## MathUtility
+
+Class MathUtility
+A utility class for common mathematical and physical constants.
+
+
+
+* Full name: \PHPallas\Utilities\MathUtility
+
+
+### MathUtility::round
+
+Round to the nearest integer.
+
+```php
+MathUtility::round( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to round. |
+
+
+**Return Value:**
+
+The rounded integer.
+
+
+
+---
+### MathUtility::floor
+
+Floor: Round down to the nearest integer.
+
+```php
+MathUtility::floor( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to floor. |
+
+
+**Return Value:**
+
+The floored integer.
+
+
+
+---
+### MathUtility::ceil
+
+Ceil: Round up to the nearest integer.
+
+```php
+MathUtility::ceil( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to ceil. |
+
+
+**Return Value:**
+
+The ceiled integer.
+
+
+
+---
+### MathUtility::truncate
+
+Truncate: Remove decimal part without rounding.
+
+```php
+MathUtility::truncate( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to truncate. |
+
+
+**Return Value:**
+
+The truncated integer.
+
+
+
+---
+### MathUtility::roundHalfUp
+
+Round Half Up.
+
+```php
+MathUtility::roundHalfUp( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to round. |
+
+
+**Return Value:**
+
+The rounded integer.
+
+
+
+---
+### MathUtility::roundHalfDown
+
+Round Half Down.
+
+```php
+MathUtility::roundHalfDown( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to round. |
+
+
+**Return Value:**
+
+The rounded integer.
+
+
+
+---
+### MathUtility::roundHalfToEven
+
+Bankers' Rounding (Round Half to Even).
+
+```php
+MathUtility::roundHalfToEven( float number ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **float** | The number to round. |
+
+
+**Return Value:**
+
+The rounded integer.
+
+
+
+---
+### MathUtility::randomInt
+
+Generate a random integer between the given min and max values.
+
+```php
+MathUtility::randomInt( int min, int max ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **int** | The minimum value (inclusive). |
+| `max` | **int** | The maximum value (inclusive). |
+
+
+**Return Value:**
+
+A random integer between min and max.
+
+
+
+---
+### MathUtility::randomFloat
+
+Generate a random float between the given min and max values.
+
+```php
+MathUtility::randomFloat( float min, float max ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **float** | The minimum value (inclusive). |
+| `max` | **float** | The maximum value (inclusive). |
+
+
+**Return Value:**
+
+A random float between min and max.
+
+
+
+---
+### MathUtility::estimateSimpleInterest
+
+Estimate simple interest.
+
+```php
+MathUtility::estimateSimpleInterest( float principal, float rate, int time ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal` | **float** | The principal amount. |
+| `rate` | **float** | The annual interest rate (as a decimal). |
+| `time` | **int** | The time in years. |
+
+
+**Return Value:**
+
+The estimated simple interest.
+
+
+
+---
+### MathUtility::estimateCompoundInterest
+
+Estimate compound interest.
+
+```php
+MathUtility::estimateCompoundInterest( float principal, float rate, int time, int n ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal` | **float** | The principal amount. |
+| `rate` | **float** | The annual interest rate (as a decimal). |
+| `time` | **int** | The time in years. |
+| `n` | **int** | The number of times interest is compounded per year. |
+
+
+**Return Value:**
+
+The estimated compound interest.
+
+
+
+---
+### MathUtility::estimateFutureValue
+
+Estimate the future value of an investment.
+
+```php
+MathUtility::estimateFutureValue( float principal, float rate, int time ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal` | **float** | The principal amount. |
+| `rate` | **float** | The annual interest rate (as a decimal). |
+| `time` | **int** | The time in years. |
+
+
+**Return Value:**
+
+The estimated future value.
+
+
+
+---
+### MathUtility::estimatePresentValue
+
+Estimate the present value of a future amount.
+
+```php
+MathUtility::estimatePresentValue( float futureValue, float rate, int time ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `futureValue` | **float** | The future amount. |
+| `rate` | **float** | The annual interest rate (as a decimal). |
+| `time` | **int** | The time in years. |
+
+
+**Return Value:**
+
+The estimated present value.
+
+
+
+---
+### MathUtility::estimateLoanPayment
+
+Estimate monthly loan payment.
+
+```php
+MathUtility::estimateLoanPayment( float principal, float annualRate, int months ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal` | **float** | The loan amount. |
+| `annualRate` | **float** | The annual interest rate (as a decimal). |
+| `months` | **int** | The number of months to pay off the loan. |
+
+
+**Return Value:**
+
+The estimated monthly payment.
+
+
+
+---
+### MathUtility::estimateTotalPayment
+
+Estimate the total amount paid over the life of the loan.
+
+```php
+MathUtility::estimateTotalPayment( float monthlyPayment, int months ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `monthlyPayment` | **float** | The monthly payment amount. |
+| `months` | **int** | The number of months to pay off the loan. |
+
+
+**Return Value:**
+
+The estimated total amount paid.
+
+
+
+---
+### MathUtility::estimateTotalInterest
+
+Estimate the total interest paid over the life of the loan.
+
+```php
+MathUtility::estimateTotalInterest( float totalPayment, float principal ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `totalPayment` | **float** | The total amount paid. |
+| `principal` | **float** | The loan amount. |
+
+
+**Return Value:**
+
+The estimated total interest paid.
+
+
+
+---
+### MathUtility::estimateAPR
+
+Estimate the Annual Percentage Rate (APR).
+
+```php
+MathUtility::estimateAPR( float interest, float principal, int months ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `interest` | **float** | The total interest paid. |
+| `principal` | **float** | The loan amount. |
+| `months` | **int** | The number of months. |
+
+
+**Return Value:**
+
+The estimated APR as a decimal.
+
+
+
+---
+### MathUtility::estimateEAR
+
+Estimate the Effective Annual Rate (EAR).
+
+```php
+MathUtility::estimateEAR( float nominalRate, int n ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `nominalRate` | **float** | The nominal interest rate (as a decimal). |
+| `n` | **int** | The number of compounding periods per year. |
+
+
+**Return Value:**
+
+The estimated EAR as a decimal.
+
+
+
+---
+### MathUtility::generateAmortizationSchedule
+
+Generate a loan amortization schedule.
+
+```php
+MathUtility::generateAmortizationSchedule( float principal, float annualRate, int months ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal` | **float** | The loan amount. |
+| `annualRate` | **float** | The annual interest rate (as a decimal). |
+| `months` | **int** | The number of months to pay off the loan. |
+
+
+**Return Value:**
+
+The amortization schedule.
+
+
+
+---
+### MathUtility::estimateLoanPayoffTime
+
+Estimate the loan payoff time in months.
+
+```php
+MathUtility::estimateLoanPayoffTime( float principal, float monthlyPayment, float annualRate ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal` | **float** | The loan amount. |
+| `monthlyPayment` | **float** | The monthly payment amount. |
+| `annualRate` | **float** | The annual interest rate (as a decimal). |
+
+
+**Return Value:**
+
+The estimated number of months to pay off the loan.
+
+
+
+---
+### MathUtility::estimateNPV
+
+Estimate the Net Present Value (NPV) of cash flows.
+
+```php
+MathUtility::estimateNPV( array cashFlows, float rate ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `cashFlows` | **array** | An array of cash flows (positive and negative). |
+| `rate` | **float** | The discount rate (as a decimal). |
+
+
+**Return Value:**
+
+The estimated NPV.
+
+
+
+---
+### MathUtility::compareLoans
+
+Compare two loans based on total cost.
+
+```php
+MathUtility::compareLoans( float principal1, float annualRate1, int months1, float principal2, float annualRate2, int months2 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `principal1` | **float** | The first loan amount. |
+| `annualRate1` | **float** | The first loan annual interest rate (as a decimal). |
+| `months1` | **int** | The first loan term in months. |
+| `principal2` | **float** | The second loan amount. |
+| `annualRate2` | **float** | The second loan annual interest rate (as a decimal). |
+| `months2` | **int** | The second loan term in months. |
+
+
+**Return Value:**
+
+Comparison result.
+
+
+
+---
+### MathUtility::addVectors
+
+Add two vectors element-wise
+
+```php
+MathUtility::addVectors( array vec1, array vec2 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vec1` | **array** |  |
+| `vec2` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::subtractVectors
+
+Subtract two vectors element-wise
+
+```php
+MathUtility::subtractVectors( array vec1, array vec2 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vec1` | **array** |  |
+| `vec2` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::scalarMultiply
+
+Multiply vector by scalar
+
+```php
+MathUtility::scalarMultiply( array vector, float scalar ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+| `scalar` | **float** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::normalize
+
+Normalize vector (convert to unit vector)
+
+```php
+MathUtility::normalize( array vector ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::magnitude
+
+Calculate vector magnitude (Euclidean norm)
+
+```php
+MathUtility::magnitude( array vector ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::dotProduct
+
+Dot product of two vectors
+
+```php
+MathUtility::dotProduct( array vec1, array vec2 ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vec1` | **array** |  |
+| `vec2` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::angleBetween
+
+Calculate angle between two vectors in radians
+
+```php
+MathUtility::angleBetween( array vec1, array vec2 ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vec1` | **array** |  |
+| `vec2` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::vectorSum
+
+Calculate sum of vector elements
+
+```php
+MathUtility::vectorSum( array vector ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::vectorAvg
+
+Calculate average of vector elements
+
+```php
+MathUtility::vectorAvg( array vector ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::vectorMin
+
+Find minimum value in vector
+
+```php
+MathUtility::vectorMin( array vector ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::vectorMax
+
+Find maximum value in vector
+
+```php
+MathUtility::vectorMax( array vector ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::crossProduct1D
+
+1D cross product (returns scalar value)
+
+```php
+MathUtility::crossProduct1D( array vec1, array vec2 ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vec1` | **array** |  |
+| `vec2` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::projection
+
+Project vector A onto vector B
+
+```php
+MathUtility::projection( array vecA, array vecB ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vecA` | **array** |  |
+| `vecB` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::vectorAppend
+
+Append value to vector (modifies original vector)
+
+```php
+MathUtility::vectorAppend( array &vector, float value ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+| `value` | **float** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::vectorReverse
+
+Reverse vector elements
+
+```php
+MathUtility::vectorReverse( array vector ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `vector` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::sin
+
+Calculates the sine of an angle.
+
+```php
+MathUtility::sin( float angle ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `angle` | **float** | The angle in radians. |
+
+
+**Return Value:**
+
+The sine of the angle.
+
+
+
+---
+### MathUtility::cos
+
+Calculates the cosine of an angle.
+
+```php
+MathUtility::cos( float angle ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `angle` | **float** | The angle in radians. |
+
+
+**Return Value:**
+
+The cosine of the angle.
+
+
+
+---
+### MathUtility::tan
+
+Calculates the tangent of an angle.
+
+```php
+MathUtility::tan( float angle ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `angle` | **float** | The angle in radians. |
+
+
+**Return Value:**
+
+The tangent of the angle.
+
+
+
+---
+### MathUtility::asin
+
+Calculates the arcsine (inverse sine) of a value.
+
+```php
+MathUtility::asin( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value, in the range [-1, 1]. |
+
+
+**Return Value:**
+
+The angle in radians whose sine is the given value.
+
+
+
+---
+### MathUtility::acos
+
+Calculates the arccosine (inverse cosine) of a value.
+
+```php
+MathUtility::acos( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value, in the range [-1, 1]. |
+
+
+**Return Value:**
+
+The angle in radians whose cosine is the given value.
+
+
+
+---
+### MathUtility::atan
+
+Calculates the arctangent (inverse tangent) of a value.
+
+```php
+MathUtility::atan( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The angle in radians whose tangent is the given value.
+
+
+
+---
+### MathUtility::atan2
+
+Calculates the arctangent of y/x, using the signs of the arguments to determine the quadrant of the result.
+
+```php
+MathUtility::atan2( float y, float x ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `y` | **float** | The y-coordinate. |
+| `x` | **float** | The x-coordinate. |
+
+
+**Return Value:**
+
+The angle in radians.
+
+
+
+---
+### MathUtility::sinh
+
+Calculates the hyperbolic sine of a value.
+
+```php
+MathUtility::sinh( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The hyperbolic sine of the value.
+
+
+
+---
+### MathUtility::cosh
+
+Calculates the hyperbolic cosine of a value.
+
+```php
+MathUtility::cosh( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The hyperbolic cosine of the value.
+
+
+
+---
+### MathUtility::tanh
+
+Calculates the hyperbolic tangent of a value.
+
+```php
+MathUtility::tanh( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The hyperbolic tangent of the value.
+
+
+
+---
+### MathUtility::asinh
+
+Calculates the inverse hyperbolic sine of a value.
+
+```php
+MathUtility::asinh( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The inverse hyperbolic sine of the value.
+
+
+
+---
+### MathUtility::acosh
+
+Calculates the inverse hyperbolic cosine of a value.
+
+```php
+MathUtility::acosh( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The inverse hyperbolic cosine of the value.
+
+
+
+---
+### MathUtility::atanh
+
+Calculates the inverse hyperbolic tangent of a value.
+
+```php
+MathUtility::atanh( float value ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **float** | The value. |
+
+
+**Return Value:**
+
+The inverse hyperbolic tangent of the value.
+
+
+
+---
+### MathUtility::deg2rad
+
+Converts an angle from degrees to radians.
+
+```php
+MathUtility::deg2rad( float degrees ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `degrees` | **float** | The angle in degrees. |
+
+
+**Return Value:**
+
+The angle in radians.
+
+
+
+---
+### MathUtility::rad2deg
+
+Converts an angle from radians to degrees.
+
+```php
+MathUtility::rad2deg( float radians ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `radians` | **float** | The angle in radians. |
+
+
+**Return Value:**
+
+The angle in degrees.
+
+
+
+---
+### MathUtility::exponential
+
+Calculate the exponential of a number.
+
+```php
+MathUtility::exponential( float x ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The exponent. |
+
+
+**Return Value:**
+
+The value of e raised to the power of x.
+
+
+
+---
+### MathUtility::naturalLog
+
+Calculate the natural logarithm of a number.
+
+```php
+MathUtility::naturalLog( float x ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The number to calculate the logarithm for. |
+
+
+**Return Value:**
+
+The natural logarithm of x.
+
+
+
+---
+### MathUtility::logBase10
+
+Calculate the base 10 logarithm of a number.
+
+```php
+MathUtility::logBase10( float x ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The number to calculate the logarithm for. |
+
+
+**Return Value:**
+
+The base 10 logarithm of x.
+
+
+
+---
+### MathUtility::logBase2
+
+Calculate the base 2 logarithm of a number.
+
+```php
+MathUtility::logBase2( float x ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The number to calculate the logarithm for. |
+
+
+**Return Value:**
+
+The base 2 logarithm of x.
+
+
+
+---
+### MathUtility::logBase
+
+Calculate the logarithm of a number with an arbitrary base.
+
+```php
+MathUtility::logBase( float x, float base ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The number to calculate the logarithm for. |
+| `base` | **float** | The base of the logarithm. |
+
+
+**Return Value:**
+
+The logarithm of x with the specified base.
+
+
+
+---
+### MathUtility::changeBase
+
+Change the base of a logarithm from one base to another.
+
+```php
+MathUtility::changeBase( float x, float fromBase, float toBase ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The number to calculate the logarithm for. |
+| `fromBase` | **float** | The original base of the logarithm. |
+| `toBase` | **float** | The new base for the logarithm. |
+
+
+**Return Value:**
+
+The logarithm of x with the new base.
+
+
+
+---
+### MathUtility::inverseNaturalLog
+
+Calculate the inverse of the natural logarithm.
+
+```php
+MathUtility::inverseNaturalLog( float y ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `y` | **float** | The value to calculate the inverse for. |
+
+
+**Return Value:**
+
+The value of e raised to the power of y.
+
+
+
+---
+### MathUtility::inverseLogBase10
+
+Calculate the inverse of the base 10 logarithm.
+
+```php
+MathUtility::inverseLogBase10( float y ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `y` | **float** | The value to calculate the inverse for. |
+
+
+**Return Value:**
+
+The value of 10 raised to the power of y.
+
+
+
+---
+### MathUtility::inverseLogBase2
+
+Calculate the inverse of the base 2 logarithm.
+
+```php
+MathUtility::inverseLogBase2( float y ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `y` | **float** | The value to calculate the inverse for. |
+
+
+**Return Value:**
+
+The value of 2 raised to the power of y.
+
+
+
+---
+### MathUtility::exponentialGrowth
+
+Calculate exponential growth.
+
+```php
+MathUtility::exponentialGrowth( float initial, float rate, float time ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `initial` | **float** | The initial amount. |
+| `rate` | **float** | The growth rate. |
+| `time` | **float** | The time period. |
+
+
+**Return Value:**
+
+The amount after exponential growth.
+
+
+
+---
+### MathUtility::exponentialDecay
+
+Calculate exponential decay.
+
+```php
+MathUtility::exponentialDecay( float initial, float rate, float time ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `initial` | **float** | The initial amount. |
+| `rate` | **float** | The decay rate. |
+| `time` | **float** | The time period. |
+
+
+**Return Value:**
+
+The amount after exponential decay.
+
+
+
+---
+### MathUtility::power
+
+Calculate the power of a base raised to an exponent.
+
+```php
+MathUtility::power( float base, float exponent ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `base` | **float** | The base. |
+| `exponent` | **float** | The exponent. |
+
+
+**Return Value:**
+
+The result of base raised to the exponent.
+
+
+
+---
+### MathUtility::solveExponentialEquation
+
+Solve for x in the equation a^x = b.
+
+```php
+MathUtility::solveExponentialEquation( float a, float b ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `a` | **float** | The base. |
+| `b` | **float** | The result. |
+
+
+**Return Value:**
+
+The value of x.
+
+
+
+---
+### MathUtility::logFactorial
+
+Calculate the logarithm of a factorial (log(n!)).
+
+```php
+MathUtility::logFactorial( int n ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | A non-negative integer. |
+
+
+**Return Value:**
+
+The logarithm of n!.
+
+
+
+---
+### MathUtility::addMatrix
+
+Add two matrices.
+
+```php
+MathUtility::addMatrix( array matrixA, array matrixB ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrixA` | **array** | The first matrix. |
+| `matrixB` | **array** | The second matrix. |
+
+
+**Return Value:**
+
+The resulting matrix after addition.
+
+
+
+---
+### MathUtility::subtractMatrix
+
+Subtract two matrices.
+
+```php
+MathUtility::subtractMatrix( array matrixA, array matrixB ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrixA` | **array** | The first matrix. |
+| `matrixB` | **array** | The second matrix. |
+
+
+**Return Value:**
+
+The resulting matrix after subtraction.
+
+
+
+---
+### MathUtility::multiplyMatrix
+
+Multiply two matrices.
+
+```php
+MathUtility::multiplyMatrix( array matrixA, array matrixB ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrixA` | **array** | The first matrix. |
+| `matrixB` | **array** | The second matrix. |
+
+
+**Return Value:**
+
+The resulting matrix after multiplication.
+
+
+
+---
+### MathUtility::inverseMatrix
+
+Calculate the inverse of a matrix.
+
+```php
+MathUtility::inverseMatrix( array matrix ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrix` | **array** | The matrix to invert. |
+
+
+**Return Value:**
+
+The inverted matrix.
+
+
+
+---
+### MathUtility::eigenvaluesMatrix
+
+Get the eigenvalues of a matrix (simplified for 2x2 matrices).
+
+```php
+MathUtility::eigenvaluesMatrix( array matrix ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrix` | **array** | The matrix to find eigenvalues for. |
+
+
+**Return Value:**
+
+The eigenvalues of the matrix.
+
+
+
+---
+### MathUtility::luDecompositionMatrix
+
+Perform LU decomposition of a matrix.
+
+```php
+MathUtility::luDecompositionMatrix( array matrix ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrix` | **array** | The matrix to decompose. |
+
+
+**Return Value:**
+
+An array containing matrices L and U.
+
+
+
+---
+### MathUtility::qrDecompositionMatrix
+
+Perform QR decomposition of a matrix using Gram-Schmidt process.
+
+```php
+MathUtility::qrDecompositionMatrix( array matrix ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrix` | **array** | The matrix to decompose. |
+
+
+**Return Value:**
+
+An array containing matrices Q and R.
+
+
+
+---
+### MathUtility::subsetMatrix
+
+Get a subset of a matrix.
+
+```php
+MathUtility::subsetMatrix( array matrix, int startRow, int startCol, int numRows, int numCols ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `matrix` | **array** | The original matrix. |
+| `startRow` | **int** | The starting row index. |
+| `startCol` | **int** | The starting column index. |
+| `numRows` | **int** | The number of rows to include. |
+| `numCols` | **int** | The number of columns to include. |
+
+
+**Return Value:**
+
+The subset of the matrix.
+
+
+
+---
+### MathUtility::mean
+
+Calculate the mean of an array of numbers.
+
+```php
+MathUtility::mean( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The mean of the numbers.
+
+
+
+---
+### MathUtility::median
+
+Calculate the median of an array of numbers.
+
+```php
+MathUtility::median( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The median of the numbers.
+
+
+
+---
+### MathUtility::mode
+
+Calculate the mode of an array of numbers.
+
+```php
+MathUtility::mode( array data ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The mode(s) of the numbers.
+
+
+
+---
+### MathUtility::variance
+
+Calculate the sample variance of an array of numbers.
+
+```php
+MathUtility::variance( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The sample variance of the numbers.
+
+
+
+---
+### MathUtility::populationVariance
+
+Calculate the population variance of an array of numbers.
+
+```php
+MathUtility::populationVariance( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The population variance of the numbers.
+
+
+
+---
+### MathUtility::standardDeviation
+
+Calculate the sample standard deviation of an array of numbers.
+
+```php
+MathUtility::standardDeviation( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The sample standard deviation of the numbers.
+
+
+
+---
+### MathUtility::populationStandardDeviation
+
+Calculate the population standard deviation of an array of numbers.
+
+```php
+MathUtility::populationStandardDeviation( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The population standard deviation of the numbers.
+
+
+
+---
+### MathUtility::correlation
+
+Calculate the correlation coefficient between two variables.
+
+```php
+MathUtility::correlation( array x, array y ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **array** | The first variable (independent). |
+| `y` | **array** | The second variable (dependent). |
+
+
+**Return Value:**
+
+The correlation coefficient.
+
+
+
+---
+### MathUtility::multipleLinearRegression
+
+Perform multiple linear regression to calculate coefficients.
+
+```php
+MathUtility::multipleLinearRegression( array X, array Y ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `X` | **array** | The independent variables (features). |
+| `Y` | **array** | The dependent variable (target). |
+
+
+**Return Value:**
+
+The coefficients of the regression model.
+
+
+
+---
+### MathUtility::normalDistributionPDF
+
+Calculate the normal distribution PDF.
+
+```php
+MathUtility::normalDistributionPDF( float x, float mean, float stdDev ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The value for which to calculate the PDF. |
+| `mean` | **float** | The mean of the distribution. |
+| `stdDev` | **float** | The standard deviation of the distribution. |
+
+
+**Return Value:**
+
+The PDF value.
+
+
+
+---
+### MathUtility::normalDistributionCDF
+
+Calculate the normal distribution CDF.
+
+```php
+MathUtility::normalDistributionCDF( float x, float mean, float stdDev ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The value for which to calculate the CDF. |
+| `mean` | **float** | The mean of the distribution. |
+| `stdDev` | **float** | The standard deviation of the distribution. |
+
+
+**Return Value:**
+
+The CDF value.
+
+
+
+---
+### MathUtility::binomialProbability
+
+Calculate the binomial probability.
+
+```php
+MathUtility::binomialProbability( int n, int k, float p ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The number of trials. |
+| `k` | **int** | The number of successes. |
+| `p` | **float** | The probability of success. |
+
+
+**Return Value:**
+
+The binomial probability.
+
+
+
+---
+### MathUtility::poissonDistribution
+
+Calculate the Poisson distribution PDF.
+
+```php
+MathUtility::poissonDistribution( int x, float lambda ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **int** | The number of occurrences. |
+| `lambda` | **float** | The expected number of occurrences. |
+
+
+**Return Value:**
+
+The PDF value.
+
+
+
+---
+### MathUtility::exponentialDistributionPDF
+
+Calculate the exponential distribution PDF.
+
+```php
+MathUtility::exponentialDistributionPDF( float x, float lambda ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The value for which to calculate the PDF. |
+| `lambda` | **float** | The rate parameter. |
+
+
+**Return Value:**
+
+The PDF value.
+
+
+
+---
+### MathUtility::exponentialDistributionCDF
+
+Calculate the exponential distribution CDF.
+
+```php
+MathUtility::exponentialDistributionCDF( float x, float lambda ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The value for which to calculate the CDF. |
+| `lambda` | **float** | The rate parameter. |
+
+
+**Return Value:**
+
+The CDF value.
+
+
+
+---
+### MathUtility::uniformDistributionPDF
+
+Calculate the uniform distribution PDF.
+
+```php
+MathUtility::uniformDistributionPDF( float x, float a, float b ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The value for which to calculate the PDF. |
+| `a` | **float** | The lower bound of the distribution. |
+| `b` | **float** | The upper bound of the distribution. |
+
+
+**Return Value:**
+
+The PDF value.
+
+
+
+---
+### MathUtility::uniformDistributionCDF
+
+Calculate the uniform distribution CDF.
+
+```php
+MathUtility::uniformDistributionCDF( float x, float a, float b ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `x` | **float** | The value for which to calculate the CDF. |
+| `a` | **float** | The lower bound of the distribution. |
+| `b` | **float** | The upper bound of the distribution. |
+
+
+**Return Value:**
+
+The CDF value.
+
+
+
+---
+### MathUtility::skewness
+
+Calculate the sample skewness of an array of numbers.
+
+```php
+MathUtility::skewness( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The skewness of the numbers.
+
+
+
+---
+### MathUtility::kurtosis
+
+Calculate the sample kurtosis of an array of numbers.
+
+```php
+MathUtility::kurtosis( array data ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The input array of numbers. |
+
+
+**Return Value:**
+
+The kurtosis of the numbers.
+
+
+
+---
+### MathUtility::gcd
+
+Calculate the greatest common divisor (GCD) of two numbers.
+
+```php
+MathUtility::gcd( int a, int b ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `a` | **int** | First number |
+| `b` | **int** | Second number |
+
+
+**Return Value:**
+
+GCD of the two numbers
+
+
+
+---
+### MathUtility::lcm
+
+Calculate the least common multiple (LCM) of two numbers.
+
+```php
+MathUtility::lcm( int a, int b ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `a` | **int** | First number |
+| `b` | **int** | Second number |
+
+
+**Return Value:**
+
+LCM of the two numbers
+
+
+
+---
+### MathUtility::isPrime
+
+Check if a number is prime.
+
+```php
+MathUtility::isPrime( int n ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The number to check |
+
+
+**Return Value:**
+
+True if the number is prime, false otherwise
+
+
+
+---
+### MathUtility::generatePrimes
+
+Generate a list of prime numbers up to a given limit.
+
+```php
+MathUtility::generatePrimes( int limit ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | **int** | The upper limit |
+
+
+**Return Value:**
+
+An array of prime numbers
+
+
+
+---
+### MathUtility::fibonacci
+
+Calculate the Fibonacci number at a given position.
+
+```php
+MathUtility::fibonacci( int n ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The position in the Fibonacci sequence |
+
+
+**Return Value:**
+
+The Fibonacci number at that position
+
+
+
+---
+### MathUtility::isPerfectSquare
+
+Check if a number is a perfect square.
+
+```php
+MathUtility::isPerfectSquare( int n ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The number to check |
+
+
+**Return Value:**
+
+True if the number is a perfect square, false otherwise
+
+
+
+---
+### MathUtility::primeFactorization
+
+Find the prime factorization of a number.
+
+```php
+MathUtility::primeFactorization( int n ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The number to factor |
+
+
+**Return Value:**
+
+An array of prime factors
+
+
+
+---
+### MathUtility::sumOfDivisors
+
+Calculate the sum of divisors of a number.
+
+```php
+MathUtility::sumOfDivisors( int n ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The number to calculate the sum of divisors for |
+
+
+**Return Value:**
+
+The sum of divisors of the number
+
+
+
+---
+### MathUtility::eulerTotient
+
+Calculate Euler's Totient function for a given number.
+
+```php
+MathUtility::eulerTotient( int n ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `n` | **int** | The number to calculate the Totient for |
+
+
+**Return Value:**
+
+The value of Euler's Totient function
+
+
+
+---
+### MathUtility::areCoprime
+
+Check if two numbers are coprime (i.e., their GCD is 1).
+
+```php
+MathUtility::areCoprime( int a, int b ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `a` | **int** | First number |
+| `b` | **int** | Second number |
+
+
+**Return Value:**
+
+True if the numbers are coprime, false otherwise
+
+
+
+---
+### MathUtility::generatePerfectNumbers
+
+Generate a list of perfect numbers up to a given limit.
+
+```php
+MathUtility::generatePerfectNumbers( int limit ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | **int** | The upper limit |
+
+
+**Return Value:**
+
+An array of perfect numbers
+
+
+
+---
+### MathUtility::differentiate
+
+
+
+```php
+MathUtility::differentiate( mixed function, mixed x, mixed h = 1.0E-10 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `x` | **mixed** |  |
+| `h` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::integrate
+
+
+
+```php
+MathUtility::integrate( array coefficients ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `coefficients` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::evaluate
+
+
+
+```php
+MathUtility::evaluate( array coefficients, mixed x ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `coefficients` | **array** |  |
+| `x` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::findQuadraticRoots
+
+
+
+```php
+MathUtility::findQuadraticRoots( mixed a, mixed b, mixed c ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `a` | **mixed** |  |
+| `b` | **mixed** |  |
+| `c` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::limit
+
+
+
+```php
+MathUtility::limit( mixed function, mixed x, mixed h = 1.0E-10 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `x` | **mixed** |  |
+| `h` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::taylorSeries
+
+
+
+```php
+MathUtility::taylorSeries( mixed function, mixed x, mixed n ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `x` | **mixed** |  |
+| `n` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::numericalIntegration
+
+
+
+```php
+MathUtility::numericalIntegration( mixed function, mixed a, mixed b, mixed n = 1000 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `a` | **mixed** |  |
+| `b` | **mixed** |  |
+| `n` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::partialDerivative
+
+
+
+```php
+MathUtility::partialDerivative( mixed function, mixed varIndex, mixed point, mixed h = 1.0E-10 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `varIndex` | **mixed** |  |
+| `point` | **mixed** |  |
+| `h` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::gradient
+
+
+
+```php
+MathUtility::gradient( mixed function, mixed point, mixed h = 1.0E-10 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `point` | **mixed** |  |
+| `h` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::secondDerivative
+
+
+
+```php
+MathUtility::secondDerivative( mixed function, mixed x, mixed h = 1.0E-10 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `x` | **mixed** |  |
+| `h` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::findLocalExtrema
+
+
+
+```php
+MathUtility::findLocalExtrema( mixed function, mixed x0, mixed h = 1.0E-10 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `x0` | **mixed** |  |
+| `h` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::areaUnderCurve
+
+
+
+```php
+MathUtility::areaUnderCurve( mixed function, mixed a, mixed b, mixed n = 1000 ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `function` | **mixed** |  |
+| `a` | **mixed** |  |
+| `b` | **mixed** |  |
+| `n` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### MathUtility::areaOfCircle
+
+Calculate the area of a circle.
+
+```php
+MathUtility::areaOfCircle( float radius ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `radius` | **float** | The radius of the circle. |
+
+
+**Return Value:**
+
+The area of the circle.
+
+
+
+---
+### MathUtility::circumferenceOfCircle
+
+Calculate the circumference of a circle.
+
+```php
+MathUtility::circumferenceOfCircle( float radius ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `radius` | **float** | The radius of the circle. |
+
+
+**Return Value:**
+
+The circumference of the circle.
+
+
+
+---
+### MathUtility::areaOfRectangle
+
+Calculate the area of a rectangle.
+
+```php
+MathUtility::areaOfRectangle( float length, float width ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **float** | The length of the rectangle. |
+| `width` | **float** | The width of the rectangle. |
+
+
+**Return Value:**
+
+The area of the rectangle.
+
+
+
+---
+### MathUtility::perimeterOfRectangle
+
+Calculate the perimeter of a rectangle.
+
+```php
+MathUtility::perimeterOfRectangle( float length, float width ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **float** | The length of the rectangle. |
+| `width` | **float** | The width of the rectangle. |
+
+
+**Return Value:**
+
+The perimeter of the rectangle.
+
+
+
+---
+### MathUtility::areaOfTriangle
+
+Calculate the area of a triangle.
+
+```php
+MathUtility::areaOfTriangle( float base, float height ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `base` | **float** | The base of the triangle. |
+| `height` | **float** | The height of the triangle. |
+
+
+**Return Value:**
+
+The area of the triangle.
+
+
+
+---
+### MathUtility::perimeterOfTriangle
+
+Calculate the perimeter of a triangle (assuming it's a right triangle).
+
+```php
+MathUtility::perimeterOfTriangle( float a, float b, float c ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `a` | **float** | The length of the first side. |
+| `b` | **float** | The length of the second side. |
+| `c` | **float** | The length of the third side. |
+
+
+**Return Value:**
+
+The perimeter of the triangle.
+
+
+
+---
+### MathUtility::areaOfSquare
+
+Calculate the area of a square.
+
+```php
+MathUtility::areaOfSquare( float side ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `side` | **float** | The length of a side of the square. |
+
+
+**Return Value:**
+
+The area of the square.
+
+
+
+---
+### MathUtility::perimeterOfSquare
+
+Calculate the perimeter of a square.
+
+```php
+MathUtility::perimeterOfSquare( float side ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `side` | **float** | The length of a side of the square. |
+
+
+**Return Value:**
+
+The perimeter of the square.
+
+
+
+---
+### MathUtility::volumeOfCube
+
+Calculate the volume of a cube.
+
+```php
+MathUtility::volumeOfCube( float side ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `side` | **float** | The length of a side of the cube. |
+
+
+**Return Value:**
+
+The volume of the cube.
+
+
+
+---
+### MathUtility::surfaceAreaOfCube
+
+Calculate the surface area of a cube.
+
+```php
+MathUtility::surfaceAreaOfCube( float side ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `side` | **float** | The length of a side of the cube. |
+
+
+**Return Value:**
+
+The surface area of the cube.
+
+
+
+---
+### MathUtility::volumeOfRectangularPrism
+
+Calculate the volume of a rectangular prism.
+
+```php
+MathUtility::volumeOfRectangularPrism( float length, float width, float height ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **float** | The length of the prism. |
+| `width` | **float** | The width of the prism. |
+| `height` | **float** | The height of the prism. |
+
+
+**Return Value:**
+
+The volume of the rectangular prism.
+
+
+
+---
+### MathUtility::surfaceAreaOfRectangularPrism
+
+Calculate the surface area of a rectangular prism.
+
+```php
+MathUtility::surfaceAreaOfRectangularPrism( float length, float width, float height ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **float** | The length of the prism. |
+| `width` | **float** | The width of the prism. |
+| `height` | **float** | The height of the prism. |
+
+
+**Return Value:**
+
+The surface area of the rectangular prism.
+
+
+
+---
+### MathUtility::areaOfTrapezoid
+
+Calculate the area of a trapezoid.
+
+```php
+MathUtility::areaOfTrapezoid( float base1, float base2, float height ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `base1` | **float** | The length of the first base. |
+| `base2` | **float** | The length of the second base. |
+| `height` | **float** | The height of the trapezoid. |
+
+
+**Return Value:**
+
+The area of the trapezoid.
+
+
+
+---
+### MathUtility::areaOfParallelogram
+
+Calculate the area of a parallelogram.
+
+```php
+MathUtility::areaOfParallelogram( float base, float height ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `base` | **float** | The length of the base. |
+| `height` | **float** | The height of the parallelogram. |
+
+
+**Return Value:**
+
+The area of the parallelogram.
+
+
+
+---
+### MathUtility::areaOfEllipse
+
+Calculate the area of an ellipse.
+
+```php
+MathUtility::areaOfEllipse( float semiMajorAxis, float semiMinorAxis ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `semiMajorAxis` | **float** | The length of the semi-major axis. |
+| `semiMinorAxis` | **float** | The length of the semi-minor axis. |
+
+
+**Return Value:**
+
+The area of the ellipse.
+
+
+
+---
+### MathUtility::circumferenceOfEllipse
+
+Calculate the circumference of an ellipse (approximation).
+
+```php
+MathUtility::circumferenceOfEllipse( float semiMajorAxis, float semiMinorAxis ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `semiMajorAxis` | **float** | The length of the semi-major axis. |
+| `semiMinorAxis` | **float** | The length of the semi-minor axis. |
+
+
+**Return Value:**
+
+The circumference of the ellipse.
+
+
+
+---
+## PHP
+
+
+
+
+
+* Full name: \PHPallas\Utilities\PHP
+
+
+### PHP::version
+
+Get PHP version
+
+```php
+PHP::version(  ): bool|string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### PHP::versionID
+
+Get PHP version as a number
+
+```php
+PHP::versionID(  ): int
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### PHP::versionMajor
+
+Get PHP major version
+
+```php
+PHP::versionMajor(  ): int|string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### PHP::versionMinor
+
+Get PHP minor Version
+
+```php
+PHP::versionMinor(  ): int|string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+### PHP::versionRelease
+
+Get PHP release version
+
+```php
+PHP::versionRelease(  ): int|string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
+## Polyfill
+
+
+
+
+
+* Full name: \PHPallas\Utilities\Polyfill
+
+
+### Polyfill::mb_str_pad
+
+
+
+```php
+Polyfill::mb_str_pad( mixed input, mixed pad_length, mixed pad_string = ' ', mixed pad_type = STR_PAD_RIGHT, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `input` | **mixed** |  |
+| `pad_length` | **mixed** |  |
+| `pad_string` | **mixed** |  |
+| `pad_type` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_strlen
+
+
+
+```php
+Polyfill::mb_strlen( mixed string, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_internal_encoding
+
+
+
+```php
+Polyfill::mb_internal_encoding( mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::iconv
+
+
+
+```php
+Polyfill::iconv( mixed in_charset, mixed out_charset, mixed str ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `in_charset` | **mixed** |  |
+| `out_charset` | **mixed** |  |
+| `str` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_split
+
+
+
+```php
+Polyfill::mb_split( mixed pattern, mixed string, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `pattern` | **mixed** |  |
+| `string` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_str_split
+
+
+
+```php
+Polyfill::mb_str_split( mixed string, mixed length = 1, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `length` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_substr
+
+
+
+```php
+Polyfill::mb_substr( mixed string, mixed start, mixed length = null, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `start` | **mixed** |  |
+| `length` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_trim
+
+
+
+```php
+Polyfill::mb_trim( mixed string, mixed character_mask = null, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `character_mask` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_ltrim
+
+
+
+```php
+Polyfill::mb_ltrim( mixed string, mixed character_mask, mixed encoding ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `character_mask` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_rtrim
+
+
+
+```php
+Polyfill::mb_rtrim( mixed string, mixed character_mask, mixed encoding ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `character_mask` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_strpos
+
+
+
+```php
+Polyfill::mb_strpos( mixed haystack, mixed needle, mixed offset, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `haystack` | **mixed** |  |
+| `needle` | **mixed** |  |
+| `offset` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_strrev
+
+
+
+```php
+Polyfill::mb_strrev( mixed string, mixed encoding = 'UTF-8' ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_str_shuffle
+
+
+
+```php
+Polyfill::mb_str_shuffle( mixed string, mixed encoding = 'UTF-8' ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::chr
+
+
+
+```php
+Polyfill::chr( mixed ascii ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `ascii` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::polyfill_mb_detect_encoding
+
+
+
+```php
+Polyfill::polyfill_mb_detect_encoding( mixed string, mixed encodings = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `encodings` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_detect_encoding
+
+
+
+```php
+Polyfill::mb_detect_encoding( mixed string, mixed encodings = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `encodings` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_detect_order
+
+
+
+```php
+Polyfill::mb_detect_order( mixed order = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `order` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::ord
+
+
+
+```php
+Polyfill::ord( mixed string ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_ord
+
+
+
+```php
+Polyfill::mb_ord( mixed char ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `char` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::str_contains
+
+
+
+```php
+Polyfill::str_contains( mixed haystack, mixed needle, mixed encoding = 'UTF-8' ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `haystack` | **mixed** |  |
+| `needle` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::str_starts_with
+
+
+
+```php
+Polyfill::str_starts_with( mixed haystack, mixed needle, mixed encoding = 'UTF-8' ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `haystack` | **mixed** |  |
+| `needle` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::str_ends_with
+
+
+
+```php
+Polyfill::str_ends_with( mixed haystack, mixed needle, mixed encoding = 'UTF-8' ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `haystack` | **mixed** |  |
+| `needle` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_chr
+
+
+
+```php
+Polyfill::mb_chr( mixed codepoint ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `codepoint` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_convert_encoding
+
+
+
+```php
+Polyfill::mb_convert_encoding( mixed string, mixed to_encoding, mixed from_encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `to_encoding` | **mixed** |  |
+| `from_encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::mb_check_encoding
+
+
+
+```php
+Polyfill::mb_check_encoding( mixed string, mixed encoding = null ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **mixed** |  |
+| `encoding` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::password_verify
+
+
+
+```php
+Polyfill::password_verify( mixed password, mixed hash ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **mixed** |  |
+| `hash` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### Polyfill::password_hash
+
+
+
+```php
+Polyfill::password_hash( mixed password, mixed algo = PASSWORD_DEFAULT, array options = [] ): mixed
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **mixed** |  |
+| `algo` | **mixed** |  |
+| `options` | **array** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+
 ## Contributing
 
 We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to get involved.
