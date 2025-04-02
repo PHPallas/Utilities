@@ -1,13 +1,13 @@
 {
     "name": "phpallas/utilities",
-    "version": "1.2.4",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Sina Kuhestani",
             "email": "sinakuhestani@gmail.com"
         }
     ],
-    "description": "Utility Library for PHP projects",
+    "description": "A comprehensive PHP library of utility functions for simplifying programming tasks, enhancing usability and efficiency across various domains.",
     "type": "library",
     "license": "MIT",
     "autoload": {
