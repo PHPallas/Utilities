@@ -1423,13 +1423,14 @@ class MathUtility
         return $subset;
     }
 
-        /**
+    /**
      * Calculate the mean of an array of numbers.
      *
      * @param array $data The input array of numbers.
      * @return float The mean of the numbers.
      */
-    public static function mean(array $data) {
+    public static function mean(array $data)
+    {
         return array_sum($data) / count($data);
     }
 
@@ -1439,13 +1440,17 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The median of the numbers.
      */
-    public static function median(array $data) {
+    public static function median(array $data)
+    {
         sort($data);
         $count = count($data);
         $middle = floor(($count - 1) / 2);
-        if ($count % 2) {
+        if ($count % 2)
+        {
             return $data[$middle];
-        } else {
+        }
+        else
+        {
             return ($data[$middle] + $data[$middle + 1]) / 2;
         }
     }
@@ -1456,7 +1461,8 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return array The mode(s) of the numbers.
      */
-    public static function mode(array $data) {
+    public static function mode(array $data)
+    {
         $values = array_count_values($data);
         $maxCount = max($values);
         $modes = array_keys($values, $maxCount);
@@ -1469,9 +1475,11 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The sample variance of the numbers.
      */
-    public static function variance(array $data) {
+    public static function variance(array $data)
+    {
         $mean = self::mean($data);
-        $squaredDiffs = array_map(function($value) use ($mean) {
+        $squaredDiffs = array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 2);
         }, $data);
         return array_sum($squaredDiffs) / (count($data) - 1);
@@ -1483,9 +1491,11 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The population variance of the numbers.
      */
-    public static function populationVariance(array $data) {
+    public static function populationVariance(array $data)
+    {
         $mean = self::mean($data);
-        $squaredDiffs = array_map(function($value) use ($mean) {
+        $squaredDiffs = array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 2);
         }, $data);
         return array_sum($squaredDiffs) / count($data);
@@ -1497,7 +1507,8 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The sample standard deviation of the numbers.
      */
-    public static function standardDeviation(array $data) {
+    public static function standardDeviation(array $data)
+    {
         return sqrt(self::variance($data));
     }
 
@@ -1507,7 +1518,8 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The population standard deviation of the numbers.
      */
-    public static function populationStandardDeviation(array $data) {
+    public static function populationStandardDeviation(array $data)
+    {
         return sqrt(self::populationVariance($data));
     }
 
@@ -1519,20 +1531,23 @@ class MathUtility
      * @return float The correlation coefficient.
      * @throws InvalidArgumentException if arrays are not of equal length.
      */
-    public static function correlation(array $x, array $y) {
-        if (count($x) !== count($y)) {
+    public static function correlation(array $x, array $y)
+    {
+        if (count($x) !== count($y))
+        {
             throw new InvalidArgumentException('Arrays must be of equal length.');
         }
-        
+
         $n = count($x);
         $meanX = self::mean($x);
         $meanY = self::mean($y);
-        
+
         $numerator = 0;
         $denominatorX = 0;
         $denominatorY = 0;
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             $numerator += ($x[$i] - $meanX) * ($y[$i] - $meanY);
             $denominatorX += pow($x[$i] - $meanX, 2);
             $denominatorY += pow($y[$i] - $meanY, 2);
@@ -1549,23 +1564,29 @@ class MathUtility
      * @return array The coefficients of the regression model.
      * @throws InvalidArgumentException if input arrays are empty or of unequal length.
      */
-    public static function multipleLinearRegression(array $X, array $Y) {
-        if (count($X) === 0 || count($Y) === 0) {
+    public static function multipleLinearRegression(array $X, array $Y)
+    {
+        if (count($X) === 0 || count($Y) === 0)
+        {
             throw new InvalidArgumentException('Input arrays cannot be empty.');
         }
-        if (count($X) !== count($Y)) {
+        if (count($X) !== count($Y))
+        {
             throw new InvalidArgumentException('Independent and dependent variable arrays must be of equal length.');
         }
 
         // Add a column of ones to X for the intercept term
         $n = count($Y);
-        $X = array_map(function($row) {
+        $X = array_map(function ($row)
+        {
             return array_merge([1], $row); // Add intercept term
         }, $X);
 
         // Convert arrays to matrices
         $X = self::transpose($X);
-        $Y = array_map(function($value) { return [$value]; }, $Y); // Convert to column matrix
+        $Y = array_map(function ($value)
+        {
+            return [$value]; }, $Y); // Convert to column matrix
 
         // Calculate coefficients using the formula: (X'X)^-1 X'Y
         $XTX = self::matrixMultiply($X, $X);
@@ -1573,7 +1594,8 @@ class MathUtility
         $XTY = self::matrixMultiply($X, $Y);
         $coefficients = self::matrixMultiply($XTX_inv, $XTY);
 
-        return array_map(function($row) {
+        return array_map(function ($row)
+        {
             return $row[0]; // Flatten the result
         }, $coefficients);
     }
@@ -1586,7 +1608,8 @@ class MathUtility
      * @param float $stdDev The standard deviation of the distribution.
      * @return float The PDF value.
      */
-    public static function normalDistributionPDF($x, $mean, $stdDev) {
+    public static function normalDistributionPDF($x, $mean, $stdDev)
+    {
         return (1 / (sqrt(2 * M_PI) * $stdDev)) * exp(-0.5 * pow(($x - $mean) / $stdDev, 2));
     }
 
@@ -1598,7 +1621,8 @@ class MathUtility
      * @param float $stdDev The standard deviation of the distribution.
      * @return float The CDF value.
      */
-    public static function normalDistributionCDF($x, $mean, $stdDev) {
+    public static function normalDistributionCDF($x, $mean, $stdDev)
+    {
         return 0.5 * (1 + self::erf(($x - $mean) / ($stdDev * sqrt(2))));
     }
 
@@ -1608,13 +1632,14 @@ class MathUtility
      * @param float $x The input value.
      * @return float The error function value.
      */
-    private static function erf($x) {
-        $a1 =  0.254829592;
+    private static function erf($x)
+    {
+        $a1 = 0.254829592;
         $a2 = -0.284496736;
-        $a3 =  1.421413741;
+        $a3 = 1.421413741;
         $a4 = -1.453152027;
-        $a5 =  1.061405429;
-        $p  =  0.3275911;
+        $a5 = 1.061405429;
+        $p = 0.3275911;
 
         $sign = ($x < 0) ? -1 : 1;
         $x = abs($x);
@@ -1631,7 +1656,8 @@ class MathUtility
      * @param float $p The probability of success.
      * @return float The binomial probability.
      */
-    public static function binomialProbability($n, $k, $p) {
+    public static function binomialProbability($n, $k, $p)
+    {
         return self::combination($n, $k) * pow($p, $k) * pow((1 - $p), ($n - $k));
     }
 
@@ -1642,8 +1668,10 @@ class MathUtility
      * @param int $k The number of items to choose.
      * @return int The number of combinations.
      */
-    private static function combination($n, $k) {
-        if ($k > $n) return 0;
+    private static function combination($n, $k)
+    {
+        if ($k > $n)
+            return 0;
         return self::factorial($n) / (self::factorial($k) * self::factorial($n - $k));
     }
 
@@ -1653,10 +1681,13 @@ class MathUtility
      * @param int $n The number to calculate the factorial for.
      * @return int The factorial of the number.
      */
-    private static function factorial($n) {
-        if ($n === 0) return 1;
+    private static function factorial($n)
+    {
+        if ($n === 0)
+            return 1;
         $result = 1;
-        for ($i = 1; $i <= $n; $i++) {
+        for ($i = 1; $i <= $n; $i++)
+        {
             $result *= $i;
         }
         return $result;
@@ -1669,7 +1700,8 @@ class MathUtility
      * @param float $lambda The expected number of occurrences.
      * @return float The PDF value.
      */
-    public static function poissonDistribution($x, $lambda) {
+    public static function poissonDistribution($x, $lambda)
+    {
         return (pow($lambda, $x) * exp(-$lambda)) / self::factorial($x);
     }
 
@@ -1680,7 +1712,8 @@ class MathUtility
      * @param float $lambda The rate parameter.
      * @return float The PDF value.
      */
-    public static function exponentialDistributionPDF($x, $lambda) {
+    public static function exponentialDistributionPDF($x, $lambda)
+    {
         return $lambda * exp(-$lambda * $x);
     }
 
@@ -1691,7 +1724,8 @@ class MathUtility
      * @param float $lambda The rate parameter.
      * @return float The CDF value.
      */
-    public static function exponentialDistributionCDF($x, $lambda) {
+    public static function exponentialDistributionCDF($x, $lambda)
+    {
         return 1 - exp(-$lambda * $x);
     }
 
@@ -1703,7 +1737,8 @@ class MathUtility
      * @param float $b The upper bound of the distribution.
      * @return float The PDF value.
      */
-    public static function uniformDistributionPDF($x, $a, $b) {
+    public static function uniformDistributionPDF($x, $a, $b)
+    {
         return ($x >= $a && $x <= $b) ? (1 / ($b - $a)) : 0;
     }
 
@@ -1715,9 +1750,12 @@ class MathUtility
      * @param float $b The upper bound of the distribution.
      * @return float The CDF value.
      */
-    public static function uniformDistributionCDF($x, $a, $b) {
-        if ($x < $a) return 0;
-        if ($x > $b) return 1;
+    public static function uniformDistributionCDF($x, $a, $b)
+    {
+        if ($x < $a)
+            return 0;
+        if ($x > $b)
+            return 1;
         return ($x - $a) / ($b - $a);
     }
 
@@ -1727,11 +1765,13 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The skewness of the numbers.
      */
-    public static function skewness(array $data) {
+    public static function skewness(array $data)
+    {
         $mean = self::mean($data);
         $n = count($data);
         $stdDev = self::standardDeviation($data);
-        $m3 = array_sum(array_map(function($value) use ($mean) {
+        $m3 = array_sum(array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 3);
         }, $data)) / $n;
 
@@ -1744,11 +1784,13 @@ class MathUtility
      * @param array $data The input array of numbers.
      * @return float The kurtosis of the numbers.
      */
-    public static function kurtosis(array $data) {
+    public static function kurtosis(array $data)
+    {
         $mean = self::mean($data);
         $n = count($data);
         $stdDev = self::standardDeviation($data);
-        $m4 = array_sum(array_map(function($value) use ($mean) {
+        $m4 = array_sum(array_map(function ($value) use ($mean)
+        {
             return pow($value - $mean, 4);
         }, $data)) / $n;
 
@@ -1761,7 +1803,8 @@ class MathUtility
      * @param array $matrix The matrix to transpose.
      * @return array The transposed matrix.
      */
-    private static function transpose(array $matrix) {
+    private static function transpose(array $matrix)
+    {
         return array_map(null, ...$matrix);
     }
 
@@ -1772,12 +1815,16 @@ class MathUtility
      * @param array $B The second matrix.
      * @return array The product of the two matrices.
      */
-    private static function matrixMultiply(array $A, array $B) {
+    private static function matrixMultiply(array $A, array $B)
+    {
         $result = [];
-        foreach ($A as $rowA) {
+        foreach ($A as $rowA)
+        {
             $resultRow = [];
-            foreach (self::transpose($B) as $rowB) {
-                $resultRow[] = array_sum(array_map(function($a, $b) {
+            foreach (self::transpose($B) as $rowB)
+            {
+                $resultRow[] = array_sum(array_map(function ($a, $b)
+                {
                     return $a * $b;
                 }, $rowA, $rowB));
             }
@@ -1792,31 +1839,40 @@ class MathUtility
      * @param array $matrix The matrix to invert.
      * @return array The inverted matrix.
      */
-    private static function matrixInverse(array $matrix) {
+    private static function matrixInverse(array $matrix)
+    {
         $n = count($matrix);
-        $identity = array_map(function($i) use ($n) {
-            return array_map(function($j) use ($i) {
+        $identity = array_map(function ($i) use ($n)
+        {
+            return array_map(function ($j) use ($i)
+            {
                 return $i === $j ? 1 : 0;
             }, range(0, $n - 1));
         }, range(0, $n - 1));
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             $matrix[$i] = array_merge($matrix[$i], $identity[$i]); // Augment the matrix
         }
 
         // Apply Gauss-Jordan elimination
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             // Make the diagonal contain all 1s
             $divisor = $matrix[$i][$i];
-            for ($j = 0; $j < 2 * $n; $j++) {
+            for ($j = 0; $j < 2 * $n; $j++)
+            {
                 $matrix[$i][$j] /= $divisor;
             }
 
             // Make the other rows contain 0s in the current column
-            for ($j = 0; $j < $n; $j++) {
-                if ($j != $i) {
+            for ($j = 0; $j < $n; $j++)
+            {
+                if ($j != $i)
+                {
                     $factor = $matrix[$j][$i];
-                    for ($k = 0; $k < 2 * $n; $k++) {
+                    for ($k = 0; $k < 2 * $n; $k++)
+                    {
                         $matrix[$j][$k] -= $factor * $matrix[$i][$k];
                     }
                 }
@@ -1825,11 +1881,226 @@ class MathUtility
 
         // Extract the inverse matrix
         $inverse = [];
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i++)
+        {
             $inverse[] = array_slice($matrix[$i], $n); // Get the right half
         }
 
         return $inverse;
+    }
+
+
+    /**
+     * Calculate the greatest common divisor (GCD) of two numbers.
+     *
+     * @param int $a First number
+     * @param int $b Second number
+     * @return int GCD of the two numbers
+     */
+    public static function gcd($a, $b)
+    {
+        while ($b != 0)
+        {
+            $temp = $b;
+            $b = $a % $b;
+            $a = $temp;
+        }
+        return abs($a);
+    }
+
+    /**
+     * Calculate the least common multiple (LCM) of two numbers.
+     *
+     * @param int $a First number
+     * @param int $b Second number
+     * @return int LCM of the two numbers
+     */
+    public static function lcm($a, $b)
+    {
+        return abs($a * $b) / self::gcd($a, $b);
+    }
+
+    /**
+     * Check if a number is prime.
+     *
+     * @param int $n The number to check
+     * @return bool True if the number is prime, false otherwise
+     */
+    public static function isPrime($n)
+    {
+        if ($n <= 1)
+        {
+            return false;
+        }
+        for ($i = 2; $i <= sqrt($n); $i++)
+        {
+            if ($n % $i == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Generate a list of prime numbers up to a given limit.
+     *
+     * @param int $limit The upper limit
+     * @return array An array of prime numbers
+     */
+    public static function generatePrimes($limit)
+    {
+        $primes = [];
+        for ($i = 2; $i <= $limit; $i++)
+        {
+            if (self::isPrime($i))
+            {
+                $primes[] = $i;
+            }
+        }
+        return $primes;
+    }
+
+    /**
+     * Calculate the Fibonacci number at a given position.
+     *
+     * @param int $n The position in the Fibonacci sequence
+     * @return int The Fibonacci number at that position
+     */
+    public static function fibonacci($n)
+    {
+        if ($n < 0)
+        {
+            throw new InvalidArgumentException("Position must be a non-negative integer.");
+        }
+        if ($n === 0)
+        {
+            return 0;
+        }
+        if ($n === 1)
+        {
+            return 1;
+        }
+        return self::fibonacci($n - 1) + self::fibonacci($n - 2);
+    }
+
+    /**
+     * Check if a number is a perfect square.
+     *
+     * @param int $n The number to check
+     * @return bool True if the number is a perfect square, false otherwise
+     */
+    public static function isPerfectSquare($n)
+    {
+        $sqrt = sqrt($n);
+        return ($sqrt * $sqrt == $n);
+    }
+
+    /**
+     * Find the prime factorization of a number.
+     *
+     * @param int $n The number to factor
+     * @return array An array of prime factors
+     */
+    public static function primeFactorization($n)
+    {
+        $factors = [];
+        for ($i = 2; $i <= sqrt($n); $i++)
+        {
+            while ($n % $i == 0)
+            {
+                $factors[] = $i;
+                $n /= $i;
+            }
+        }
+        if ($n > 1)
+        {
+            $factors[] = $n;
+        }
+        return $factors;
+    }
+
+    /**
+     * Calculate the sum of divisors of a number.
+     *
+     * @param int $n The number to calculate the sum of divisors for
+     * @return int The sum of divisors of the number
+     */
+    public static function sumOfDivisors($n)
+    {
+        $sum = 0;
+        for ($i = 1; $i <= $n; $i++)
+        {
+            if ($n % $i == 0)
+            {
+                $sum += $i;
+            }
+        }
+        return $sum;
+    }
+
+    /**
+     * Calculate Euler's Totient function for a given number.
+     *
+     * @param int $n The number to calculate the Totient for
+     * @return int The value of Euler's Totient function
+     */
+    public static function eulerTotient($n)
+    {
+        if ($n < 1)
+        {
+            throw new InvalidArgumentException("Input must be a positive integer.");
+        }
+        $result = $n; // Initialize result as n
+        for ($p = 2; $p * $p <= $n; $p++)
+        {
+            if ($n % $p == 0)
+            {
+                // If p is a prime factor of n, subtract multiples of p
+                while ($n % $p == 0)
+                {
+                    $n /= $p;
+                }
+                $result -= $result / $p;
+            }
+        }
+        // If n has a prime factor greater than sqrt(n)
+        if ($n > 1)
+        {
+            $result -= $result / $n;
+        }
+        return (int) $result;
+    }
+
+    /**
+     * Check if two numbers are coprime (i.e., their GCD is 1).
+     *
+     * @param int $a First number
+     * @param int $b Second number
+     * @return bool True if the numbers are coprime, false otherwise
+     */
+    public static function areCoprime($a, $b)
+    {
+        return self::gcd($a, $b) === 1;
+    }
+
+    /**
+     * Generate a list of perfect numbers up to a given limit.
+     *
+     * @param int $limit The upper limit
+     * @return array An array of perfect numbers
+     */
+    public static function generatePerfectNumbers($limit)
+    {
+        $perfectNumbers = [];
+        for ($num = 1; $num <= $limit; $num++)
+        {
+            if (self::sumOfDivisors($num) === 2 * $num)
+            {
+                $perfectNumbers[] = $num;
+            }
+        }
+        return $perfectNumbers;
     }
 
 }
