@@ -38,10 +38,12 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(true, TypesUtility::isBoolean(true));
         $this->assertSame(false, TypesUtility::isBoolean(1));
         $this->assertSame(false, TypesUtility::isBoolean("true"));
+        $this->assertSame(false, TypesUtility::isBool("true"));
 
         $this->assertSame(false, TypesUtility::isNotBoolean(true));
         $this->assertSame(true, TypesUtility::isNotBoolean(1));
         $this->assertSame(true, TypesUtility::isNotBoolean("true"));
+        $this->assertSame(true, TypesUtility::isNotBool("true"));
     }
 
     public function testIsCallable()
@@ -71,10 +73,12 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(true, TypesUtility::isFloat(1.2));
         $this->assertSame(false, TypesUtility::isFloat(1));
         $this->assertSame(false, TypesUtility::isFloat("true"));
+        $this->assertSame(false, TypesUtility::isDouble("true"));
 
         $this->assertSame(false, TypesUtility::isNotFloat(1.2));
         $this->assertSame(true, TypesUtility::isNotFloat(1));
         $this->assertSame(true, TypesUtility::isNotFloat("true"));
+        $this->assertSame(true, TypesUtility::isNotDouble("true"));
     }
 
     public function testIsInteger()
@@ -82,10 +86,12 @@ final class TypesUtilityTests extends TestCase
         $this->assertSame(true, TypesUtility::isInteger(15));
         $this->assertSame(false, TypesUtility::isInteger(1.0));
         $this->assertSame(false, TypesUtility::isInteger("true"));
+        $this->assertSame(false, TypesUtility::isInt("true"));
 
         $this->assertSame(false, TypesUtility::isNotInteger(15));
         $this->assertSame(true, TypesUtility::isNotInteger(1.0));
         $this->assertSame(true, TypesUtility::isNotInteger("true"));
+        $this->assertSame(true, TypesUtility::isNotInt("true"));
     }
 
     public function testIsIterable()

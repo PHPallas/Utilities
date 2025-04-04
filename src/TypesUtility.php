@@ -77,6 +77,26 @@ class TypesUtility
     }
 
     /**
+     * An alias to isBoolean()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isBool($value)
+    {
+        return static::isBoolean($value);
+    }
+
+    /**
+     * An alias to isMotBoolean()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isNotBool($value)
+    {
+        return static::isNotBoolean($value);
+    }
+
+    /**
      * Check if the variable is callable.
      *
      * @param mixed $value The variable to check.
@@ -161,6 +181,26 @@ class TypesUtility
     }
 
     /**
+     * An alias to isFloat()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isDouble($value)
+    {
+        return static::isFloat($value);
+    }
+
+    /**
+     * An alias to isNotFloat()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isNotDouble($value)
+    {
+        return static::isNotFloat($value);
+    }
+
+    /**
      * Check if the variable is an integer.
      *
      * @param mixed $value The variable to check.
@@ -181,6 +221,26 @@ class TypesUtility
     public static function isNotInteger($value)
     {
         return BooleanUtility::not(static::isInteger($value));
+    }
+
+    /**
+     * An alias to isInteger()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isInt($value)
+    {
+        return static::isInteger($value);
+    }
+
+    /**
+     * An alias to isNotInteger()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isNotInt($value)
+    {
+        return static::isNotInteger($value);
     }
 
     /**
@@ -490,6 +550,16 @@ class TypesUtility
     }
 
     /**
+     * An alias to toInteger()
+     * @return int
+     * @since 1.1.0
+     */
+    public static function toInt($variable)
+    {
+        return static::toInteger($variable);
+    }
+
+    /**
      * Convert a variable to a float.
      *
      * @param mixed $variable The variable to convert.
@@ -501,6 +571,16 @@ class TypesUtility
     }
 
     /**
+     * An alias to toFloat()
+     * @return float
+     * @since 1.1.0
+     */
+    public static function toDouble($variable)
+    {
+        return static::toFloat($variable);
+    }
+
+    /**
      * Convert a variable to a boolean.
      *
      * @param mixed $variable The variable to convert.
@@ -509,6 +589,16 @@ class TypesUtility
     public static function toBoolean($variable)
     {
         return static::to($variable, "bool");
+    }
+
+    /**
+     * An alias to toBoolean()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function toBool($variable)
+    {
+        return static::toBoolean($variable);
     }
 
     /**
