@@ -7918,9 +7918,7 @@ The modified string with the value added evenly.
 Drops specified characters from the given string.
 
 ```php
-StringUtility::drop( string string, string characters = " 
-
-	 " ): string
+StringUtility::drop( string string, string characters = " \n\r\t\v\x00" ): string
 ```
 
 This method removes all occurrences of the specified characters
@@ -8027,9 +8025,7 @@ The modified string with the character at the specified index removed.
 Drops specified characters from both ends of the given string.
 
 ```php
-StringUtility::dropFromSides( string string, string characters = " 
-
-	 " ): string
+StringUtility::dropFromSides( string string, string characters = " \n\r\t\v\x00" ): string
 ```
 
 This method trims the specified characters from the start and end
@@ -8056,9 +8052,7 @@ The modified string with specified characters trimmed from both ends.
 Drops specified characters from the start of the given string.
 
 ```php
-StringUtility::dropFromStart( string string, string characters = " 
-
-	 " ): string
+StringUtility::dropFromStart( string string, string characters = " \n\r\t\v\x00" ): string
 ```
 
 This method removes all occurrences of the specified characters
@@ -8085,9 +8079,7 @@ The modified string with specified characters removed from the start.
 Drops specified characters from the end of the given string.
 
 ```php
-StringUtility::dropFromEnd( string string, string characters = " 
-
-	 " ): string
+StringUtility::dropFromEnd( string string, string characters = " \n\r\t\v\x00" ): string
 ```
 
 This method removes all occurrences of the specified characters
