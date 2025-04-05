@@ -397,8 +397,8 @@ class StringUtility
      * replacements based on the provided flag.
      *
      * @param string $string The input string in which to perform the replacement.
-     * @param string $needle The substring to be replaced.
-     * @param string $replace The substring to replace with.
+     * @param string|array $needle The substring to be replaced.
+     * @param string|array $replace The substring to replace with.
      * @param bool $caseSensitive Indicates whether the replacement should be 
      *                            case-sensitive. Default is false.
      * @return string The modified string with replacements made.
@@ -937,6 +937,21 @@ class StringUtility
     }
 
     /**
+     * Converts a string to title case.
+     *
+     * This method capitalizes the first letter of each word in the 
+     * input string while converting the rest to lowercase.
+     *
+     * @param string $string The input string to transform.
+     * @return string The title-cased string.
+     * @since 1.1.0
+     */
+    public static function transformToTitleCase($string)
+    {
+        return ucwords(strtolower($string));
+    }
+
+    /**
      * Transforms the given string to camelCase.
      *
      * This method converts the input string to PascalCase and then lowers 
@@ -1232,6 +1247,23 @@ class StringUtility
         $percent = 0;
         similar_text($string1, $string2, $percent);
         return $percent / 100; // Return similarity as a value between 0 and 1
+    }
+
+    /**
+     * Calculates the Levenshtein distance between two strings.
+     *
+     * This method measures the number of single-character edits 
+     * (insertions, deletions, or substitutions) required to change 
+     * one string into another.
+     *
+     * @param string $string1 The first string to compare.
+     * @param string $string2 The second string to compare.
+     * @return int The Levenshtein distance between the two strings.
+     * @since 1.1.0
+     */
+    public static function estimateLevenshteinDistance($string1, $string2)
+    {
+        return levenshtein($string1, $string2);
     }
 
     /**
@@ -1583,6 +1615,36 @@ class StringUtility
     }
 
     /**
+     * Encodes a string using Base64 encoding.
+     *
+     * This method converts the input string into its Base64 encoded 
+     * representation, which is useful for data transfer.
+     *
+     * @param string $string The input string to encode.
+     * @return string The Base64 encoded string.
+     * @since 1.1.0
+     */
+    public static function inBase64($string)
+    {
+        return base64_encode($string);
+    }
+
+    /**
+     * Decodes a Base64 encoded string.
+     *
+     * This method converts a Base64 encoded string back to its 
+     * original form.
+     *
+     * @param string $string The Base64 encoded string to decode.
+     * @return string The original string represented by the Base64 input.
+     * @since 1.1.0
+     */
+    public static function ofBase64($string)
+    {
+        return base64_decode($string);
+    }
+
+    /**
      * Generates an MD5 hash of a given string.
      *
      * @param string $string The input string to hash.
@@ -1625,6 +1687,281 @@ class StringUtility
     public static function validateChecksum($string, $checksum)
     {
         return Polyfill::password_verify(sha1($string), $checksum); // Verify the string against the checksum
+    }
+
+    /**
+     * Converts a string into a URL-friendly slug.
+     *
+     * This method transforms the input string into lowercase, 
+     * removes special characters, and replaces spaces with dashes.
+     *
+     * @param string $string The input string to convert.
+     * @return string The URL-friendly slug.
+     * @since 1.1.0
+     */
+    public static function slugify($string)
+    {
+        $string = strtolower(trim($string));
+        $string = preg_replace('/[^a-z0-9-]+/', '-', $string);
+        return trim($string, '-');
+    }
+
+    /**
+     * Interpolates variables into a string template.
+     *
+     * This method replaces placeholders in the format {key} with 
+     * corresponding values from the provided associative array.
+     *
+     * @param string $template The string template with placeholders.
+     * @param array $variables An associative array of variables to interpolate.
+     * @return string The string with variables interpolated.
+     * @since 1.1.0
+     */
+    public static function interpolate($template, $variables)
+    {
+        return preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($variables)
+        {
+            return isset($variables[$matches[1]]) ? $variables[$matches[1]] : '';
+        }, $template);
+    }
+
+    /**
+     * Formats a given phone number into a specified format.
+     *
+     * This function accepts a phone number string in any format and 
+     * returns it in a standardized format based on the specified format string.
+     *
+     * @param string $number The input phone number to format.
+     * @param string $format The desired format for the phone number. 
+     *                       Supported formats include:
+     *                       - '(###) ###-####'
+     *                       - '###-###-####'
+     *                       - '###.###.####'
+     *                       - '### ### ####'
+     *                       - '###/###-####'
+     *                       - '#######'
+     *                       - '+1 (###) ###-####'
+     *                       - '+1 ###-###-####'
+     *                       - '+1 ###.###.####'
+     *                       - '+1 ### ### ####'
+     *                       - '+44 #### ### ###'
+     *                       - '+49 ### #### ####'
+     *                       - '0### ### ####'
+     *                       - '###-##-####'
+     *                       - '###.##.####'
+     *                       - '###-###-###'
+     *                       - '### ### ###'
+     *                       - '###-###'
+     *                       - '###.###'
+     *                       - '### ###'
+     * @return string The formatted phone number or an error message.
+     */
+    public static function formatPhoneNumber($number, $format)
+    {
+        // Remove all non-digit characters
+        $number = preg_replace('/\D/', '', $number);
+
+        // Check if the number has the correct length
+        if (strlen($number) < 10 || strlen($number) > 15)
+        {
+            return 'Error: Invalid phone number length.';
+        }
+
+        // Check for international format
+        if (strlen($number) === 11 && $number[0] === '1')
+        {
+            $number = substr($number, 1); // Remove leading '1' for US numbers
+        }
+        elseif (strlen($number) > 10)
+        {
+            // Assume a country code exists, but do not alter the number
+        }
+
+        // Create a mapping of formats
+        $formattedNumber = '';
+        $formatLength = strlen($format);
+        $numberIndex = 0;
+
+        for ($i = 0; $i < $formatLength; $i++)
+        {
+            if ($format[$i] === '#')
+            {
+                if ($numberIndex < strlen($number))
+                {
+                    $formattedNumber .= $number[$numberIndex++];
+                }
+                else
+                {
+                    return 'Error: Not enough digits in the number for the specified format.';
+                }
+            }
+            else
+            {
+                $formattedNumber .= $format[$i]; // Add the format character
+            }
+        }
+
+        // If there are extra digits left in the number
+        if ($numberIndex < strlen($number))
+        {
+            return 'Error: Too many digits in the number for the specified format.';
+        }
+
+        return $formattedNumber;
+    }
+
+    /**
+     * Validates a phone number.
+     *
+     * @param string $number The phone number to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validatePhoneNumber($number)
+    {
+        $cleanedNumber = preg_replace('/\D/', '', $number);
+        return (strlen($cleanedNumber) >= 10 && strlen($cleanedNumber) <= 15);
+    }
+
+    /**
+     * Validates an email address.
+     *
+     * @param string $email The email address to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateEmail($email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
+    /**
+     * Validates a name.
+     *
+     * @param string $name The name to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateName($name)
+    {
+        return (bool) preg_match('/^[a-zA-Z\s]+$/', $name) && !empty(trim($name));
+    }
+
+    /**
+     * Validates a URL.
+     *
+     * @param string $url The URL to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateURL($url)
+    {
+        return filter_var($url, FILTER_VALIDATE_URL) !== false;
+    }
+
+    /**
+     * Validates a date in YYYY-MM-DD format.
+     *
+     * @param string $date The date to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateDate($date)
+    {
+        $d = strtotime($date);
+        return date('Y-m-d', $d) === $date;
+    }
+
+    /**
+     * Validates a password.
+     * The password must be at least 8 characters long, contain at least one number, 
+     * one uppercase letter, and one lowercase letter.
+     *
+     * @param string $password The password to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validatePassword($password)
+    {
+        // Check if the password meets all criteria
+        if (strlen($password) < 8)
+        {
+            return false; // Invalid: less than 8 characters
+        }
+        if (!preg_match('/[a-z]/', $password))
+        {
+            return false; // Invalid: no lowercase letters
+        }
+        if (!preg_match('/[A-Z]/', $password))
+        {
+            return false; // Invalid: no uppercase letters
+        }
+        if (!preg_match('/\d/', $password))
+        {
+            return false; // Invalid: no numbers
+        }
+
+        return true; // Valid password
+    }
+
+    /**
+     * Validates a credit card number using the Luhn algorithm.
+     *
+     * @param string $number The credit card number to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateCreditCard($number)
+    {
+        if (empty($number)) return false;
+        $cleanedNumber = preg_replace('/\D/', '', $number);
+        $sum = 0;
+        $alt = false;
+
+        for ($i = strlen($cleanedNumber) - 1; $i >= 0; $i--)
+        {
+            $n = (int) $cleanedNumber[$i];
+            if ($alt)
+            {
+                $n *= 2;
+                if ($n > 9)
+                {
+                    $n -= 9;
+                }
+            }
+            $sum += $n;
+            $alt = !$alt;
+        }
+
+        return $sum % 10 === 0;
+    }
+
+    /**
+     * Validates a username.
+     * The username must be 3-15 characters long and can contain letters, numbers, and underscores.
+     *
+     * @param string $username The username to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateUsername($username)
+    {
+        return (bool) preg_match('/^[a-zA-Z0-9_]{3,15}$/', $username);
+    }
+
+    /**
+     * Validates a postal code.
+     * Supports US ZIP codes (5 or 9 digits) and Canadian postal codes (A1A 1A1).
+     *
+     * @param string $postalCode The postal code to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validatePostalCode($postalCode)
+    {
+        return (bool) preg_match('/^\d{5}(-\d{4})?$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/', $postalCode);
+    }
+
+    /**
+     * Validates an IP address.
+     *
+     * @param string $ip The IP address to validate.
+     * @return bool True if valid, false otherwise.
+     */
+    public static function validateIP($ip)
+    {
+        return filter_var($ip, FILTER_VALIDATE_IP) !== false;
     }
 
 }
