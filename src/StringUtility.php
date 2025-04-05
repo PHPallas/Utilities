@@ -1755,6 +1755,7 @@ class StringUtility
      *                       - '###.###'
      *                       - '### ###'
      * @return string The formatted phone number or an error message.
+     * @since 1.1.0
      */
     public static function formatPhoneNumber($number, $format)
     {
@@ -1815,6 +1816,7 @@ class StringUtility
      *
      * @param string $number The phone number to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validatePhoneNumber($number)
     {
@@ -1827,6 +1829,7 @@ class StringUtility
      *
      * @param string $email The email address to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateEmail($email)
     {
@@ -1838,6 +1841,7 @@ class StringUtility
      *
      * @param string $name The name to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateName($name)
     {
@@ -1849,6 +1853,7 @@ class StringUtility
      *
      * @param string $url The URL to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateURL($url)
     {
@@ -1860,6 +1865,7 @@ class StringUtility
      *
      * @param string $date The date to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateDate($date)
     {
@@ -1874,6 +1880,7 @@ class StringUtility
      *
      * @param string $password The password to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validatePassword($password)
     {
@@ -1903,6 +1910,7 @@ class StringUtility
      *
      * @param string $number The credit card number to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateCreditCard($number)
     {
@@ -1935,6 +1943,7 @@ class StringUtility
      *
      * @param string $username The username to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateUsername($username)
     {
@@ -1947,6 +1956,7 @@ class StringUtility
      *
      * @param string $postalCode The postal code to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validatePostalCode($postalCode)
     {
@@ -1958,6 +1968,7 @@ class StringUtility
      *
      * @param string $ip The IP address to validate.
      * @return bool True if valid, false otherwise.
+     * @since 1.1.0
      */
     public static function validateIP($ip)
     {
