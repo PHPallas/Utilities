@@ -42,6 +42,18 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not an array.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not an array, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotArray($value)
+    {
+        return BooleanUtility::not(static::isArray($value));
+    }
+
+    /**
      * Check if the variable is a boolean.
      *
      * @param mixed $value The variable to check.
@@ -53,6 +65,38 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not a boolean.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not a boolean, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotBoolean($value)
+    {
+        return BooleanUtility::not(static::isBoolean($value));
+    }
+
+    /**
+     * An alias to isBoolean()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isBool($value)
+    {
+        return static::isBoolean($value);
+    }
+
+    /**
+     * An alias to isMotBoolean()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isNotBool($value)
+    {
+        return static::isNotBoolean($value);
+    }
+
+    /**
      * Check if the variable is callable.
      *
      * @param mixed $value The variable to check.
@@ -61,6 +105,18 @@ class TypesUtility
     public static function isCallable($value)
     {
         return is_callable($value); // Since PHP 4.0.6
+    }
+
+    /**
+     * Check if the variable is not callable.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not callable, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotCallable($value)
+    {
+        return BooleanUtility::not(static::isCallable($value));
     }
 
     /**
@@ -90,6 +146,18 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not countable.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is mot countable, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotCountable($value)
+    {
+        return BooleanUtility::not(static::isCountable($value));
+    }
+
+    /**
      * Check if the variable is a float.
      *
      * @param mixed $value The variable to check.
@@ -101,6 +169,38 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not a float.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not a float, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotFloat($value)
+    {
+        return BooleanUtility::not(static::isFloat($value));
+    }
+
+    /**
+     * An alias to isFloat()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isDouble($value)
+    {
+        return static::isFloat($value);
+    }
+
+    /**
+     * An alias to isNotFloat()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isNotDouble($value)
+    {
+        return static::isNotFloat($value);
+    }
+
+    /**
      * Check if the variable is an integer.
      *
      * @param mixed $value The variable to check.
@@ -109,6 +209,38 @@ class TypesUtility
     public static function isInteger($value)
     {
         return is_int($value); // Since PHP 4.0
+    }
+
+    /**
+     * Check if the variable is not an integer.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not an integer, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotInteger($value)
+    {
+        return BooleanUtility::not(static::isInteger($value));
+    }
+
+    /**
+     * An alias to isInteger()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isInt($value)
+    {
+        return static::isInteger($value);
+    }
+
+    /**
+     * An alias to isNotInteger()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function isNotInt($value)
+    {
+        return static::isNotInteger($value);
     }
 
     /**
@@ -142,6 +274,18 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not iterable.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not iterable, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotIterable($value)
+    {
+        return BooleanUtility::not(static::isIterable($value));
+    }
+
+    /**
      * Check if the variable is null.
      *
      * @param mixed $value The variable to check.
@@ -150,6 +294,18 @@ class TypesUtility
     public static function isNull($value)
     {
         return is_null($value); // Since PHP 4.0.4
+    }
+
+        /**
+     * Check if the variable is not null.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not null, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotNull($value)
+    {
+        return BooleanUtility::not(static::isNull($value));
     }
 
     /**
@@ -164,6 +320,18 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not numeric.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not numeric, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotNumeric($value)
+    {
+        return BooleanUtility::not(static::isNumeric($value));
+    }
+
+    /**
      * Check if the variable is an object.
      *
      * @param mixed $value The variable to check.
@@ -172,6 +340,18 @@ class TypesUtility
     public static function isObject($value)
     {
         return is_object($value); // Since PHP 4.0.0
+    }
+
+    /**
+     * Check if the variable is not an object.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not an object, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotObject($value)
+    {
+        return BooleanUtility::not(static::isObject($value));
     }
 
     /**
@@ -186,6 +366,18 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not a resource.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not a resource, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotResource($value)
+    {
+        return BooleanUtility::not(static::isResource($value));
+    }
+
+    /**
      * Check if the variable is a scalar.
      *
      * @param mixed $value The variable to check.
@@ -197,6 +389,18 @@ class TypesUtility
     }
 
     /**
+     * Check if the variable is not a scalar.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is not a scalar, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotScalar($value)
+    {
+        return BooleanUtility::not(static::isScalar($value));
+    }
+
+    /**
      * Check if the variable is a string.
      *
      * @param mixed $value The variable to check.
@@ -205,6 +409,18 @@ class TypesUtility
     public static function isString($value)
     {
         return is_string($value); // Since PHP 4.0.0
+    }
+
+    /**
+     * Check if the variable is not a string.
+     *
+     * @param mixed $value The variable to check.
+     * @return bool True if the variable is a string, false otherwise.
+     * @since 1.1.0
+     */
+    public static function isNotString($value)
+    {
+        return BooleanUtility::not(static::isString($value));
     }
 
     /**
@@ -334,6 +550,16 @@ class TypesUtility
     }
 
     /**
+     * An alias to toInteger()
+     * @return int
+     * @since 1.1.0
+     */
+    public static function toInt($variable)
+    {
+        return static::toInteger($variable);
+    }
+
+    /**
      * Convert a variable to a float.
      *
      * @param mixed $variable The variable to convert.
@@ -345,6 +571,16 @@ class TypesUtility
     }
 
     /**
+     * An alias to toFloat()
+     * @return float
+     * @since 1.1.0
+     */
+    public static function toDouble($variable)
+    {
+        return static::toFloat($variable);
+    }
+
+    /**
      * Convert a variable to a boolean.
      *
      * @param mixed $variable The variable to convert.
@@ -353,6 +589,16 @@ class TypesUtility
     public static function toBoolean($variable)
     {
         return static::to($variable, "bool");
+    }
+
+    /**
+     * An alias to toBoolean()
+     * @return bool
+     * @since 1.1.0
+     */
+    public static function toBool($variable)
+    {
+        return static::toBoolean($variable);
     }
 
     /**

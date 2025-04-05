@@ -11,6 +11,8 @@
 
 namespace PHPallas\Utilities;
 
+use Exception;
+
 class SqlUtility
 {
     public const DATABASE_CUBIRD = 1;
@@ -399,6 +401,12 @@ class SqlUtility
         return static::responder($sql, $params);
     }
 
+    /**
+     * Create union query
+     * @param mixed $selects
+     * @param mixed $full
+     * @return array{params: mixed, sql: string}
+     */
     public static function unionQuery($selects, $full = false)
     {
         $params = [];
@@ -410,6 +418,223 @@ class SqlUtility
         }
         $sql = StringUtility::dropFromSides($sql) . ";";
         return static::responder($sql, $params);
+    }
+
+        /**
+     * Creates a SQL CREATE TABLE statement.
+     * @param string $tableName
+     * @param array $columns Associative array of column names and data types
+     * @param array $options Additional options like PRIMARY KEY, UNIQUE, etc.
+     * @return array
+     * @since 1.1.0
+     */
+    public static function createTable($tableName, array $columns, array $options = [])
+    {
+        $columnDefinitions = [];
+        foreach ($columns as $name => $type)
+        {
+            $columnDefinitions[] = "$name $type";
+        }
+        $columnsClause = implode(", ", $columnDefinitions);
+
+        $optionsClause = "";
+        if (!empty($options))
+        {
+            $optionsClause = ", " . implode(", ", $options);
+        }
+
+        $sql = "CREATE TABLE $tableName ($columnsClause$optionsClause);";
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Alters an existing table to add or drop columns.
+     * @param string $tableName
+     * @param array $addColumns Associative array of column names and data types to add
+     * @param array $dropColumns Array of column names to drop
+     * @return array
+     * @since 1.1.0
+     */
+    public static function alterTable($tableName, array $addColumns = [], array $dropColumns = [], $database = 9)
+    {
+        $addClauses = [];
+        foreach ($addColumns as $name => $type)
+        {
+            if ($database === static::DATABASE_POSTGRESQL || $database === static::DATABASE_SQLSERVER || $database === static::DATABASE_AZURE)
+            {
+                $addClauses[] = "ADD $name $type"; // PostgreSQL and SQL Server
+            }
+            else
+            {
+                $addClauses[] = "ADD COLUMN $name $type"; // MySQL, MariaDB, SQLite
+            }
+        }
+        $addClause = implode(", ", $addClauses);
+
+        $dropClause = !empty($dropColumns) ? "DROP " . implode(", ", $dropColumns) : "";
+
+        $sql = "ALTER TABLE $tableName ";
+        if (!empty($addClause))
+        {
+            $sql .= "$addClause ";
+        }
+        if (!empty($dropClause))
+        {
+            $sql .= "$dropClause ";
+        }
+        $sql = rtrim($sql) . ";";
+
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Drops an existing table.
+     * @param string $tableName
+     * @return array
+     * @since 1.1.0
+     */
+    public static function dropTable($tableName)
+    {
+        $sql = "DROP TABLE $tableName;";
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Modifies an existing column in a table.
+     * @param string $tableName
+     * @param string $columnName
+     * @param string $newDefinition New data type or attributes
+     * @return array
+     * @since 1.1.0
+     */
+    public static function modifyColumn($tableName, $columnName, $newDefinition, $database = 9)
+    {
+        if ($database === static::DATABASE_POSTGRESQL || $database === static::DATABASE_SQLSERVER || $database === static::DATABASE_AZURE)
+        {
+            $sql = "ALTER TABLE $tableName ALTER COLUMN $columnName $newDefinition;";
+        }
+        elseif ($database === static::DATABASE_MYSQL || $database === static::DATABASE_MARIADB)
+        {
+            $sql = "ALTER TABLE $tableName MODIFY $columnName $newDefinition;";
+        }
+        elseif ($database === static::DATABASE_SQLITE)
+        {
+            // SQLite does not support modifying column types directly
+            throw new Exception("SQLite does not support modifying column types directly.");
+        }
+        else
+        {
+            throw new Exception("Unsupported database type for modifying columns.");
+        }
+
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Adds an index to a table.
+     * @param string $tableName
+     * @param string $indexName
+     * @param array $columns Array of column names to index
+     * @return array
+     * @since 1.1.0
+     */
+    public static function addIndex($tableName, $indexName, array $columns)
+    {
+        $columnsClause = implode(", ", $columns);
+        $sql = "CREATE INDEX $indexName ON $tableName ($columnsClause);";
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Drops an existing index from a table.
+     * @param string $tableName
+     * @param string $indexName
+     * @return array
+     * @since 1.1.0
+     */
+    public static function dropIndex($tableName, $indexName, $database = 9)
+    {
+        if ($database === static::DATABASE_SQLSERVER || $database === static::DATABASE_AZURE)
+        {
+            $sql = "DROP INDEX $indexName ON $tableName;";
+        }
+        else
+        {
+            $sql = "DROP INDEX $indexName;";
+        }
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Creates a new database.
+     *
+     * @param int $database The database type constant.
+     * @param string $dbName The name of the database to create.
+     * @return array The SQL statement and parameters for execution.
+     * @throws Exception If the database type is unsupported or if SQLite is used.
+     * @since 1.1.0
+     */
+    public static function createDatabase($dbName, $database)
+    {
+        switch ($database) {
+            case static::DATABASE_MYSQL:
+            case static::DATABASE_MARIADB:
+                $sql = "CREATE DATABASE `$dbName`;";
+                break;
+            case static::DATABASE_POSTGRESQL:
+                $sql = "CREATE DATABASE \"$dbName\";";
+                break;
+            case static::DATABASE_SQLSERVER:
+            case static::DATABASE_AZURE:
+                $sql = "CREATE DATABASE [$dbName];";
+                break;
+            case static::DATABASE_ORACLE:
+                $sql = "CREATE USER \"$dbName\" IDENTIFIED BY password;"; // Oracle uses users instead of databases
+                break;
+            case static::DATABASE_SQLITE:
+                // SQLite doesn't have a CREATE DATABASE command; it creates the database file on connection.
+                throw new Exception("SQLite does not support CREATE DATABASE command directly.");
+            default:
+                throw new Exception("Unsupported database type for creating databases.");
+        }
+
+        return static::responder($sql, []);
+    }
+
+    /**
+     * Drops an existing database.
+     *
+     * @param int $database The database type constant.
+     * @param string $dbName The name of the database to drop.
+     * @return array The SQL statement and parameters for execution.
+     * @throws Exception If the database type is unsupported or if SQLite is used.
+     * @since 1.1.0
+     */
+    public static function dropDatabase($dbName, $database)
+    {
+        switch ($database) {
+            case static::DATABASE_MYSQL:
+            case static::DATABASE_MARIADB:
+                $sql = "DROP DATABASE `$dbName`;";
+                break;
+            case static::DATABASE_POSTGRESQL:
+                $sql = "DROP DATABASE \"$dbName\";";
+                break;
+            case static::DATABASE_SQLSERVER:
+            case static::DATABASE_AZURE:
+                $sql = "DROP DATABASE [$dbName];";
+                break;
+            case static::DATABASE_ORACLE:
+                $sql = "DROP USER \"$dbName\" CASCADE;"; // Oracle uses users instead of databases
+                break;
+            case static::DATABASE_SQLITE:
+                // SQLite does not support DROP DATABASE; you would delete the file manually.
+                throw new Exception("SQLite does not support DROP DATABASE command directly.");
+            default:
+                throw new Exception("Unsupported database type for dropping databases.");
+        }
+
+        return static::responder($sql, []);
     }
 
     public static function buildOrderClause($order)
@@ -436,6 +661,7 @@ class SqlUtility
         }
         return $output;
     }
+
     public static function buildWhereClause($conditions, &$params)
     {
         $sql = "";
@@ -686,6 +912,7 @@ class SqlUtility
         return StringUtility::fromArray($fields, ", ");
 
     }
+
     private static function responder($sql, $params)
     {
         return [

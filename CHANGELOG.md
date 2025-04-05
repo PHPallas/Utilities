@@ -1,8 +1,58 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.0]
 
 ### Added
+
+47 New Methods added:
+
+- `SqlUtility::createTable()`
+- `SqlUtility::alterTable()`
+- `SqlUtility::dropTable()`
+- `SqlUtility::modifyColumn()`
+- `SqlUtility::addIndex()`
+- `SqlUtility::dropIndex()`
+- `SqlUtility::createDatabase()`
+- `SqlUtility::dropDatabase()`
+- `StringUtility::transformToTitleCase()`
+- `StringUtility::estimateLevenshteinDistance()`
+- `StringUtility::inBase64()`
+- `StringUtility::ofBase64()`
+- `StringUtility::slugify()`
+- `StringUtility::interpolate()`
+- `StringUtility::formatPhoneNumber()`
+- `StringUtility::validatePhoneNumber()`
+- `StringUtility::validateEmail()`
+- `StringUtility::validateName()`
+- `StringUtility::validateURL()`
+- `StringUtility::validateDate()`
+- `StringUtility::validatePassword()`
+- `StringUtility::validateCreditCard()`
+- `StringUtility::validateUsername()`
+- `StringUtility::validatePostalCode()`
+- `StringUtility::validateIP()`
+- `TypesUtility::isNotArray()`
+- `TypesUtility::isNotBoolean()`
+- `TypesUtility::isBool()`
+- `TypesUtility::isNotBool()`
+- `TypesUtility::isNotCallable()`
+- `TypesUtility::isNotCountable()`
+- `TypesUtility::isNotFloat()`
+- `TypesUtility::isDouble()`
+- `TypesUtility::isNotDouble()`
+- `TypesUtility::isNotInteger()`
+- `TypesUtility::isInt()`
+- `TypesUtility::isNotInt()`
+- `TypesUtility::isNotIterable()`
+- `TypesUtility::isNotNull()`
+- `TypesUtility::isNotNumeric()`
+- `TypesUtility::isNotObject()`
+- `TypesUtility::isNotResource()`
+- `TypesUtility::isNotScalar()`
+- `TypesUtility::isNotString()`
+- `TypesUtility::toInt()`
+- `TypesUtility::toDouble()`
+- `TypesUtility::toBool()`
 
 ### Changed
 
@@ -11,6 +61,7 @@
 ### Removed
 
 ### Fixed
+
 
 ## [1.0.0] - 2025-04-04
 
