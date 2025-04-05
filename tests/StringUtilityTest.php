@@ -56,22 +56,22 @@ final class StringUtilityTest extends TestCase
     public function testGetSubset()
     {
         $string = "Hello World!";
-        $sub = StringUtility::getSubset($string, 3,4);
+        $sub = StringUtility::getSubset($string, 3, 4);
         $this->assertSame("lo W", $sub);
 
         $string = "سلام دنیا!";
-        $sub = StringUtility::getSubset($string, 5,4);
+        $sub = StringUtility::getSubset($string, 5, 4);
         $this->assertSame("دنیا", $sub);
     }
 
     public function testGetSegment()
     {
         $string = "Hello World!";
-        $segment = StringUtility::getSegment($string, 3,8);
+        $segment = StringUtility::getSegment($string, 3, 8);
         $this->assertSame("lo Wo", $segment);
 
         $string = "سلام دنیا!";
-        $segment = StringUtility::getSegment($string, 3,8);
+        $segment = StringUtility::getSegment($string, 3, 8);
         $this->assertSame("م دنی", $segment);
     }
 
@@ -122,13 +122,13 @@ final class StringUtilityTest extends TestCase
     public function testHasPhrase()
     {
         $string = "Hello World!";
-        $this->assertSame(true, StringUtility::hasPhrase($string,"World"));
+        $this->assertSame(true, StringUtility::hasPhrase($string, "World"));
         $this->assertSame(true, StringUtility::hasPhrase($string, "world", false));
         $this->assertSame(false, StringUtility::hasPhrase($string, "world"));
         $this->assertSame(false, StringUtility::hasPhrase($string, "world", true));
 
         $string = "سلام دنیا!";
-        $this->assertSame(true, StringUtility::hasPhrase($string,"سلام"));
+        $this->assertSame(true, StringUtility::hasPhrase($string, "سلام"));
         $this->assertSame(true, StringUtility::hasPhrase($string, "سلام", false));
         $this->assertSame(true, StringUtility::hasPhrase($string, "سلام"));
         $this->assertSame(true, StringUtility::hasPhrase($string, "سلام", true));
@@ -290,37 +290,37 @@ final class StringUtilityTest extends TestCase
     public function testTransformToLowercase()
     {
         $this->assertSame("hello world!", StringUtility::transformToLowercase("Hello World!"));
-        $this->assertSame("helloworld!", StringUtility::transformToLowercase("Hello-World!",true));
-        $this->assertSame("helloworld!", StringUtility::transformToLowercase("Hello World!",true,true));
-        $this->assertSame("hello-world!", StringUtility::transformToLowercase("Hello - World!",false,true));
-        $this->assertSame("hello world!", StringUtility::transformToLowercase("Hello World!",false,false));
+        $this->assertSame("helloworld!", StringUtility::transformToLowercase("Hello-World!", true));
+        $this->assertSame("helloworld!", StringUtility::transformToLowercase("Hello World!", true, true));
+        $this->assertSame("hello-world!", StringUtility::transformToLowercase("Hello - World!", false, true));
+        $this->assertSame("hello world!", StringUtility::transformToLowercase("Hello World!", false, false));
     }
 
     public function testTransformToUppercase()
     {
         $this->assertSame("HELLO WORLD!", StringUtility::transformToUppercase("Hello World!"));
-        $this->assertSame("HELLOWORLD!", StringUtility::transformToUppercase("Hello-World!",true));
-        $this->assertSame("HELLOWORLD!", StringUtility::transformToUppercase("Hello World!",true,true));
-        $this->assertSame("HELLO-WORLD!", StringUtility::transformToUppercase("Hello - World!",false,true));
-        $this->assertSame("HELLO WORLD!", StringUtility::transformToUppercase("Hello World!",false,false));
+        $this->assertSame("HELLOWORLD!", StringUtility::transformToUppercase("Hello-World!", true));
+        $this->assertSame("HELLOWORLD!", StringUtility::transformToUppercase("Hello World!", true, true));
+        $this->assertSame("HELLO-WORLD!", StringUtility::transformToUppercase("Hello - World!", false, true));
+        $this->assertSame("HELLO WORLD!", StringUtility::transformToUppercase("Hello World!", false, false));
     }
 
     public function testTransformToLowercaseFirst()
     {
         $this->assertSame("hello World!", StringUtility::transformToLowercaseFirst("Hello World!"));
-        $this->assertSame("helloWorld!", StringUtility::transformToLowercaseFirst("Hello-World!",true));
-        $this->assertSame("helloWorld!", StringUtility::transformToLowercaseFirst("Hello World!",true,true));
-        $this->assertSame("hello-World!", StringUtility::transformToLowercaseFirst("Hello - World!",false,true));
-        $this->assertSame("hello World!", StringUtility::transformToLowercaseFirst("Hello World!",false,false));
+        $this->assertSame("helloWorld!", StringUtility::transformToLowercaseFirst("Hello-World!", true));
+        $this->assertSame("helloWorld!", StringUtility::transformToLowercaseFirst("Hello World!", true, true));
+        $this->assertSame("hello-World!", StringUtility::transformToLowercaseFirst("Hello - World!", false, true));
+        $this->assertSame("hello World!", StringUtility::transformToLowercaseFirst("Hello World!", false, false));
     }
 
     public function testTransformToUppercaseFirst()
     {
         $this->assertSame("Hello world!", StringUtility::transformToUppercaseFirst("hello world!"));
-        $this->assertSame("Helloworld!", StringUtility::transformToUppercaseFirst("hello-world!",true));
-        $this->assertSame("Helloworld!", StringUtility::transformToUppercaseFirst("hello world!",true,true));
-        $this->assertSame("Hello-world!", StringUtility::transformToUppercaseFirst("hello - world!",false,true));
-        $this->assertSame("Hello world!", StringUtility::transformToUppercaseFirst("hello world!",false,false));
+        $this->assertSame("Helloworld!", StringUtility::transformToUppercaseFirst("hello-world!", true));
+        $this->assertSame("Helloworld!", StringUtility::transformToUppercaseFirst("hello world!", true, true));
+        $this->assertSame("Hello-world!", StringUtility::transformToUppercaseFirst("hello - world!", false, true));
+        $this->assertSame("Hello world!", StringUtility::transformToUppercaseFirst("hello world!", false, false));
     }
 
     public function testTransformToFlatcase()
@@ -481,8 +481,8 @@ final class StringUtilityTest extends TestCase
 
     public function testEstimateCounts()
     {
-        $this->assertSame(["t"=>2,"e"=>1,"s"=>1], StringUtility::estimateCounts("test"));
-        $this->assertSame(["ت"=>2,"س"=>1], StringUtility::estimateCounts("تست"));
+        $this->assertSame(["t" => 2, "e" => 1, "s" => 1], StringUtility::estimateCounts("test"));
+        $this->assertSame(["ت" => 2, "س" => 1], StringUtility::estimateCounts("تست"));
     }
 
     public function testMerge()
@@ -493,14 +493,14 @@ final class StringUtilityTest extends TestCase
 
     public function testSplit()
     {
-        $this->assertSame(["John"," Doe"], StringUtility::split("John Doe", 4));
-        $this->assertSame(["سینا"," کوه","ستان","ی"], StringUtility::split("سینا کوهستانی", 4));
+        $this->assertSame(["John", " Doe"], StringUtility::split("John Doe", 4));
+        $this->assertSame(["سینا", " کوه", "ستان", "ی"], StringUtility::split("سینا کوهستانی", 4));
     }
 
     public function testSplitBy()
     {
-        $this->assertSame(["John","Doe"], StringUtility::splitBy("John Doe", " "));
-        $this->assertSame(["سینا","کوهستانی"], StringUtility::splitBy("سینا کوهستانی", " "));
+        $this->assertSame(["John", "Doe"], StringUtility::splitBy("John Doe", " "));
+        $this->assertSame(["سینا", "کوهستانی"], StringUtility::splitBy("سینا کوهستانی", " "));
     }
 
     public function testToHex()
@@ -541,14 +541,14 @@ final class StringUtilityTest extends TestCase
 
     public function testToArray()
     {
-        $this->assertSame(["j", "o","h","n"], StringUtility::toArray("john"));
-        $this->assertSame(["س", "ی","ن","ا"], StringUtility::toArray("سینا"));
+        $this->assertSame(["j", "o", "h", "n"], StringUtility::toArray("john"));
+        $this->assertSame(["س", "ی", "ن", "ا"], StringUtility::toArray("سینا"));
     }
 
     public function testFromArray()
     {
-        $this->assertSame("john", StringUtility::fromArray(["j", "o","h","n"]));
-        $this->assertSame("سینا", StringUtility::fromArray(["س", "ی","ن","ا"]));
+        $this->assertSame("john", StringUtility::fromArray(["j", "o", "h", "n"]));
+        $this->assertSame("سینا", StringUtility::fromArray(["س", "ی", "ن", "ا"]));
     }
 
     public function testToInteger()
@@ -579,10 +579,58 @@ final class StringUtilityTest extends TestCase
         $this->assertSame(false, StringUtility::toBoolean("nok"));
         $this->assertSame(true, StringUtility::toBoolean("something"));
     }
-    
+
     public function testFromBoolean()
     {
         $this->assertSame("false", StringUtility::fromBoolean(false));
         $this->assertSame("true", StringUtility::fromBoolean(true));
     }
+
+    public function testPhoneNumberFormatter()
+    {
+        $this->assertSame("(123) 456-7890", StringUtility::formatPhoneNumber("+1 123 456 7890", '(###) ###-####'));
+    }
+
+    public function testValidators()
+    {
+        $this->assertSame(true, StringUtility::validatePhoneNumber("+1 123 456 7890"));
+        $this->assertSame(false, StringUtility::validatePhoneNumber("+1 123 48856 789098989898"));
+
+        $this->assertSame(true, StringUtility::validateEmail("john@doe.com"));
+        $this->assertSame(false, StringUtility::validateEmail("incorrect#"));
+
+        $this->assertSame(true, StringUtility::validateName("john doe"));
+        $this->assertSame(false, StringUtility::validateName("john15 do"));
+
+        $this->assertSame(true, StringUtility::validateUrl("https://example.com"));
+        $this->assertSame(false, StringUtility::validateUrl("php.net"));
+
+        $this->assertSame(true, StringUtility::validateDate("2025-01-01"));
+        $this->assertSame(false, StringUtility::validateDate("89-00-12"));
+
+        $this->assertSame(true, StringUtility::validatePassword("J@Doe_express98"));
+        $this->assertSame(false, StringUtility::validatePassword("123456"));
+
+        $this->assertSame(true, StringUtility::validateIP("127.0.0.1"));
+        $this->assertSame(false, StringUtility::validateIP("123456"));
+
+        $this->assertTrue(StringUtility::validateCreditCard("4111 1111 1111 1111"));
+        $this->assertTrue(StringUtility::validateCreditCard("5500 0000 0000 0004"));
+        $this->assertTrue(StringUtility::validateCreditCard("3400 0000 0000 009"));
+        $this->assertTrue(StringUtility::validateCreditCard("6011 0000 0000 0004"));
+        $this->assertFalse(StringUtility::validateCreditCard("1234 5678 9012 3456")); // Invalid format
+        $this->assertFalse(StringUtility::validateCreditCard("4111 1111 1111 1110")); // Fails Luhn check
+        $this->assertFalse(StringUtility::validateCreditCard("")); // Empty input
+        $this->assertFalse(StringUtility::validateCreditCard("1520 efgh ijkl mnop")); // 
+
+        $this->assertTrue(StringUtility::validateUsername("user_name1"));
+        $this->assertTrue(StringUtility::validateUsername("username"));
+        $this->assertTrue(StringUtility::validateUsername("User123"));
+        $this->assertTrue(StringUtility::validateUsername("u123"));
+        $this->assertFalse(StringUtility::validateUsername("us")); // Too short
+        $this->assertFalse(StringUtility::validateUsername("username_is_too_long")); // Too long
+        $this->assertFalse(StringUtility::validateUsername("user name")); // Contains space
+        $this->assertFalse(StringUtility::validateUsername("user@name"));
+    }
+    
 }
