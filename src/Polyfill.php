@@ -13,8 +13,22 @@ namespace PHPallas\Utilities;
 
 use InvalidArgumentException;
 
+/**
+ * Class Polyfill
+ * Provides multibyte string functions to polyfill missing PHP functionality.
+ */
 class Polyfill
 {
+    /**
+     * Pads a string to a certain length with another string.
+     *
+     * @param string $input The input string.
+     * @param int $pad_length The length of the resulting string after padding.
+     * @param string $pad_string The string to pad with.
+     * @param int $pad_type The type of padding (STR_PAD_LEFT, STR_PAD_RIGHT, STR_PAD_BOTH).
+     * @param string|null $encoding The character encoding.
+     * @return string The padded string.
+     */
     public static function mb_str_pad($input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_RIGHT, $encoding = null)
     {
         if ($encoding === null)
@@ -29,6 +43,7 @@ class Polyfill
         }
         $pad_string_length = static::mb_strlen($pad_string, $encoding);
         $pad_needed = $pad_length - $input_length;
+
         switch ($pad_type)
         {
             case STR_PAD_LEFT:
@@ -42,6 +57,14 @@ class Polyfill
                 return $input . str_repeat($pad_string, ceil($pad_needed / $pad_string_length));
         }
     }
+
+    /**
+     * Get the length of a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param string|null $encoding The character encoding.
+     * @return int The length of the string.
+     */
     public static function mb_strlen($string, $encoding = null)
     {
         if (function_exists("\mb_strlen"))
@@ -57,6 +80,13 @@ class Polyfill
         $char_length = strlen(static::iconv($encoding, $encoding . '//IGNORE', 'あ'));
         return $length / $char_length;
     }
+
+    /**
+     * Get or set the internal encoding.
+     *
+     * @param string|null $encoding The character encoding.
+     * @return string The internal encoding.
+     */
     public static function mb_internal_encoding($encoding = null)
     {
         if (function_exists("\mb_internal_encoding"))
@@ -70,6 +100,15 @@ class Polyfill
         }
         return $internal_encoding;
     }
+
+    /**
+     * Convert character encoding.
+     *
+     * @param string $in_charset The input character set.
+     * @param string $out_charset The output character set.
+     * @param string $str The string to convert.
+     * @return string The converted string.
+     */
     public static function iconv($in_charset, $out_charset, $str)
     {
         if (function_exists("\iconv"))
@@ -91,6 +130,15 @@ class Polyfill
         }
         return $str;
     }
+
+    /**
+     * Split a string into an array using a regular expression.
+     *
+     * @param string $pattern The regular expression pattern.
+     * @param string $string The input string.
+     * @param string|null $encoding The character encoding.
+     * @return array The array of split strings.
+     */
     public static function mb_split($pattern, $string, $encoding = null)
     {
         if ($encoding === null)
@@ -108,6 +156,15 @@ class Polyfill
 
         return array_values($result);
     }
+
+    /**
+     * Split a multibyte string into an array.
+     *
+     * @param string $string The input string.
+     * @param int $length The length of each segment.
+     * @param string|null $encoding The character encoding.
+     * @return array The array of split strings.
+     */
     public static function mb_str_split($string, $length = 1, $encoding = null)
     {
         if (function_exists("\mb_str_split"))
@@ -129,6 +186,16 @@ class Polyfill
 
         return $result;
     }
+
+    /**
+     * Get a part of a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param int $start The starting position.
+     * @param int|null $length The length of the substring.
+     * @param string|null $encoding The character encoding.
+     * @return string The substring.
+     */
     public static function mb_substr($string, $start, $length = null, $encoding = null)
     {
         if (function_exists("\mb_substr"))
@@ -166,6 +233,15 @@ class Polyfill
         }
         return $result;
     }
+
+    /**
+     * Trim whitespace or other characters from both sides of a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param string|null $character_mask The characters to trim.
+     * @param string|null $encoding The character encoding.
+     * @return string The trimmed string.
+     */
     public static function mb_trim($string, $character_mask = null, $encoding = null)
     {
         if ($encoding === null)
@@ -184,6 +260,14 @@ class Polyfill
         return $string;
     }
 
+    /**
+     * Trim characters from the left side of a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param string $character_mask The characters to trim.
+     * @param string $encoding The character encoding.
+     * @return string The trimmed string.
+     */
     public static function mb_ltrim($string, $character_mask, $encoding)
     {
         $len = mb_strlen($string, $encoding);
@@ -197,6 +281,14 @@ class Polyfill
         return static::mb_substr($string, $start, $len - $start, $encoding);
     }
 
+    /**
+     * Trim characters from the right side of a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param string $character_mask The characters to trim.
+     * @param string $encoding The character encoding.
+     * @return string The trimmed string.
+     */
     public static function mb_rtrim($string, $character_mask, $encoding)
     {
         $len = static::mb_strlen($string, $encoding);
@@ -209,6 +301,16 @@ class Polyfill
 
         return static::mb_substr($string, 0, $end, $encoding);
     }
+
+    /**
+     * Find the position of the first occurrence of a substring in a multibyte string.
+     *
+     * @param string $haystack The input string.
+     * @param string $needle The substring to find.
+     * @param int $offset The offset from which to start searching.
+     * @param string|null $encoding The character encoding.
+     * @return int|false The position of the first occurrence or false if not found.
+     */
     public static function mb_strpos($haystack, $needle, $offset = 0, $encoding = null)
     {
         if ($encoding === null)
@@ -244,12 +346,28 @@ class Polyfill
 
         return false;
     }
+
+    /**
+     * Reverse a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param string $encoding The character encoding.
+     * @return string The reversed string.
+     */
     public static function mb_strrev($string, $encoding = 'UTF-8')
     {
         $characters = preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY);
         $reversedCharacters = array_reverse($characters);
         return implode('', $reversedCharacters);
     }
+
+    /**
+     * Shuffle the characters of a multibyte string.
+     *
+     * @param string $string The input string.
+     * @param string $encoding The character encoding.
+     * @return string The shuffled string.
+     */
     public static function mb_str_shuffle($string, $encoding = 'UTF-8')
     {
         $characters = preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY);
@@ -257,6 +375,14 @@ class Polyfill
 
         return implode('', $characters);
     }
+
+    /**
+     * Get a character from an ASCII value.
+     *
+     * @param int $ascii The ASCII value.
+     * @return string The character.
+     * @throws InvalidArgumentException If the ASCII value is out of range.
+     */
     public static function chr($ascii)
     {
         if ($ascii < 0 || $ascii > 255)
@@ -266,6 +392,14 @@ class Polyfill
 
         return static::mb_convert_encoding(pack('C', $ascii), 'UTF-8');
     }
+
+    /**
+     * Detect the encoding of a string.
+     *
+     * @param string $string The input string.
+     * @param array|null $encodings The list of encodings to check.
+     * @return string|false The detected encoding or false if not found.
+     */
     public static function polyfill_mb_detect_encoding($string, $encodings = null)
     {
         if ($encodings === null)
@@ -287,27 +421,26 @@ class Polyfill
 
         return false;
     }
+
+    /**
+     * Detect the encoding of a string.
+     *
+     * @param string $string The input string.
+     * @param array|null $encodings The list of encodings to check.
+     * @return string|false The detected encoding or false if not found.
+     */
     public static function mb_detect_encoding($string, $encodings = null)
     {
-        if ($encodings === null)
-        {
-            $encodings = ['UTF-8', 'ISO-8859-1', 'Windows-1252', 'ASCII'];
-        }
-        else
-        {
-            $encodings = (array) $encodings;
-        }
-
-        foreach ($encodings as $encoding)
-        {
-            if (is_string($string) && static::mb_check_encoding($string, $encoding))
-            {
-                return $encoding;
-            }
-        }
-
-        return false;
+        return static::polyfill_mb_detect_encoding($string, $encodings);
     }
+
+    /**
+     * Get or set the order of encodings to use for detection.
+     *
+     * @param array|null $order The order of encodings.
+     * @return array The current encoding order.
+     * @throws InvalidArgumentException If the order is not an array.
+     */
     public static function mb_detect_order($order = null)
     {
         global $encodingOrder;
@@ -326,6 +459,13 @@ class Polyfill
 
         return $encodingOrder;
     }
+
+    /**
+     * Get the ASCII value of the first character of a string.
+     *
+     * @param string $string The input string.
+     * @return int The ASCII value.
+     */
     public static function ord($string)
     {
         if (empty($string))
@@ -339,6 +479,12 @@ class Polyfill
         return $codePoint;
     }
 
+    /**
+     * Get the codepoint of a character.
+     *
+     * @param string $char The input character.
+     * @return int|false The codepoint or false if invalid.
+     */
     public static function mb_ord($char)
     {
         if (static::mb_strlen($char, 'UTF-8') !== 1)
@@ -368,6 +514,14 @@ class Polyfill
         return $codepoint;
     }
 
+    /**
+     * Check if a string contains a substring.
+     *
+     * @param string $haystack The input string.
+     * @param string $needle The substring to find.
+     * @param string $encoding The character encoding.
+     * @return bool True if the substring is found, false otherwise.
+     */
     public static function str_contains($haystack, $needle, $encoding = 'UTF-8')
     {
         if ($needle === '')
@@ -376,6 +530,15 @@ class Polyfill
         }
         return static::mb_strpos($haystack, $needle, 0, $encoding) !== false;
     }
+
+    /**
+     * Check if a string starts with a given substring.
+     *
+     * @param string $haystack The input string.
+     * @param string $needle The substring to check.
+     * @param string $encoding The character encoding.
+     * @return bool True if the string starts with the substring, false otherwise.
+     */
     public static function str_starts_with($haystack, $needle, $encoding = 'UTF-8')
     {
         if ($needle === '')
@@ -385,6 +548,15 @@ class Polyfill
 
         return static::mb_substr($haystack, 0, static::mb_strlen($needle, $encoding), $encoding) === $needle;
     }
+
+    /**
+     * Check if a string ends with a given substring.
+     *
+     * @param string $haystack The input string.
+     * @param string $needle The substring to check.
+     * @param string $encoding The character encoding.
+     * @return bool True if the string ends with the substring, false otherwise.
+     */
     public static function str_ends_with($haystack, $needle, $encoding = 'UTF-8')
     {
         if ($needle === '')
@@ -399,6 +571,14 @@ class Polyfill
         }
         return static::mb_substr($haystack, -$needleLength, null, $encoding) === $needle;
     }
+
+    /**
+     * Get a character from a Unicode codepoint.
+     *
+     * @param int $codepoint The Unicode codepoint (must be between 0 and 0x10FFFF).
+     * @return string The corresponding character.
+     * @throws InvalidArgumentException If the codepoint is out of range.
+     */
     public static function mb_chr($codepoint)
     {
         if (!is_int($codepoint) || $codepoint < 0 || $codepoint > 0x10FFFF)
@@ -423,6 +603,16 @@ class Polyfill
             return pack('C*', 0xF0 | ($codepoint >> 18), 0x80 | (($codepoint >> 12) & 0x3F), 0x80 | (($codepoint >> 6) & 0x3F), 0x80 | ($codepoint & 0x3F));
         }
     }
+
+    /**
+     * Convert a string from one character encoding to another.
+     *
+     * @param string $string The input string.
+     * @param string $to_encoding The target encoding.
+     * @param string|null $from_encoding The source encoding (if null, will be detected).
+     * @return string The converted string.
+     * @throws InvalidArgumentException If the target encoding is unsupported.
+     */
     public static function mb_convert_encoding($string, $to_encoding, $from_encoding = null)
     {
         if ($from_encoding === null)
@@ -448,6 +638,15 @@ class Polyfill
         }
         return $string;
     }
+
+    /**
+     * Check if a string is valid for a given encoding.
+     *
+     * @param string $string The input string.
+     * @param string|null $encoding The encoding to check against (defaults to 'UTF-8').
+     * @return bool True if the string is valid for the encoding, false otherwise.
+     * @throws InvalidArgumentException If the encoding is unsupported.
+     */
     public static function mb_check_encoding($string, $encoding = null)
     {
         if ($encoding === null)
@@ -459,17 +658,22 @@ class Polyfill
         {
             case 'UTF-8':
                 return preg_match('//u', $string);
-
             case 'ISO-8859-1':
                 return static::mb_detect_encoding($string, 'ISO-8859-1', true) === 'ISO-8859-1';
-
             case 'ASCII':
                 return preg_match('/^[\x00-\x7F]*$/', $string);
-
             default:
                 throw new InvalidArgumentException('Unsupported encoding: ' . $encoding);
         }
     }
+
+    /**
+     * Verify a password against a hashed value.
+     *
+     * @param string $password The plain text password.
+     * @param string $hash The hashed password.
+     * @return bool True if the password matches the hash, false otherwise.
+     */
     public static function password_verify($password, $hash)
     {
         if (function_exists("\password_verify"))
@@ -482,6 +686,15 @@ class Polyfill
 
         return $newHash === $hash;
     }
+
+    /**
+     * Hash a password using a secure algorithm.
+     *
+     * @param string $password The plain text password.
+     * @param int $algo The hashing algorithm to use (defaults to PASSWORD_DEFAULT).
+     * @param array $options Options for the hashing algorithm.
+     * @return string|false The hashed password or false on failure.
+     */
     public static function password_hash($password, $algo = PASSWORD_DEFAULT, array $options = [])
     {
         if (function_exists("\password_hash"))
