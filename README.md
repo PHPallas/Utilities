@@ -195,6 +195,7 @@ $result => "Hello_World";
 | [**DateTime**](#DateTime) |  |
 | [DateTime::getComponents](#DateTimegetComponents) | Summary of toString |
 | [DateTime::isLeapSolarHijri](#DateTimeisLeapSolarHijri) | Checks if a Solar Hijri year is leap year |
+| [DateTime::isLeapLunarHijri](#DateTimeisLeapLunarHijri) |  |
 | [**MathUtility**](#MathUtility) | Class MathUtilityA utility class for common mathematical and physical constants. |
 | [MathUtility::round](#MathUtilityround) | Round to the nearest integer. |
 | [MathUtility::floor](#MathUtilityfloor) | Floor: Round down to the nearest integer. |
@@ -334,40 +335,48 @@ $result => "Hello_World";
 | [PHP::versionMajor](#PHPversionMajor) | Get PHP major version |
 | [PHP::versionMinor](#PHPversionMinor) | Get PHP minor Version |
 | [PHP::versionRelease](#PHPversionRelease) | Get PHP release version |
-| [**Polyfill**](#Polyfill) |  |
-| [Polyfill::mb_str_pad](#Polyfillmb_str_pad) |  |
-| [Polyfill::mb_strlen](#Polyfillmb_strlen) |  |
-| [Polyfill::mb_internal_encoding](#Polyfillmb_internal_encoding) |  |
-| [Polyfill::iconv](#Polyfilliconv) |  |
-| [Polyfill::mb_split](#Polyfillmb_split) |  |
-| [Polyfill::mb_str_split](#Polyfillmb_str_split) |  |
-| [Polyfill::mb_substr](#Polyfillmb_substr) |  |
-| [Polyfill::mb_trim](#Polyfillmb_trim) |  |
-| [Polyfill::mb_ltrim](#Polyfillmb_ltrim) |  |
-| [Polyfill::mb_rtrim](#Polyfillmb_rtrim) |  |
-| [Polyfill::mb_strpos](#Polyfillmb_strpos) |  |
-| [Polyfill::mb_strrev](#Polyfillmb_strrev) |  |
-| [Polyfill::mb_str_shuffle](#Polyfillmb_str_shuffle) |  |
-| [Polyfill::chr](#Polyfillchr) |  |
-| [Polyfill::polyfill_mb_detect_encoding](#Polyfillpolyfill_mb_detect_encoding) |  |
-| [Polyfill::mb_detect_encoding](#Polyfillmb_detect_encoding) |  |
-| [Polyfill::mb_detect_order](#Polyfillmb_detect_order) |  |
-| [Polyfill::ord](#Polyfillord) |  |
-| [Polyfill::mb_ord](#Polyfillmb_ord) |  |
-| [Polyfill::str_contains](#Polyfillstr_contains) |  |
-| [Polyfill::str_starts_with](#Polyfillstr_starts_with) |  |
-| [Polyfill::str_ends_with](#Polyfillstr_ends_with) |  |
-| [Polyfill::mb_chr](#Polyfillmb_chr) |  |
-| [Polyfill::mb_convert_encoding](#Polyfillmb_convert_encoding) |  |
-| [Polyfill::mb_check_encoding](#Polyfillmb_check_encoding) |  |
-| [Polyfill::password_verify](#Polyfillpassword_verify) |  |
-| [Polyfill::password_hash](#Polyfillpassword_hash) |  |
+| [**Polyfill**](#Polyfill) | Class PolyfillProvides multibyte string functions to polyfill missing PHP functionality. |
+| [Polyfill::mb_str_pad](#Polyfillmb_str_pad) | Pads a string to a certain length with another string. |
+| [Polyfill::mb_strlen](#Polyfillmb_strlen) | Get the length of a multibyte string. |
+| [Polyfill::mb_internal_encoding](#Polyfillmb_internal_encoding) | Get or set the internal encoding. |
+| [Polyfill::iconv](#Polyfilliconv) | Convert character encoding. |
+| [Polyfill::mb_split](#Polyfillmb_split) | Split a string into an array using a regular expression. |
+| [Polyfill::mb_str_split](#Polyfillmb_str_split) | Split a multibyte string into an array. |
+| [Polyfill::mb_substr](#Polyfillmb_substr) | Get a part of a multibyte string. |
+| [Polyfill::mb_trim](#Polyfillmb_trim) | Trim whitespace or other characters from both sides of a multibyte string. |
+| [Polyfill::mb_ltrim](#Polyfillmb_ltrim) | Trim characters from the left side of a multibyte string. |
+| [Polyfill::mb_rtrim](#Polyfillmb_rtrim) | Trim characters from the right side of a multibyte string. |
+| [Polyfill::mb_strpos](#Polyfillmb_strpos) | Find the position of the first occurrence of a substring in a multibyte string. |
+| [Polyfill::mb_strrev](#Polyfillmb_strrev) | Reverse a multibyte string. |
+| [Polyfill::mb_str_shuffle](#Polyfillmb_str_shuffle) | Shuffle the characters of a multibyte string. |
+| [Polyfill::chr](#Polyfillchr) | Get a character from an ASCII value. |
+| [Polyfill::polyfill_mb_detect_encoding](#Polyfillpolyfill_mb_detect_encoding) | Detect the encoding of a string. |
+| [Polyfill::mb_detect_encoding](#Polyfillmb_detect_encoding) | Detect the encoding of a string. |
+| [Polyfill::mb_detect_order](#Polyfillmb_detect_order) | Get or set the order of encodings to use for detection. |
+| [Polyfill::ord](#Polyfillord) | Get the ASCII value of the first character of a string. |
+| [Polyfill::mb_ord](#Polyfillmb_ord) | Get the codepoint of a character. |
+| [Polyfill::str_contains](#Polyfillstr_contains) | Check if a string contains a substring. |
+| [Polyfill::str_starts_with](#Polyfillstr_starts_with) | Check if a string starts with a given substring. |
+| [Polyfill::str_ends_with](#Polyfillstr_ends_with) | Check if a string ends with a given substring. |
+| [Polyfill::mb_chr](#Polyfillmb_chr) | Get a character from a Unicode codepoint. |
+| [Polyfill::mb_convert_encoding](#Polyfillmb_convert_encoding) | Convert a string from one character encoding to another. |
+| [Polyfill::mb_check_encoding](#Polyfillmb_check_encoding) | Check if a string is valid for a given encoding. |
+| [Polyfill::password_verify](#Polyfillpassword_verify) | Verify a password against a hashed value. |
+| [Polyfill::password_hash](#Polyfillpassword_hash) | Hash a password using a secure algorithm. |
 | [**SqlUtility**](#SqlUtility) |  |
 | [SqlUtility::selectQuery](#SqlUtilityselectQuery) | selectQuery is a versatile function that dynamically builds a SQL SELECTstatement based on the provided parameters. It handles various SQL syntaxdifferences across multiple database systems, ensuring that the correctsyntax is used for limiting results, grouping, ordering, and filteringdata. The method is designed to be flexible and reusable for differentdatabase interactions. |
 | [SqlUtility::updateQuery](#SqlUtilityupdateQuery) | The updateQuery method is a flexible function that constructs a SQLUPDATE statement dynamically based on the provided parameters. It handlesthe creation of the SET and WHERE clauses, ensuring proper parameterbinding to prevent SQL injection. This method is designed to be reusablefor updating rows in different tables with varying conditions. |
 | [SqlUtility::deleteQuery](#SqlUtilitydeleteQuery) | The deleteQuery method is a straightforward function that constructs aSQL DELETE statement dynamically based on the provided parameters. Itbuilds the WHERE clause to specify which rows to delete, ensuring properparameter binding to prevent SQL injection. This method is designed to bereusable for deleting records from different tables based on variousconditions. |
 | [SqlUtility::insertQuery](#SqlUtilityinsertQuery) | This function is designed to handle both single-row and multi-rowinserts into a database table. It dynamically constructs the SQL queryand ensures that parameter names are unique to prevent conflicts duringexecution. |
-| [SqlUtility::unionQuery](#SqlUtilityunionQuery) |  |
+| [SqlUtility::unionQuery](#SqlUtilityunionQuery) | Create union query |
+| [SqlUtility::createTable](#SqlUtilitycreateTable) | Creates a SQL CREATE TABLE statement. |
+| [SqlUtility::alterTable](#SqlUtilityalterTable) | Alters an existing table to add or drop columns. |
+| [SqlUtility::dropTable](#SqlUtilitydropTable) | Drops an existing table. |
+| [SqlUtility::modifyColumn](#SqlUtilitymodifyColumn) | Modifies an existing column in a table. |
+| [SqlUtility::addIndex](#SqlUtilityaddIndex) | Adds an index to a table. |
+| [SqlUtility::dropIndex](#SqlUtilitydropIndex) | Drops an existing index from a table. |
+| [SqlUtility::createDatabase](#SqlUtilitycreateDatabase) | Creates a new database. |
+| [SqlUtility::dropDatabase](#SqlUtilitydropDatabase) | Drops an existing database. |
 | [SqlUtility::buildOrderClause](#SqlUtilitybuildOrderClause) |  |
 | [SqlUtility::buildWhereClause](#SqlUtilitybuildWhereClause) |  |
 | [**StringUtility**](#StringUtility) | Class StringUtility |
@@ -406,6 +415,7 @@ $result => "Hello_World";
 | [StringUtility::transformToCapital](#StringUtilitytransformToCapital) | Capitalizes the first letter of each word in the string. |
 | [StringUtility::transformToFlatcase](#StringUtilitytransformToFlatcase) | Transforms the given string to flatcase. |
 | [StringUtility::transformToPascalCase](#StringUtilitytransformToPascalCase) | Transforms the given string to PascalCase. |
+| [StringUtility::transformToTitleCase](#StringUtilitytransformToTitleCase) | Converts a string to title case. |
 | [StringUtility::transformToCamelcase](#StringUtilitytransformToCamelcase) | Transforms the given string to camelCase. |
 | [StringUtility::transformToSnakecase](#StringUtilitytransformToSnakecase) | Transforms the given string to snake_case. |
 | [StringUtility::transformToMacrocase](#StringUtilitytransformToMacrocase) | Transforms the given string to MACROCASE. |
@@ -424,6 +434,7 @@ $result => "Hello_World";
 | [StringUtility::estimateLength](#StringUtilityestimateLength) | Estimates the length of a string. |
 | [StringUtility::estimateCounts](#StringUtilityestimateCounts) | Estimates the counts of each character in a string. |
 | [StringUtility::estimateSimilarity](#StringUtilityestimateSimilarity) | Compares two strings and returns a similarity score. |
+| [StringUtility::estimateLevenshteinDistance](#StringUtilityestimateLevenshteinDistance) | Calculates the Levenshtein distance between two strings. |
 | [StringUtility::merge](#StringUtilitymerge) | Merges multiple strings into a single string using a specified separator. |
 | [StringUtility::split](#StringUtilitysplit) | Splits a string into segments of specified length. |
 | [StringUtility::splitBy](#StringUtilitysplitBy) | Splits a string by a specified separator. |
@@ -452,33 +463,69 @@ $result => "Hello_World";
 | [StringUtility::ofSafeCharacters](#StringUtilityofSafeCharacters) | Converts HTML entities back to their corresponding characters. |
 | [StringUtility::inHtmlEntities](#StringUtilityinHtmlEntities) | Converts special characters to HTML entities with quotes. |
 | [StringUtility::ofHtmlEntities](#StringUtilityofHtmlEntities) | Converts HTML entities back to their corresponding characters with quotes. |
+| [StringUtility::inBase64](#StringUtilityinBase64) | Encodes a string using Base64 encoding. |
+| [StringUtility::ofBase64](#StringUtilityofBase64) | Decodes a Base64 encoded string. |
 | [StringUtility::hashMD5](#StringUtilityhashMD5) | Generates an MD5 hash of a given string. |
 | [StringUtility::hashSHA](#StringUtilityhashSHA) | Generates a SHA-1 hash of a given string. |
 | [StringUtility::hashChecksum](#StringUtilityhashChecksum) | Generates a checksum for a given string using SHA-1. |
 | [StringUtility::validateChecksum](#StringUtilityvalidateChecksum) | Validates a given string against a provided checksum. |
+| [StringUtility::slugify](#StringUtilityslugify) | Converts a string into a URL-friendly slug. |
+| [StringUtility::interpolate](#StringUtilityinterpolate) | Interpolates variables into a string template. |
+| [StringUtility::formatPhoneNumber](#StringUtilityformatPhoneNumber) | Formats a given phone number into a specified format. |
+| [StringUtility::validatePhoneNumber](#StringUtilityvalidatePhoneNumber) | Validates a phone number. |
+| [StringUtility::validateEmail](#StringUtilityvalidateEmail) | Validates an email address. |
+| [StringUtility::validateName](#StringUtilityvalidateName) | Validates a name. |
+| [StringUtility::validateURL](#StringUtilityvalidateURL) | Validates a URL. |
+| [StringUtility::validateDate](#StringUtilityvalidateDate) | Validates a date in YYYY-MM-DD format. |
+| [StringUtility::validatePassword](#StringUtilityvalidatePassword) | Validates a password. |
+| [StringUtility::validateCreditCard](#StringUtilityvalidateCreditCard) | Validates a credit card number using the Luhn algorithm. |
+| [StringUtility::validateUsername](#StringUtilityvalidateUsername) | Validates a username. |
+| [StringUtility::validatePostalCode](#StringUtilityvalidatePostalCode) | Validates a postal code. |
+| [StringUtility::validateIP](#StringUtilityvalidateIP) | Validates an IP address. |
 | [**TypesUtility**](#TypesUtility) | Class TypesUtility |
 | [TypesUtility::getType](#TypesUtilitygetType) | Get the type of a variable. |
 | [TypesUtility::isArray](#TypesUtilityisArray) | Check if the variable is an array. |
+| [TypesUtility::isNotArray](#TypesUtilityisNotArray) | Check if the variable is not an array. |
 | [TypesUtility::isBoolean](#TypesUtilityisBoolean) | Check if the variable is a boolean. |
+| [TypesUtility::isNotBoolean](#TypesUtilityisNotBoolean) | Check if the variable is not a boolean. |
+| [TypesUtility::isBool](#TypesUtilityisBool) | An alias to isBoolean() |
+| [TypesUtility::isNotBool](#TypesUtilityisNotBool) | An alias to isMotBoolean() |
 | [TypesUtility::isCallable](#TypesUtilityisCallable) | Check if the variable is callable. |
+| [TypesUtility::isNotCallable](#TypesUtilityisNotCallable) | Check if the variable is not callable. |
 | [TypesUtility::isCountable](#TypesUtilityisCountable) | Check if the variable is countable. |
+| [TypesUtility::isNotCountable](#TypesUtilityisNotCountable) | Check if the variable is not countable. |
 | [TypesUtility::isFloat](#TypesUtilityisFloat) | Check if the variable is a float. |
+| [TypesUtility::isNotFloat](#TypesUtilityisNotFloat) | Check if the variable is not a float. |
+| [TypesUtility::isDouble](#TypesUtilityisDouble) | An alias to isFloat() |
+| [TypesUtility::isNotDouble](#TypesUtilityisNotDouble) | An alias to isNotFloat() |
 | [TypesUtility::isInteger](#TypesUtilityisInteger) | Check if the variable is an integer. |
+| [TypesUtility::isNotInteger](#TypesUtilityisNotInteger) | Check if the variable is not an integer. |
+| [TypesUtility::isInt](#TypesUtilityisInt) | An alias to isInteger() |
+| [TypesUtility::isNotInt](#TypesUtilityisNotInt) | An alias to isNotInteger() |
 | [TypesUtility::isIterable](#TypesUtilityisIterable) | Check if the variable is iterable. |
+| [TypesUtility::isNotIterable](#TypesUtilityisNotIterable) | Check if the variable is not iterable. |
 | [TypesUtility::isNull](#TypesUtilityisNull) | Check if the variable is null. |
+| [TypesUtility::isNotNull](#TypesUtilityisNotNull) | Check if the variable is not null. |
 | [TypesUtility::isNumeric](#TypesUtilityisNumeric) | Check if the variable is numeric. |
+| [TypesUtility::isNotNumeric](#TypesUtilityisNotNumeric) | Check if the variable is not numeric. |
 | [TypesUtility::isObject](#TypesUtilityisObject) | Check if the variable is an object. |
+| [TypesUtility::isNotObject](#TypesUtilityisNotObject) | Check if the variable is not an object. |
 | [TypesUtility::isResource](#TypesUtilityisResource) | Check if the variable is a resource. |
+| [TypesUtility::isNotResource](#TypesUtilityisNotResource) | Check if the variable is not a resource. |
 | [TypesUtility::isScalar](#TypesUtilityisScalar) | Check if the variable is a scalar. |
+| [TypesUtility::isNotScalar](#TypesUtilityisNotScalar) | Check if the variable is not a scalar. |
 | [TypesUtility::isString](#TypesUtilityisString) | Check if the variable is a string. |
+| [TypesUtility::isNotString](#TypesUtilityisNotString) | Check if the variable is not a string. |
 | [TypesUtility::to](#TypesUtilityto) | Convert a variable to a specified target type. |
 | [TypesUtility::toString](#TypesUtilitytoString) | Convert a variable to a string. |
 | [TypesUtility::toInteger](#TypesUtilitytoInteger) | Convert a variable to an integer. |
+| [TypesUtility::toInt](#TypesUtilitytoInt) | An alias to toInteger() |
 | [TypesUtility::toFloat](#TypesUtilitytoFloat) | Convert a variable to a float. |
+| [TypesUtility::toDouble](#TypesUtilitytoDouble) | An alias to toFloat() |
 | [TypesUtility::toBoolean](#TypesUtilitytoBoolean) | Convert a variable to a boolean. |
+| [TypesUtility::toBool](#TypesUtilitytoBool) | An alias to toBoolean() |
 | [TypesUtility::toArray](#TypesUtilitytoArray) | Convert a variable to an array. |
 | [TypesUtility::toObject](#TypesUtilitytoObject) | Convert a variable to an object. |
-
 
 ## ArrayUtility
 
@@ -2049,8 +2096,6 @@ ArrayUtility::sortRandom( array array ): array
 
 
 ---
-
-
 ## BooleanUtility
 
 Class BooleanUtility
@@ -2688,6 +2733,31 @@ Checks if a Solar Hijri year is leap year
 
 ```php
 DateTime::isLeapSolarHijri( mixed year ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `year` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### DateTime::isLeapLunarHijri
+
+
+
+```php
+DateTime::isLeapLunarHijri( mixed year ): mixed
 ```
 
 
@@ -6232,7 +6302,8 @@ PHP::versionRelease(  ): int|string
 ---
 ## Polyfill
 
-
+Class Polyfill
+Provides multibyte string functions to polyfill missing PHP functionality.
 
 
 
@@ -6241,10 +6312,10 @@ PHP::versionRelease(  ): int|string
 
 ### Polyfill::mb_str_pad
 
-
+Pads a string to a certain length with another string.
 
 ```php
-Polyfill::mb_str_pad( mixed input, mixed pad_length, mixed pad_string = ' ', mixed pad_type = STR_PAD_RIGHT, mixed encoding = null ): mixed
+Polyfill::mb_str_pad( string input, int pad_length, string pad_string = ' ', int pad_type = STR_PAD_RIGHT, string|null encoding = null ): string
 ```
 
 
@@ -6254,26 +6325,26 @@ Polyfill::mb_str_pad( mixed input, mixed pad_length, mixed pad_string = ' ', mix
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `input` | **mixed** |  |
-| `pad_length` | **mixed** |  |
-| `pad_string` | **mixed** |  |
-| `pad_type` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `input` | **string** | The input string. |
+| `pad_length` | **int** | The length of the resulting string after padding. |
+| `pad_string` | **string** | The string to pad with. |
+| `pad_type` | **int** | The type of padding (STR_PAD_LEFT, STR_PAD_RIGHT, STR_PAD_BOTH). |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The padded string.
 
 
 
 ---
 ### Polyfill::mb_strlen
 
-
+Get the length of a multibyte string.
 
 ```php
-Polyfill::mb_strlen( mixed string, mixed encoding = null ): mixed
+Polyfill::mb_strlen( string string, string|null encoding = null ): int
 ```
 
 
@@ -6283,23 +6354,23 @@ Polyfill::mb_strlen( mixed string, mixed encoding = null ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The length of the string.
 
 
 
 ---
 ### Polyfill::mb_internal_encoding
 
-
+Get or set the internal encoding.
 
 ```php
-Polyfill::mb_internal_encoding( mixed encoding = null ): mixed
+Polyfill::mb_internal_encoding( string|null encoding = null ): string
 ```
 
 
@@ -6309,22 +6380,22 @@ Polyfill::mb_internal_encoding( mixed encoding = null ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `encoding` | **mixed** |  |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The internal encoding.
 
 
 
 ---
 ### Polyfill::iconv
 
-
+Convert character encoding.
 
 ```php
-Polyfill::iconv( mixed in_charset, mixed out_charset, mixed str ): mixed
+Polyfill::iconv( string in_charset, string out_charset, string str ): string
 ```
 
 
@@ -6334,24 +6405,24 @@ Polyfill::iconv( mixed in_charset, mixed out_charset, mixed str ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `in_charset` | **mixed** |  |
-| `out_charset` | **mixed** |  |
-| `str` | **mixed** |  |
+| `in_charset` | **string** | The input character set. |
+| `out_charset` | **string** | The output character set. |
+| `str` | **string** | The string to convert. |
 
 
 **Return Value:**
 
-
+The converted string.
 
 
 
 ---
 ### Polyfill::mb_split
 
-
+Split a string into an array using a regular expression.
 
 ```php
-Polyfill::mb_split( mixed pattern, mixed string, mixed encoding = null ): mixed
+Polyfill::mb_split( string pattern, string string, string|null encoding = null ): array
 ```
 
 
@@ -6361,24 +6432,24 @@ Polyfill::mb_split( mixed pattern, mixed string, mixed encoding = null ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `pattern` | **mixed** |  |
-| `string` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `pattern` | **string** | The regular expression pattern. |
+| `string` | **string** | The input string. |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The array of split strings.
 
 
 
 ---
 ### Polyfill::mb_str_split
 
-
+Split a multibyte string into an array.
 
 ```php
-Polyfill::mb_str_split( mixed string, mixed length = 1, mixed encoding = null ): mixed
+Polyfill::mb_str_split( string string, int length = 1, string|null encoding = null ): array
 ```
 
 
@@ -6388,24 +6459,24 @@ Polyfill::mb_str_split( mixed string, mixed length = 1, mixed encoding = null ):
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `length` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `length` | **int** | The length of each segment. |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The array of split strings.
 
 
 
 ---
 ### Polyfill::mb_substr
 
-
+Get a part of a multibyte string.
 
 ```php
-Polyfill::mb_substr( mixed string, mixed start, mixed length = null, mixed encoding = null ): mixed
+Polyfill::mb_substr( string string, int start, int|null length = null, string|null encoding = null ): string
 ```
 
 
@@ -6415,25 +6486,25 @@ Polyfill::mb_substr( mixed string, mixed start, mixed length = null, mixed encod
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `start` | **mixed** |  |
-| `length` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `start` | **int** | The starting position. |
+| `length` | **int\|null** | The length of the substring. |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The substring.
 
 
 
 ---
 ### Polyfill::mb_trim
 
-
+Trim whitespace or other characters from both sides of a multibyte string.
 
 ```php
-Polyfill::mb_trim( mixed string, mixed character_mask = null, mixed encoding = null ): mixed
+Polyfill::mb_trim( string string, string|null character_mask = null, string|null encoding = null ): string
 ```
 
 
@@ -6443,24 +6514,24 @@ Polyfill::mb_trim( mixed string, mixed character_mask = null, mixed encoding = n
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `character_mask` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `character_mask` | **string\|null** | The characters to trim. |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The trimmed string.
 
 
 
 ---
 ### Polyfill::mb_ltrim
 
-
+Trim characters from the left side of a multibyte string.
 
 ```php
-Polyfill::mb_ltrim( mixed string, mixed character_mask, mixed encoding ): mixed
+Polyfill::mb_ltrim( string string, string character_mask, string encoding ): string
 ```
 
 
@@ -6470,24 +6541,24 @@ Polyfill::mb_ltrim( mixed string, mixed character_mask, mixed encoding ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `character_mask` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `character_mask` | **string** | The characters to trim. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+The trimmed string.
 
 
 
 ---
 ### Polyfill::mb_rtrim
 
-
+Trim characters from the right side of a multibyte string.
 
 ```php
-Polyfill::mb_rtrim( mixed string, mixed character_mask, mixed encoding ): mixed
+Polyfill::mb_rtrim( string string, string character_mask, string encoding ): string
 ```
 
 
@@ -6497,24 +6568,24 @@ Polyfill::mb_rtrim( mixed string, mixed character_mask, mixed encoding ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `character_mask` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `character_mask` | **string** | The characters to trim. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+The trimmed string.
 
 
 
 ---
 ### Polyfill::mb_strpos
 
-
+Find the position of the first occurrence of a substring in a multibyte string.
 
 ```php
-Polyfill::mb_strpos( mixed haystack, mixed needle, mixed offset, mixed encoding = null ): mixed
+Polyfill::mb_strpos( string haystack, string needle, int offset, string|null encoding = null ): int|false
 ```
 
 
@@ -6524,25 +6595,25 @@ Polyfill::mb_strpos( mixed haystack, mixed needle, mixed offset, mixed encoding 
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `haystack` | **mixed** |  |
-| `needle` | **mixed** |  |
-| `offset` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `haystack` | **string** | The input string. |
+| `needle` | **string** | The substring to find. |
+| `offset` | **int** | The offset from which to start searching. |
+| `encoding` | **string\|null** | The character encoding. |
 
 
 **Return Value:**
 
-
+The position of the first occurrence or false if not found.
 
 
 
 ---
 ### Polyfill::mb_strrev
 
-
+Reverse a multibyte string.
 
 ```php
-Polyfill::mb_strrev( mixed string, mixed encoding = 'UTF-8' ): mixed
+Polyfill::mb_strrev( string string, string encoding = 'UTF-8' ): string
 ```
 
 
@@ -6552,23 +6623,23 @@ Polyfill::mb_strrev( mixed string, mixed encoding = 'UTF-8' ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+The reversed string.
 
 
 
 ---
 ### Polyfill::mb_str_shuffle
 
-
+Shuffle the characters of a multibyte string.
 
 ```php
-Polyfill::mb_str_shuffle( mixed string, mixed encoding = 'UTF-8' ): mixed
+Polyfill::mb_str_shuffle( string string, string encoding = 'UTF-8' ): string
 ```
 
 
@@ -6578,23 +6649,23 @@ Polyfill::mb_str_shuffle( mixed string, mixed encoding = 'UTF-8' ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+The shuffled string.
 
 
 
 ---
 ### Polyfill::chr
 
-
+Get a character from an ASCII value.
 
 ```php
-Polyfill::chr( mixed ascii ): mixed
+Polyfill::chr( int ascii ): string
 ```
 
 
@@ -6604,22 +6675,22 @@ Polyfill::chr( mixed ascii ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `ascii` | **mixed** |  |
+| `ascii` | **int** | The ASCII value. |
 
 
 **Return Value:**
 
-
+The character.
 
 
 
 ---
 ### Polyfill::polyfill_mb_detect_encoding
 
-
+Detect the encoding of a string.
 
 ```php
-Polyfill::polyfill_mb_detect_encoding( mixed string, mixed encodings = null ): mixed
+Polyfill::polyfill_mb_detect_encoding( string string, array|null encodings = null ): string|false
 ```
 
 
@@ -6629,23 +6700,23 @@ Polyfill::polyfill_mb_detect_encoding( mixed string, mixed encodings = null ): m
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `encodings` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `encodings` | **array\|null** | The list of encodings to check. |
 
 
 **Return Value:**
 
-
+The detected encoding or false if not found.
 
 
 
 ---
 ### Polyfill::mb_detect_encoding
 
-
+Detect the encoding of a string.
 
 ```php
-Polyfill::mb_detect_encoding( mixed string, mixed encodings = null ): mixed
+Polyfill::mb_detect_encoding( string string, array|null encodings = null ): string|false
 ```
 
 
@@ -6655,23 +6726,23 @@ Polyfill::mb_detect_encoding( mixed string, mixed encodings = null ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `encodings` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `encodings` | **array\|null** | The list of encodings to check. |
 
 
 **Return Value:**
 
-
+The detected encoding or false if not found.
 
 
 
 ---
 ### Polyfill::mb_detect_order
 
-
+Get or set the order of encodings to use for detection.
 
 ```php
-Polyfill::mb_detect_order( mixed order = null ): mixed
+Polyfill::mb_detect_order( array|null order = null ): array
 ```
 
 
@@ -6681,22 +6752,22 @@ Polyfill::mb_detect_order( mixed order = null ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `order` | **mixed** |  |
+| `order` | **array\|null** | The order of encodings. |
 
 
 **Return Value:**
 
-
+The current encoding order.
 
 
 
 ---
 ### Polyfill::ord
 
-
+Get the ASCII value of the first character of a string.
 
 ```php
-Polyfill::ord( mixed string ): mixed
+Polyfill::ord( string string ): int
 ```
 
 
@@ -6706,22 +6777,22 @@ Polyfill::ord( mixed string ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
+| `string` | **string** | The input string. |
 
 
 **Return Value:**
 
-
+The ASCII value.
 
 
 
 ---
 ### Polyfill::mb_ord
 
-
+Get the codepoint of a character.
 
 ```php
-Polyfill::mb_ord( mixed char ): mixed
+Polyfill::mb_ord( string char ): int|false
 ```
 
 
@@ -6731,22 +6802,22 @@ Polyfill::mb_ord( mixed char ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `char` | **mixed** |  |
+| `char` | **string** | The input character. |
 
 
 **Return Value:**
 
-
+The codepoint or false if invalid.
 
 
 
 ---
 ### Polyfill::str_contains
 
-
+Check if a string contains a substring.
 
 ```php
-Polyfill::str_contains( mixed haystack, mixed needle, mixed encoding = 'UTF-8' ): mixed
+Polyfill::str_contains( string haystack, string needle, string encoding = 'UTF-8' ): bool
 ```
 
 
@@ -6756,24 +6827,24 @@ Polyfill::str_contains( mixed haystack, mixed needle, mixed encoding = 'UTF-8' )
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `haystack` | **mixed** |  |
-| `needle` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `haystack` | **string** | The input string. |
+| `needle` | **string** | The substring to find. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+True if the substring is found, false otherwise.
 
 
 
 ---
 ### Polyfill::str_starts_with
 
-
+Check if a string starts with a given substring.
 
 ```php
-Polyfill::str_starts_with( mixed haystack, mixed needle, mixed encoding = 'UTF-8' ): mixed
+Polyfill::str_starts_with( string haystack, string needle, string encoding = 'UTF-8' ): bool
 ```
 
 
@@ -6783,24 +6854,24 @@ Polyfill::str_starts_with( mixed haystack, mixed needle, mixed encoding = 'UTF-8
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `haystack` | **mixed** |  |
-| `needle` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `haystack` | **string** | The input string. |
+| `needle` | **string** | The substring to check. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+True if the string starts with the substring, false otherwise.
 
 
 
 ---
 ### Polyfill::str_ends_with
 
-
+Check if a string ends with a given substring.
 
 ```php
-Polyfill::str_ends_with( mixed haystack, mixed needle, mixed encoding = 'UTF-8' ): mixed
+Polyfill::str_ends_with( string haystack, string needle, string encoding = 'UTF-8' ): bool
 ```
 
 
@@ -6810,24 +6881,24 @@ Polyfill::str_ends_with( mixed haystack, mixed needle, mixed encoding = 'UTF-8' 
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `haystack` | **mixed** |  |
-| `needle` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `haystack` | **string** | The input string. |
+| `needle` | **string** | The substring to check. |
+| `encoding` | **string** | The character encoding. |
 
 
 **Return Value:**
 
-
+True if the string ends with the substring, false otherwise.
 
 
 
 ---
 ### Polyfill::mb_chr
 
-
+Get a character from a Unicode codepoint.
 
 ```php
-Polyfill::mb_chr( mixed codepoint ): mixed
+Polyfill::mb_chr( int codepoint ): string
 ```
 
 
@@ -6837,22 +6908,22 @@ Polyfill::mb_chr( mixed codepoint ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `codepoint` | **mixed** |  |
+| `codepoint` | **int** | The Unicode codepoint (must be between 0 and 0x10FFFF). |
 
 
 **Return Value:**
 
-
+The corresponding character.
 
 
 
 ---
 ### Polyfill::mb_convert_encoding
 
-
+Convert a string from one character encoding to another.
 
 ```php
-Polyfill::mb_convert_encoding( mixed string, mixed to_encoding, mixed from_encoding = null ): mixed
+Polyfill::mb_convert_encoding( string string, string to_encoding, string|null from_encoding = null ): string
 ```
 
 
@@ -6862,24 +6933,24 @@ Polyfill::mb_convert_encoding( mixed string, mixed to_encoding, mixed from_encod
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `to_encoding` | **mixed** |  |
-| `from_encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `to_encoding` | **string** | The target encoding. |
+| `from_encoding` | **string\|null** | The source encoding (if null, will be detected). |
 
 
 **Return Value:**
 
-
+The converted string.
 
 
 
 ---
 ### Polyfill::mb_check_encoding
 
-
+Check if a string is valid for a given encoding.
 
 ```php
-Polyfill::mb_check_encoding( mixed string, mixed encoding = null ): mixed
+Polyfill::mb_check_encoding( string string, string|null encoding = null ): bool
 ```
 
 
@@ -6889,23 +6960,23 @@ Polyfill::mb_check_encoding( mixed string, mixed encoding = null ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **mixed** |  |
-| `encoding` | **mixed** |  |
+| `string` | **string** | The input string. |
+| `encoding` | **string\|null** | The encoding to check against (defaults to &#039;UTF-8&#039;). |
 
 
 **Return Value:**
 
-
+True if the string is valid for the encoding, false otherwise.
 
 
 
 ---
 ### Polyfill::password_verify
 
-
+Verify a password against a hashed value.
 
 ```php
-Polyfill::password_verify( mixed password, mixed hash ): mixed
+Polyfill::password_verify( string password, string hash ): bool
 ```
 
 
@@ -6915,23 +6986,23 @@ Polyfill::password_verify( mixed password, mixed hash ): mixed
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `password` | **mixed** |  |
-| `hash` | **mixed** |  |
+| `password` | **string** | The plain text password. |
+| `hash` | **string** | The hashed password. |
 
 
 **Return Value:**
 
-
+True if the password matches the hash, false otherwise.
 
 
 
 ---
 ### Polyfill::password_hash
 
-
+Hash a password using a secure algorithm.
 
 ```php
-Polyfill::password_hash( mixed password, mixed algo = PASSWORD_DEFAULT, array options = [] ): mixed
+Polyfill::password_hash( string password, int algo = PASSWORD_DEFAULT, array options = [] ): string|false
 ```
 
 
@@ -6941,20 +7012,18 @@ Polyfill::password_hash( mixed password, mixed algo = PASSWORD_DEFAULT, array op
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `password` | **mixed** |  |
-| `algo` | **mixed** |  |
-| `options` | **array** |  |
+| `password` | **string** | The plain text password. |
+| `algo` | **int** | The hashing algorithm to use (defaults to PASSWORD_DEFAULT). |
+| `options` | **array** | Options for the hashing algorithm. |
 
 
 **Return Value:**
 
-
+The hashed password or false on failure.
 
 
 
 ---
-
-
 ## SqlUtility
 
 
@@ -7106,10 +7175,10 @@ SqlUtility::insertQuery( string table, array values, mixed ignore = false, mixed
 ---
 ### SqlUtility::unionQuery
 
-
+Create union query
 
 ```php
-SqlUtility::unionQuery( mixed selects, mixed full = false ): mixed
+SqlUtility::unionQuery( mixed selects, mixed full = false ): array{params: mixed, sql: string}
 ```
 
 
@@ -7126,6 +7195,220 @@ SqlUtility::unionQuery( mixed selects, mixed full = false ): mixed
 **Return Value:**
 
 
+
+
+
+---
+### SqlUtility::createTable
+
+Creates a SQL CREATE TABLE statement.
+
+```php
+SqlUtility::createTable( string tableName, array columns, array options = [] ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tableName` | **string** |  |
+| `columns` | **array** | Associative array of column names and data types |
+| `options` | **array** | Additional options like PRIMARY KEY, UNIQUE, etc. |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::alterTable
+
+Alters an existing table to add or drop columns.
+
+```php
+SqlUtility::alterTable( string tableName, array addColumns = [], array dropColumns = [], mixed database = 9 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tableName` | **string** |  |
+| `addColumns` | **array** | Associative array of column names and data types to add |
+| `dropColumns` | **array** | Array of column names to drop |
+| `database` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::dropTable
+
+Drops an existing table.
+
+```php
+SqlUtility::dropTable( string tableName ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tableName` | **string** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::modifyColumn
+
+Modifies an existing column in a table.
+
+```php
+SqlUtility::modifyColumn( string tableName, string columnName, string newDefinition, mixed database = 9 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tableName` | **string** |  |
+| `columnName` | **string** |  |
+| `newDefinition` | **string** | New data type or attributes |
+| `database` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::addIndex
+
+Adds an index to a table.
+
+```php
+SqlUtility::addIndex( string tableName, string indexName, array columns ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tableName` | **string** |  |
+| `indexName` | **string** |  |
+| `columns` | **array** | Array of column names to index |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::dropIndex
+
+Drops an existing index from a table.
+
+```php
+SqlUtility::dropIndex( string tableName, string indexName, mixed database = 9 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tableName` | **string** |  |
+| `indexName` | **string** |  |
+| `database` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### SqlUtility::createDatabase
+
+Creates a new database.
+
+```php
+SqlUtility::createDatabase( string dbName, int database ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `dbName` | **string** | The name of the database to create. |
+| `database` | **int** | The database type constant. |
+
+
+**Return Value:**
+
+The SQL statement and parameters for execution.
+
+
+
+---
+### SqlUtility::dropDatabase
+
+Drops an existing database.
+
+```php
+SqlUtility::dropDatabase( string dbName, int database ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `dbName` | **string** | The name of the database to drop. |
+| `database` | **int** | The database type constant. |
+
+
+**Return Value:**
+
+The SQL statement and parameters for execution.
 
 
 
@@ -7408,7 +7691,7 @@ The modified string with the character set at the index.
 Replaces occurrences of a substring within a string.
 
 ```php
-StringUtility::setReplace( string string, string needle, string replace, bool caseSensitive = false ): string
+StringUtility::setReplace( string string, string|array needle, string|array replace, bool caseSensitive = false ): string
 ```
 
 This method replaces all instances of the specified needle with the
@@ -7421,8 +7704,8 @@ replacements based on the provided flag.
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `string` | **string** | The input string in which to perform the replacement. |
-| `needle` | **string** | The substring to be replaced. |
-| `replace` | **string** | The substring to replace with. |
+| `needle` | **string\|array** | The substring to be replaced. |
+| `replace` | **string\|array** | The substring to replace with. |
 | `caseSensitive` | **bool** | Indicates whether the replacement should be
 case-sensitive. Default is false. |
 
@@ -7635,7 +7918,9 @@ The modified string with the value added evenly.
 Drops specified characters from the given string.
 
 ```php
-StringUtility::drop( string string, string characters = "\n\r\t\v\x00 ): string
+StringUtility::drop( string string, string characters = " 
+
+	 " ): string
 ```
 
 This method removes all occurrences of the specified characters
@@ -7742,7 +8027,9 @@ The modified string with the character at the specified index removed.
 Drops specified characters from both ends of the given string.
 
 ```php
-StringUtility::dropFromSides( string string, string characters = "\n\r\t\v\x00" ): string
+StringUtility::dropFromSides( string string, string characters = " 
+
+	 " ): string
 ```
 
 This method trims the specified characters from the start and end
@@ -7769,7 +8056,9 @@ The modified string with specified characters trimmed from both ends.
 Drops specified characters from the start of the given string.
 
 ```php
-StringUtility::dropFromStart( string string, string characters = "\n\r\t\v\x00" ): string
+StringUtility::dropFromStart( string string, string characters = " 
+
+	 " ): string
 ```
 
 This method removes all occurrences of the specified characters
@@ -7796,7 +8085,9 @@ The modified string with specified characters removed from the start.
 Drops specified characters from the end of the given string.
 
 ```php
-StringUtility::dropFromEnd( string string, string characters = "\n\r\t\v\x00" ): string
+StringUtility::dropFromEnd( string string, string characters = " 
+
+	 " ): string
 ```
 
 This method removes all occurrences of the specified characters
@@ -8157,6 +8448,32 @@ each word, and joins them together.
 **Return Value:**
 
 The PascalCase string.
+
+
+
+---
+### StringUtility::transformToTitleCase
+
+Converts a string to title case.
+
+```php
+StringUtility::transformToTitleCase( string string ): string
+```
+
+This method capitalizes the first letter of each word in the
+input string while converting the rest to lowercase.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to transform. |
+
+
+**Return Value:**
+
+The title-cased string.
 
 
 
@@ -8626,6 +8943,34 @@ StringUtility::estimateSimilarity( string string1, string string2 ): float
 **Return Value:**
 
 A similarity score between 0 and 1, where 1 means identical.
+
+
+
+---
+### StringUtility::estimateLevenshteinDistance
+
+Calculates the Levenshtein distance between two strings.
+
+```php
+StringUtility::estimateLevenshteinDistance( string string1, string string2 ): int
+```
+
+This method measures the number of single-character edits
+(insertions, deletions, or substitutions) required to change
+one string into another.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string1` | **string** | The first string to compare. |
+| `string2` | **string** | The second string to compare. |
+
+
+**Return Value:**
+
+The Levenshtein distance between the two strings.
 
 
 
@@ -9339,6 +9684,58 @@ The decoded string with HTML entities converted back.
 
 
 ---
+### StringUtility::inBase64
+
+Encodes a string using Base64 encoding.
+
+```php
+StringUtility::inBase64( string string ): string
+```
+
+This method converts the input string into its Base64 encoded
+representation, which is useful for data transfer.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to encode. |
+
+
+**Return Value:**
+
+The Base64 encoded string.
+
+
+
+---
+### StringUtility::ofBase64
+
+Decodes a Base64 encoded string.
+
+```php
+StringUtility::ofBase64( string string ): string
+```
+
+This method converts a Base64 encoded string back to its
+original form.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The Base64 encoded string to decode. |
+
+
+**Return Value:**
+
+The original string represented by the Base64 input.
+
+
+
+---
 ### StringUtility::hashMD5
 
 Generates an MD5 hash of a given string.
@@ -9440,6 +9837,358 @@ True if the string matches the checksum, false otherwise.
 
 
 ---
+### StringUtility::slugify
+
+Converts a string into a URL-friendly slug.
+
+```php
+StringUtility::slugify( string string ): string
+```
+
+This method transforms the input string into lowercase,
+removes special characters, and replaces spaces with dashes.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The input string to convert. |
+
+
+**Return Value:**
+
+The URL-friendly slug.
+
+
+
+---
+### StringUtility::interpolate
+
+Interpolates variables into a string template.
+
+```php
+StringUtility::interpolate( string template, array variables ): string
+```
+
+This method replaces placeholders in the format {key} with
+corresponding values from the provided associative array.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `template` | **string** | The string template with placeholders. |
+| `variables` | **array** | An associative array of variables to interpolate. |
+
+
+**Return Value:**
+
+The string with variables interpolated.
+
+
+
+---
+### StringUtility::formatPhoneNumber
+
+Formats a given phone number into a specified format.
+
+```php
+StringUtility::formatPhoneNumber( string number, string format ): string
+```
+
+This function accepts a phone number string in any format and
+returns it in a standardized format based on the specified format string.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **string** | The input phone number to format. |
+| `format` | **string** | The desired format for the phone number.
+Supported formats include:
+- &#039;(###) ###-####&#039;
+- &#039;###-###-####&#039;
+- &#039;###.###.####&#039;
+- &#039;### ### ####&#039;
+- &#039;###/###-####&#039;
+- &#039;#######&#039;
+- &#039;+1 (###) ###-####&#039;
+- &#039;+1 ###-###-####&#039;
+- &#039;+1 ###.###.####&#039;
+- &#039;+1 ### ### ####&#039;
+- &#039;+44 #### ### ###&#039;
+- &#039;+49 ### #### ####&#039;
+- &#039;0### ### ####&#039;
+- &#039;###-##-####&#039;
+- &#039;###.##.####&#039;
+- &#039;###-###-###&#039;
+- &#039;### ### ###&#039;
+- &#039;###-###&#039;
+- &#039;###.###&#039;
+- &#039;### ###&#039; |
+
+
+**Return Value:**
+
+The formatted phone number or an error message.
+
+
+
+---
+### StringUtility::validatePhoneNumber
+
+Validates a phone number.
+
+```php
+StringUtility::validatePhoneNumber( string number ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **string** | The phone number to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateEmail
+
+Validates an email address.
+
+```php
+StringUtility::validateEmail( string email ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `email` | **string** | The email address to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateName
+
+Validates a name.
+
+```php
+StringUtility::validateName( string name ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | **string** | The name to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateURL
+
+Validates a URL.
+
+```php
+StringUtility::validateURL( string url ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `url` | **string** | The URL to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateDate
+
+Validates a date in YYYY-MM-DD format.
+
+```php
+StringUtility::validateDate( string date ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `date` | **string** | The date to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validatePassword
+
+Validates a password.
+
+```php
+StringUtility::validatePassword( string password ): bool
+```
+
+The password must be at least 8 characters long, contain at least one number,
+one uppercase letter, and one lowercase letter.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateCreditCard
+
+Validates a credit card number using the Luhn algorithm.
+
+```php
+StringUtility::validateCreditCard( string number ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `number` | **string** | The credit card number to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateUsername
+
+Validates a username.
+
+```php
+StringUtility::validateUsername( string username ): bool
+```
+
+The username must be 3-15 characters long and can contain letters, numbers, and underscores.
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `username` | **string** | The username to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validatePostalCode
+
+Validates a postal code.
+
+```php
+StringUtility::validatePostalCode( string postalCode ): bool
+```
+
+Supports US ZIP codes (5 or 9 digits) and Canadian postal codes (A1A 1A1).
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `postalCode` | **string** | The postal code to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
+### StringUtility::validateIP
+
+Validates an IP address.
+
+```php
+StringUtility::validateIP( string ip ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `ip` | **string** | The IP address to validate. |
+
+
+**Return Value:**
+
+True if valid, false otherwise.
+
+
+
+---
 ## TypesUtility
 
 Class TypesUtility
@@ -9499,6 +10248,31 @@ True if the variable is an array, false otherwise.
 
 
 ---
+### TypesUtility::isNotArray
+
+Check if the variable is not an array.
+
+```php
+TypesUtility::isNotArray( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not an array, false otherwise.
+
+
+
+---
 ### TypesUtility::isBoolean
 
 Check if the variable is a boolean.
@@ -9520,6 +10294,81 @@ TypesUtility::isBoolean( mixed value ): bool
 **Return Value:**
 
 True if the variable is a boolean, false otherwise.
+
+
+
+---
+### TypesUtility::isNotBoolean
+
+Check if the variable is not a boolean.
+
+```php
+TypesUtility::isNotBoolean( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not a boolean, false otherwise.
+
+
+
+---
+### TypesUtility::isBool
+
+An alias to isBoolean()
+
+```php
+TypesUtility::isBool( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### TypesUtility::isNotBool
+
+An alias to isMotBoolean()
+
+```php
+TypesUtility::isNotBool( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
 
 
 
@@ -9549,6 +10398,31 @@ True if the variable is callable, false otherwise.
 
 
 ---
+### TypesUtility::isNotCallable
+
+Check if the variable is not callable.
+
+```php
+TypesUtility::isNotCallable( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not callable, false otherwise.
+
+
+
+---
 ### TypesUtility::isCountable
 
 Check if the variable is countable.
@@ -9570,6 +10444,31 @@ TypesUtility::isCountable( mixed value ): bool
 **Return Value:**
 
 True if the variable is countable, false otherwise.
+
+
+
+---
+### TypesUtility::isNotCountable
+
+Check if the variable is not countable.
+
+```php
+TypesUtility::isNotCountable( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is mot countable, false otherwise.
 
 
 
@@ -9599,6 +10498,81 @@ True if the variable is a float, false otherwise.
 
 
 ---
+### TypesUtility::isNotFloat
+
+Check if the variable is not a float.
+
+```php
+TypesUtility::isNotFloat( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not a float, false otherwise.
+
+
+
+---
+### TypesUtility::isDouble
+
+An alias to isFloat()
+
+```php
+TypesUtility::isDouble( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### TypesUtility::isNotDouble
+
+An alias to isNotFloat()
+
+```php
+TypesUtility::isNotDouble( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
 ### TypesUtility::isInteger
 
 Check if the variable is an integer.
@@ -9620,6 +10594,81 @@ TypesUtility::isInteger( mixed value ): bool
 **Return Value:**
 
 True if the variable is an integer, false otherwise.
+
+
+
+---
+### TypesUtility::isNotInteger
+
+Check if the variable is not an integer.
+
+```php
+TypesUtility::isNotInteger( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not an integer, false otherwise.
+
+
+
+---
+### TypesUtility::isInt
+
+An alias to isInteger()
+
+```php
+TypesUtility::isInt( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### TypesUtility::isNotInt
+
+An alias to isNotInteger()
+
+```php
+TypesUtility::isNotInt( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** |  |
+
+
+**Return Value:**
+
+
 
 
 
@@ -9649,6 +10698,31 @@ True if the variable is iterable, false otherwise.
 
 
 ---
+### TypesUtility::isNotIterable
+
+Check if the variable is not iterable.
+
+```php
+TypesUtility::isNotIterable( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not iterable, false otherwise.
+
+
+
+---
 ### TypesUtility::isNull
 
 Check if the variable is null.
@@ -9670,6 +10744,31 @@ TypesUtility::isNull( mixed value ): bool
 **Return Value:**
 
 True if the variable is null, false otherwise.
+
+
+
+---
+### TypesUtility::isNotNull
+
+Check if the variable is not null.
+
+```php
+TypesUtility::isNotNull( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not null, false otherwise.
 
 
 
@@ -9699,6 +10798,31 @@ True if the variable is numeric, false otherwise.
 
 
 ---
+### TypesUtility::isNotNumeric
+
+Check if the variable is not numeric.
+
+```php
+TypesUtility::isNotNumeric( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not numeric, false otherwise.
+
+
+
+---
 ### TypesUtility::isObject
 
 Check if the variable is an object.
@@ -9720,6 +10844,31 @@ TypesUtility::isObject( mixed value ): bool
 **Return Value:**
 
 True if the variable is an object, false otherwise.
+
+
+
+---
+### TypesUtility::isNotObject
+
+Check if the variable is not an object.
+
+```php
+TypesUtility::isNotObject( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not an object, false otherwise.
 
 
 
@@ -9749,6 +10898,31 @@ True if the variable is a resource, false otherwise.
 
 
 ---
+### TypesUtility::isNotResource
+
+Check if the variable is not a resource.
+
+```php
+TypesUtility::isNotResource( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not a resource, false otherwise.
+
+
+
+---
 ### TypesUtility::isScalar
 
 Check if the variable is a scalar.
@@ -9774,12 +10948,62 @@ True if the variable is a scalar, false otherwise.
 
 
 ---
+### TypesUtility::isNotScalar
+
+Check if the variable is not a scalar.
+
+```php
+TypesUtility::isNotScalar( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is not a scalar, false otherwise.
+
+
+
+---
 ### TypesUtility::isString
 
 Check if the variable is a string.
 
 ```php
 TypesUtility::isString( mixed value ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value` | **mixed** | The variable to check. |
+
+
+**Return Value:**
+
+True if the variable is a string, false otherwise.
+
+
+
+---
+### TypesUtility::isNotString
+
+Check if the variable is not a string.
+
+```php
+TypesUtility::isNotString( mixed value ): bool
 ```
 
 
@@ -9875,6 +11099,31 @@ The converted integer.
 
 
 ---
+### TypesUtility::toInt
+
+An alias to toInteger()
+
+```php
+TypesUtility::toInt( mixed variable ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
 ### TypesUtility::toFloat
 
 Convert a variable to a float.
@@ -9900,6 +11149,31 @@ The converted float.
 
 
 ---
+### TypesUtility::toDouble
+
+An alias to toFloat()
+
+```php
+TypesUtility::toDouble( mixed variable ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** |  |
+
+
+**Return Value:**
+
+
+
+
+
+---
 ### TypesUtility::toBoolean
 
 Convert a variable to a boolean.
@@ -9921,6 +11195,31 @@ TypesUtility::toBoolean( mixed variable ): bool
 **Return Value:**
 
 The converted boolean.
+
+
+
+---
+### TypesUtility::toBool
+
+An alias to toBoolean()
+
+```php
+TypesUtility::toBool( mixed variable ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `variable` | **mixed** |  |
+
+
+**Return Value:**
+
+
 
 
 
