@@ -8,11 +8,12 @@ class FileUtilityTest extends \PHPUnit\Framework\TestCase
     private $yamlFile = 'test.yaml';
     private $iniFile = 'test.ini';
     private $xmlFile = 'test.xml';
+    private $envFile = '.env';
 
     protected function tearDown(): void
     {
         // Clean up test files after each test
-        foreach ([$this->jsonFile, $this->yamlFile, $this->iniFile, $this->xmlFile] as $file)
+        foreach ([$this->jsonFile, $this->yamlFile, $this->iniFile, $this->xmlFile, $this->envFile] as $file)
         {
             if (file_exists($file))
             {
@@ -53,6 +54,14 @@ class FileUtilityTest extends \PHPUnit\Framework\TestCase
         FileUtility::writeToXml($data, $this->xmlFile);
 
         $result = FileUtility::readFromXml($this->xmlFile);
+        $this->assertEquals($data, $result);
+    }
+
+    public function testReadWriteEnv()
+    {
+        $data = ["DATABASE" => "TEST"];
+        FileUtility::writeToEnv($data, $this->envFile);
+        $result = FileUtility::readFromEnv($this->envFile);
         $this->assertEquals($data, $result);
     }
 

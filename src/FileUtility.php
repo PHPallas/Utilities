@@ -44,7 +44,7 @@ class FileUtility
     public static function writeToJson($data, $file)
     {
         $jsonContent = json_encode($data, JSON_PRETTY_PRINT);
-        
+
         if ($jsonContent === false)
         {
             return false;
@@ -167,5 +167,36 @@ class FileUtility
         $xmlContent = Polyfill::arrayToXml($data); // Convert array to XML
         $result = file_put_contents($file, $xmlContent);
         return $result !== false;
+    }
+
+    /**
+     * Reads a value from the .env file.
+     *
+     * @param string $key The key of the environment variable.
+     * @return string|null The value of the environment variable or null if not found.
+     */
+    public static function readFromEnv($file)
+    {
+        $env = parse_ini_file($file); // Parse the .env file
+        return $env; // Return the value or null if not found
+    }
+
+    /**
+     * Writes a value to the .env file.
+     *
+     * @param string $key The key of the environment variable.
+     * @param string $value The value to set.
+     * @return bool True on success, false on failure.
+     */
+    public static function writeToEnv($data, $file)
+    {
+        $content = '';
+
+        foreach ($data as $k => $v)
+        {
+            $content .= "$k=\"$v\"\n"; // Quote values to handle spaces
+        }
+
+        return file_put_contents($file, $content) !== false;
     }
 }
