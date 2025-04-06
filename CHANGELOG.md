@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.2.0]
+
+### Added
+
+- `FileUtility::createDirectory()`
+- `FileUtility::loadFileContent()`
+- `FileUtility::writeToFile()`
+- `FileUtility::isDirectory()`
+- `FileUtility::isNotDirectory()`
+- `FileUtility::fileExists()`
+- `FileUtility::fileNotExists()`
+- `FileUtility::readFromJson()`
+- `FileUtility::writeToJson()`
+- `FileUtility::readFromYaml()`
+- `FileUtility::writeToYaml()`
+- `FileUtility::readFromIni()`
+- `FileUtility::writeToIni()`
+- `FileUtility::readFromXml()`
+- `FileUtility::writeToXml()`
+- `FileUtility::readFromEnv()`
+- `FileUtility::writeToEnv()`
+
+### Changed
+
+- `Boolean::areEqual()`: extra code line removed
+
 ## [1.1.0]
 
 ### Added

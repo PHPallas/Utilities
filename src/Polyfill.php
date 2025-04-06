@@ -718,4 +718,111 @@ class Polyfill
 
         return $hash;
     }
+
+    /**
+     * Polyfill for yaml_parse function.
+     *
+     * @param string $yamlContent The YAML content to parse.
+     * @return array|null The parsed data as an associative array, or null on failure.
+     */
+    public static function yaml_parse($yamlContent)
+    {
+        $lines = explode("\n", trim($yamlContent));
+        $result = [];
+        $currentKey = null;
+        
+        foreach ($lines as $line) {
+            // Ignore empty lines
+            if (trim($line) === '') {
+                continue;
+            }
+            
+            // Handle key-value pairs
+            if (preg_match('/^(\w+):\s*(.*)$/', $line, $matches)) {
+                $key = $matches[1];
+                $value = trim($matches[2]);
+                
+                // Handle nested lists
+                if (strpos($value, '-') === 0) {
+                    $result[$key] = [];
+                    $currentKey = $key;
+                } else {
+                    $result[$key] = $value;
+                    $currentKey = null;
+                }
+            } elseif (isset($currentKey)) {
+                // Handle list items
+                if (preg_match('/^\s*-\s*(.*)$/', $line, $matches)) {
+                    $result[$currentKey][] = trim($matches[1]);
+                }
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Polyfill for yaml_emit function.
+     *
+     * @param array $data The data to encode as YAML.
+     * @return string|null The YAML representation of the data, or null on failure.
+     */
+    public static function yaml_emit($data)
+    {
+        // Convert associative array to a YAML-like format
+        $yamlContent = '';
+        foreach ($data as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $yamlContent .= "$key:\n";
+                foreach ($value as $item)
+                {
+                    $yamlContent .= "  - $item\n"; // Handle lists
+                }
+            }
+            else
+            {
+                $yamlContent .= "$key: $value\n";
+            }
+        }
+        return $yamlContent;
+    }
+
+    /**
+     * Converts an associative array to XML format.
+     *
+     * @param array $data The data to convert.
+     * @param string $rootElement The root element name.
+     * @return string The XML representation of the data.
+     */
+    public static function arrayToXml(array $data, $rootElement = 'root')
+    {
+        $xml = "<$rootElement>";
+        foreach ($data as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $xml .= self::arrayToXml($value, $key);
+            }
+            else
+            {
+                $xml .= "<$key>" . htmlspecialchars($value) . "</$key>";
+            }
+        }
+        $xml .= "</$rootElement>";
+        return $xml;
+    }
+
+    /**
+     * Converts XML to an associative array.
+     *
+     * @param string $xmlString The XML string to convert.
+     * @return array The converted associative array.
+     */
+    public static function xmlToArray($xmlString)
+    {
+        $xml = simplexml_load_string($xmlString);
+        return json_decode(json_encode($xml), true);
+    }
 }
