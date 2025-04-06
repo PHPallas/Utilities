@@ -122,7 +122,6 @@ class BooleanUtility
         else {
             static::throwError();
         }
-        return static::FALSE;
     }
 
     /**
