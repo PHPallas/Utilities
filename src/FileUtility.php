@@ -11,26 +11,131 @@
 
 namespace PHPallas\Utilities;
 
+/**
+ * Class FileUtility
+ * 
+ * A utility class providing methods to read, write, manipulate and other 
+ * operations upon files.
+ *
+ * @since 1.2.0
+ */
 class FileUtility
 {
+    /**
+     * Creates a directory at the specified path.
+     *
+     * @param string $path The path of the directory to create.
+     * @param int $permissions The permissions to set for the new directory (default is 0777).
+     * @param bool $recursive Whether to create directories recursively (default is true).
+     * @return void
+     */
+    public static function createDirectory($path, $permissions = 0777, $recursive = true)
+    {
+        mkdir($path, $permissions, $recursive);
+    }
+
+    /**
+     * Loads the content of a file.
+     *
+     * @param string $file The path to the file.
+     * @return string|null The content of the file, or null if the file does not exist.
+     */
+    public static function loadFileContent($file)
+    {
+        if (static::fileExists($file))
+        {
+            return file_get_contents($file);
+        }
+        return null;
+    }
+
+    /**
+     * Writes content to a specified file.
+     *
+     * @param string $file The path to the file.
+     * @param string $content The content to write to the file.
+     * @return int|false The number of bytes written to the file, or false on failure.
+     */
+    public static function writeToFile($file, $content)
+    {
+        $directoryPath = dirname($file);
+
+        // Check if the directory exists, if not create it
+        if (static::isNotDirectory($directoryPath))
+        {
+            static::createDirectory($directoryPath); // Create the directory recursively
+        }
+
+        return file_put_contents($file, $content);
+    }
+
+    /**
+     * Checks if the specified path is a directory.
+     *
+     * @param string $path The path to check.
+     * @return bool True if the path is a directory, false otherwise.
+     */
+    public static function isDirectory($path)
+    {
+        return is_dir($path);
+    }
+
+    /**
+     * Checks if the specified path is not a directory.
+     *
+     * @param string $path The path to check.
+     * @return bool True if the path is not a directory, false otherwise.
+     */
+    public static function isNotDirectory($path)
+    {
+        return BooleanUtility::not(is_dir($path));
+    }
+
+    /**
+     * Checks if a file exists.
+     *
+     * @param string $file The path to the file.
+     * @return bool True if the file exists and is not a directory, false otherwise.
+     */
+    public static function fileExists($file)
+    {
+        if (@file_exists($file) && static::isNotDirectory($file))
+        {
+            return BooleanUtility::TRUE;
+        }
+        return BooleanUtility::FALSE;
+    }
+
+    /**
+     * Checks if a file does not exist.
+     *
+     * @param string $file The path to the file.
+     * @return bool True if the file does not exist, false otherwise.
+     */
+    public static function fileNotExists($file)
+    {
+        return BooleanUtility::not(static::fileExists($file));
+    }
+
     /**
      * Reads data from a JSON file.
      *
      * @param string $file The path to the JSON file.
      * @return array|null The decoded data as an associative array, or null on failure.
+     * @since 1.2.0
      */
     public static function readFromJson($file)
     {
-        if (!file_exists($file))
+        if (static::fileNotExists($file))
         {
             return null;
         }
-        $jsonContent = file_get_contents($file);
-        if ($jsonContent === false)
+        $jsonContent = static::loadFileContent($file);
+        if (null === $jsonContent)
         {
             return null;
         }
-        $data = json_decode($jsonContent, true);
+        $data = json_decode($jsonContent, BooleanUtility::TRUE);
         return $data;
     }
 
@@ -40,22 +145,23 @@ class FileUtility
      * @param array $data The data to be encoded and written to the file.
      * @param string $file The path to the JSON file.
      * @return bool True on success, false on failure.
+     * @since 1.2.0
      */
     public static function writeToJson($data, $file)
     {
         $jsonContent = json_encode($data, JSON_PRETTY_PRINT);
 
-        if ($jsonContent === false)
+        if (BooleanUtility::FALSE === $jsonContent)
         {
-            return false;
+            return BooleanUtility::FALSE;
         }
 
-        if (!is_dir(dirname($file)))
+        if (static::isNotDirectory(dirname($file)))
         {
-            return false; // Return false if the directory does not exist
+            return BooleanUtility::FALSE; // Return false if the directory does not exist
         }
 
-        return file_put_contents($file, json_encode($data)) !== false;
+        return BooleanUtility::FALSE !== static::writeToFile($file, $jsonContent);
     }
 
     /**
@@ -63,20 +169,20 @@ class FileUtility
      *
      * @param string $file The path to the YAML file.
      * @return array|null The parsed data as an associative array, or null on failure.
+     * @since 1.2.0
      */
     public static function readFromYaml($file)
     {
-        if (!file_exists($file))
+        if (static::fileNotExists($file))
         {
             return null;
         }
-        $yamlContent = file_get_contents($file);
-        if ($yamlContent === false)
+        $yamlContent = static::loadFileContent($file);
+        if (BooleanUtility::FALSE === $yamlContent)
         {
             return null;
         }
-        $data = Polyfill::yaml_parse($yamlContent);
-        return $data;
+        return Polyfill::yaml_parse($yamlContent);
     }
 
     /**
@@ -85,16 +191,17 @@ class FileUtility
      * @param array $data The data to be encoded and written to the file.
      * @param string $file The path to the YAML file.
      * @return bool True on success, false on failure.
+     * @since 1.2.0
      */
     public static function writeToYaml($data, $file)
     {
         $yamlContent = Polyfill::yaml_emit($data);
-        if ($yamlContent === false)
+        if (BooleanUtility::FALSE === $yamlContent)
         {
-            return false;
+            return BooleanUtility::FALSE;
         }
-        $result = file_put_contents($file, $yamlContent);
-        return $result !== false;
+        $result = static::writeToFile($file, $yamlContent);
+        return BooleanUtility::FALSE !== $result;
     }
 
     /**
@@ -102,15 +209,16 @@ class FileUtility
      *
      * @param string $file The path to the INI file.
      * @return array|null The parsed data as an associative array, or null on failure.
+     * @since 1.2.0
      */
     public static function readFromIni($file)
     {
-        if (!file_exists($file))
+        if (static::fileNotExists($file))
         {
             return null;
         }
-        $data = parse_ini_file($file, true);
-        return $data;
+        $data = static::loadFileContent($file);
+        return parse_ini_string($data, BooleanUtility::TRUE);
     }
 
     /**
@@ -119,6 +227,7 @@ class FileUtility
      * @param array $data The data to be encoded and written to the file.
      * @param string $file The path to the INI file.
      * @return bool True on success, false on failure.
+     * @since 1.2.0
      */
     public static function writeToIni($data, $file)
     {
@@ -131,8 +240,8 @@ class FileUtility
                 $iniContent .= "$key = \"$value\"\n";
             }
         }
-        $result = file_put_contents($file, $iniContent);
-        return $result !== false;
+        $result = static::writeToFile($file, $iniContent);
+        return BooleanUtility::FALSE !== $result;
     }
 
     /**
@@ -140,15 +249,16 @@ class FileUtility
      *
      * @param string $file The path to the XML file.
      * @return array|null The parsed data as an associative array, or null on failure.
+     * @since 1.2.0
      */
     public static function readFromXml($file)
     {
-        if (!file_exists($file))
+        if (static::fileNotExists($file))
         {
             return null;
         }
-        $xmlContent = file_get_contents($file);
-        if ($xmlContent === false)
+        $xmlContent = static::loadFileContent($file);
+        if (BooleanUtility::FALSE === $xmlContent)
         {
             return null;
         }
@@ -165,28 +275,31 @@ class FileUtility
     public static function writeToXml($data, $file)
     {
         $xmlContent = Polyfill::arrayToXml($data); // Convert array to XML
-        $result = file_put_contents($file, $xmlContent);
-        return $result !== false;
+        $result = static::writeToFile($file, $xmlContent);
+        return BooleanUtility::FALSE !== $result;
     }
 
     /**
-     * Reads a value from the .env file.
+     * Reads key-value pairs from a .env file.
      *
-     * @param string $key The key of the environment variable.
-     * @return string|null The value of the environment variable or null if not found.
+     * @param string $file The path to the .env file.
+     * @return array|null The parsed environment variables as an associative array, or null on failure.
+     * @since 1.2.0
      */
     public static function readFromEnv($file)
     {
-        $env = parse_ini_file($file); // Parse the .env file
-        return $env; // Return the value or null if not found
+        $data = static::loadFileContent($file);
+        $env = parse_ini_string($data, BooleanUtility::TRUE); // Parse the .env file
+        return $env; // Return the parsed environment variables
     }
 
     /**
-     * Writes a value to the .env file.
+     * Writes key-value pairs to a .env file.
      *
-     * @param string $key The key of the environment variable.
-     * @param string $value The value to set.
+     * @param array $data The key-value pairs to be written to the .env file.
+     * @param string $file The path to the .env file.
      * @return bool True on success, false on failure.
+     * @since 1.2.0
      */
     public static function writeToEnv($data, $file)
     {
@@ -197,6 +310,6 @@ class FileUtility
             $content .= "$k=\"$v\"\n"; // Quote values to handle spaces
         }
 
-        return file_put_contents($file, $content) !== false;
+        return BooleanUtility::FALSE !== static::writeToFile($file, $content);
     }
 }
