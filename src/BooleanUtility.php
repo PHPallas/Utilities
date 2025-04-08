@@ -54,6 +54,12 @@ class BooleanUtility
      */
     const DEFAULT_BOOL = false;
 
+
+    public static function createRandom()
+    {
+        return (bool)rand(0, 1);
+    }
+
     /**
      * Converts a string to a boolean value.
      *
