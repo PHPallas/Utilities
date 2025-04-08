@@ -400,7 +400,7 @@ class MathUtility
 
             if ($principalPayment <= 0)
             {
-                throw new \RuntimeException("Monthly payment is not enough to cover interest.");
+                throw new RuntimeException("Monthly payment is not enough to cover interest.");
             }
 
             // Adjust for the last payment if the remaining principal is less than the principalPayment

@@ -330,7 +330,7 @@ class HttpUtility
     {
         static::sendHeader('Content-Type: application/json', true, $http_response_code);
         echo json_encode($data);
-        exit;
+        return;
     }
 
     /**
@@ -357,7 +357,7 @@ class HttpUtility
     public static function redirect($url, $http_response_code = 302)
     {
         static::sendHeader('Location: ' . $url, true, $http_response_code);
-        exit;
+        return;
     }
 
     /**
