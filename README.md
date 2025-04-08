@@ -6,7 +6,10 @@ Welcome to **PHPallas Utilities**! This application is designed to provide a com
 
 - **ArrayUtility**: Over 60 functions for array manipulation.
 - **BooleanUtility**: More than 20 functions for handling boolean values.
+- **FileUtility**: Over 15 functions for file handling.
 - **MathUtility**: Over 130 functions covering a wide range of mathematical operations.
+- **RandomUtility**: Functions for creating random values.
+- **SecurityUtility**: Around 50 function for security check, verification and etc.
 - **SqlUtility**: Functions for constructing SQL queries, including `SELECT`, `UPDATE`, `DELETE`, `INSERT`, `JOIN`, and `UNION`.
 - **StringUtility**: More than 80 functions for string manipulation.
 - **TypesUtility**: Over 20 functions for type manipulation, including conversions.
@@ -169,6 +172,7 @@ $result => "Hello_World";
 | [ArrayUtility::sort](#ArrayUtilitysort) | Sort elements of an array |
 | [ArrayUtility::sortRandom](#ArrayUtilitysortRandom) | Shuffles (randomizes the order of the elements in) an array. |
 | [**BooleanUtility**](#BooleanUtility) | Class BooleanUtility |
+| [BooleanUtility::createRandom](#BooleanUtilitycreateRandom) |  |
 | [BooleanUtility::fromString](#BooleanUtilityfromString) | Converts a string to a boolean value. |
 | [BooleanUtility::toString](#BooleanUtilitytoString) | Converts a boolean value to its string representation. |
 | [BooleanUtility::areEqual](#BooleanUtilityareEqual) | Checks if two boolean values are equal. |
@@ -196,6 +200,24 @@ $result => "Hello_World";
 | [DateTime::getComponents](#DateTimegetComponents) | Summary of toString |
 | [DateTime::isLeapSolarHijri](#DateTimeisLeapSolarHijri) | Checks if a Solar Hijri year is leap year |
 | [DateTime::isLeapLunarHijri](#DateTimeisLeapLunarHijri) |  |
+| [**FileUtility**](#FileUtility) | Class FileUtility |
+| [FileUtility::createDirectory](#FileUtilitycreateDirectory) | Creates a directory at the specified path. |
+| [FileUtility::loadFileContent](#FileUtilityloadFileContent) | Loads the content of a file. |
+| [FileUtility::writeToFile](#FileUtilitywriteToFile) | Writes content to a specified file. |
+| [FileUtility::isDirectory](#FileUtilityisDirectory) | Checks if the specified path is a directory. |
+| [FileUtility::isNotDirectory](#FileUtilityisNotDirectory) | Checks if the specified path is not a directory. |
+| [FileUtility::fileExists](#FileUtilityfileExists) | Checks if a file exists. |
+| [FileUtility::fileNotExists](#FileUtilityfileNotExists) | Checks if a file does not exist. |
+| [FileUtility::readFromJson](#FileUtilityreadFromJson) | Reads data from a JSON file. |
+| [FileUtility::writeToJson](#FileUtilitywriteToJson) | Writes data to a JSON file. |
+| [FileUtility::readFromYaml](#FileUtilityreadFromYaml) | Reads data from a YAML file. |
+| [FileUtility::writeToYaml](#FileUtilitywriteToYaml) | Writes data to a YAML file. |
+| [FileUtility::readFromIni](#FileUtilityreadFromIni) | Reads data from an INI file. |
+| [FileUtility::writeToIni](#FileUtilitywriteToIni) | Writes data to an INI file. |
+| [FileUtility::readFromXml](#FileUtilityreadFromXml) | Reads data from an XML file. |
+| [FileUtility::writeToXml](#FileUtilitywriteToXml) | Writes data to an XML file. |
+| [FileUtility::readFromEnv](#FileUtilityreadFromEnv) | Reads key-value pairs from a .env file. |
+| [FileUtility::writeToEnv](#FileUtilitywriteToEnv) | Writes key-value pairs to a .env file. |
 | [**MathUtility**](#MathUtility) | Class MathUtilityA utility class for common mathematical and physical constants. |
 | [MathUtility::round](#MathUtilityround) | Round to the nearest integer. |
 | [MathUtility::floor](#MathUtilityfloor) | Floor: Round down to the nearest integer. |
@@ -363,6 +385,57 @@ $result => "Hello_World";
 | [Polyfill::mb_check_encoding](#Polyfillmb_check_encoding) | Check if a string is valid for a given encoding. |
 | [Polyfill::password_verify](#Polyfillpassword_verify) | Verify a password against a hashed value. |
 | [Polyfill::password_hash](#Polyfillpassword_hash) | Hash a password using a secure algorithm. |
+| [Polyfill::yaml_parse](#Polyfillyaml_parse) | Polyfill for yaml_parse function. |
+| [Polyfill::yaml_emit](#Polyfillyaml_emit) | Polyfill for yaml_emit function. |
+| [Polyfill::arrayToXml](#PolyfillarrayToXml) | Converts an associative array to XML format. |
+| [Polyfill::xmlToArray](#PolyfillxmlToArray) | Converts XML to an associative array. |
+| [**RandomUtility**](#RandomUtility) | Class RandomUtility |
+| [RandomUtility::randomInt](#RandomUtilityrandomInt) | Generates a random integer between the specified minimum and maximum values. |
+| [RandomUtility::randomFloat](#RandomUtilityrandomFloat) | Generates a random float between the specified minimum and maximum values. |
+| [RandomUtility::randomBool](#RandomUtilityrandomBool) | Generates a random boolean value. |
+| [RandomUtility::randomString](#RandomUtilityrandomString) | Generates a random string of the specified length using predefined characters. |
+| [RandomUtility::randomArray](#RandomUtilityrandomArray) | Generates an array of random values of the specified count. |
+| [RandomUtility::randomObject](#RandomUtilityrandomObject) | Generates a random object with properties based on random values. |
+| [**SecurityUtility**](#SecurityUtility) |  |
+| [SecurityUtility::hashPassword](#SecurityUtilityhashPassword) | Hash a password using SHA-256. |
+| [SecurityUtility::verifyPassword](#SecurityUtilityverifyPassword) | Verify a password against a hashed value. |
+| [SecurityUtility::generateToken](#SecurityUtilitygenerateToken) | Generate a secure random token. |
+| [SecurityUtility::sanitizeString](#SecurityUtilitysanitizeString) | Sanitize a string to prevent XSS. |
+| [SecurityUtility::validateEmail](#SecurityUtilityvalidateEmail) | Validate an email address. |
+| [SecurityUtility::generateRandomPassword](#SecurityUtilitygenerateRandomPassword) | Generate a random password. |
+| [SecurityUtility::isStrongPassword](#SecurityUtilityisStrongPassword) | Check if a string is a strong password. |
+| [SecurityUtility::encryptData](#SecurityUtilityencryptData) | Encrypt data using a simple XOR cipher (not secure for sensitive data). |
+| [SecurityUtility::decryptData](#SecurityUtilitydecryptData) | Decrypt data encrypted by the XOR cipher. |
+| [SecurityUtility::generateRandomString](#SecurityUtilitygenerateRandomString) | Generate a random alphanumeric string. |
+| [SecurityUtility::generateRandomInt](#SecurityUtilitygenerateRandomInt) | Generate a random integer. |
+| [SecurityUtility::generateRandomFloat](#SecurityUtilitygenerateRandomFloat) | Generate a random float. |
+| [SecurityUtility::generateUUID](#SecurityUtilitygenerateUUID) | Generate a random UUID. |
+| [SecurityUtility::generateSecureRandomBytes](#SecurityUtilitygenerateSecureRandomBytes) | Generate a secure random binary string. |
+| [SecurityUtility::validateURL](#SecurityUtilityvalidateURL) | Validate a URL. |
+| [SecurityUtility::validatePhoneNumber](#SecurityUtilityvalidatePhoneNumber) | Validate a phone number (simple validation). |
+| [SecurityUtility::hashWithBcrypt](#SecurityUtilityhashWithBcrypt) | Generate a secure hash using bcrypt. |
+| [SecurityUtility::verifyBcryptPassword](#SecurityUtilityverifyBcryptPassword) | Verify a bcrypt-hashed password. |
+| [SecurityUtility::generateRandomColor](#SecurityUtilitygenerateRandomColor) | Generate a random color in HEX format. |
+| [SecurityUtility::sanitizeArray](#SecurityUtilitysanitizeArray) | Sanitize an array of strings. |
+| [SecurityUtility::generateSecurityQuestion](#SecurityUtilitygenerateSecurityQuestion) | Generate a random security question. |
+| [SecurityUtility::generateSecurityAnswer](#SecurityUtilitygenerateSecurityAnswer) | Generate a random answer for a security question. |
+| [SecurityUtility::getClientIP](#SecurityUtilitygetClientIP) | Get the current IP address. |
+| [SecurityUtility::getUserAgent](#SecurityUtilitygetUserAgent) | Get the current user agent. |
+| [SecurityUtility::generateSessionID](#SecurityUtilitygenerateSessionID) | Generate a random session ID. |
+| [SecurityUtility::isValidJSON](#SecurityUtilityisValidJSON) | Check if a string is a valid JSON. |
+| [SecurityUtility::generateRandomStringFromSet](#SecurityUtilitygenerateRandomStringFromSet) | Generate a random string of a specified character set. |
+| [SecurityUtility::aesEncrypt](#SecurityUtilityaesEncrypt) | Encrypt a string using AES-256. |
+| [SecurityUtility::aesDecrypt](#SecurityUtilityaesDecrypt) | Decrypt a string using AES-256. |
+| [SecurityUtility::generateAPIKey](#SecurityUtilitygenerateAPIKey) | Generate a random API key. |
+| [SecurityUtility::createCSRFToken](#SecurityUtilitycreateCSRFToken) | Create a CSRF token. |
+| [SecurityUtility::validateCSRFToken](#SecurityUtilityvalidateCSRFToken) | Validate a CSRF token. |
+| [SecurityUtility::generateHMACKey](#SecurityUtilitygenerateHMACKey) | Generate a random secret key for HMAC. |
+| [SecurityUtility::generateHMAC](#SecurityUtilitygenerateHMAC) | Generate HMAC for a given data. |
+| [SecurityUtility::validateHMAC](#SecurityUtilityvalidateHMAC) | Validate HMAC for a given data. |
+| [SecurityUtility::generateSalt](#SecurityUtilitygenerateSalt) | Generate a random salt. |
+| [SecurityUtility::hashPasswordWithSalt](#SecurityUtilityhashPasswordWithSalt) | Hash a password with a salt. |
+| [SecurityUtility::verifyPasswordWithSalt](#SecurityUtilityverifyPasswordWithSalt) | Verify a password with a salt. |
+| [SecurityUtility::generateRandomPhrase](#SecurityUtilitygenerateRandomPhrase) | Generate a random phrase (for testing). |
 | [**SqlUtility**](#SqlUtility) |  |
 | [SqlUtility::selectQuery](#SqlUtilityselectQuery) | selectQuery is a versatile function that dynamically builds a SQL SELECTstatement based on the provided parameters. It handles various SQL syntaxdifferences across multiple database systems, ensuring that the correctsyntax is used for limiting results, grouping, ordering, and filteringdata. The method is designed to be flexible and reusable for differentdatabase interactions. |
 | [SqlUtility::updateQuery](#SqlUtilityupdateQuery) | The updateQuery method is a flexible function that constructs a SQLUPDATE statement dynamically based on the provided parameters. It handlesthe creation of the SET and WHERE clauses, ensuring proper parameterbinding to prevent SQL injection. This method is designed to be reusablefor updating rows in different tables with varying conditions. |
@@ -2106,6 +2179,25 @@ a set of immutable constants for commonly used boolean values.
 * Full name: \PHPallas\Utilities\BooleanUtility
 
 
+### BooleanUtility::createRandom
+
+
+
+```php
+BooleanUtility::createRandom(  ): mixed
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+
+
+
+
+---
 ### BooleanUtility::fromString
 
 Converts a string to a boolean value.
@@ -2773,6 +2865,449 @@ DateTime::isLeapLunarHijri( mixed year ): mixed
 **Return Value:**
 
 
+
+
+
+---
+## FileUtility
+
+Class FileUtility
+
+A utility class providing methods to read, write, manipulate and other
+operations upon files.
+
+* Full name: \PHPallas\Utilities\FileUtility
+
+
+### FileUtility::createDirectory
+
+Creates a directory at the specified path.
+
+```php
+FileUtility::createDirectory( string path, int permissions = 0777, bool recursive = true ): void
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `path` | **string** | The path of the directory to create. |
+| `permissions` | **int** | The permissions to set for the new directory (default is 0777). |
+| `recursive` | **bool** | Whether to create directories recursively (default is true). |
+
+
+**Return Value:**
+
+
+
+
+
+---
+### FileUtility::loadFileContent
+
+Loads the content of a file.
+
+```php
+FileUtility::loadFileContent( string file ): string|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the file. |
+
+
+**Return Value:**
+
+The content of the file, or null if the file does not exist.
+
+
+
+---
+### FileUtility::writeToFile
+
+Writes content to a specified file.
+
+```php
+FileUtility::writeToFile( string file, string content ): int|false
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the file. |
+| `content` | **string** | The content to write to the file. |
+
+
+**Return Value:**
+
+The number of bytes written to the file, or false on failure.
+
+
+
+---
+### FileUtility::isDirectory
+
+Checks if the specified path is a directory.
+
+```php
+FileUtility::isDirectory( string path ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `path` | **string** | The path to check. |
+
+
+**Return Value:**
+
+True if the path is a directory, false otherwise.
+
+
+
+---
+### FileUtility::isNotDirectory
+
+Checks if the specified path is not a directory.
+
+```php
+FileUtility::isNotDirectory( string path ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `path` | **string** | The path to check. |
+
+
+**Return Value:**
+
+True if the path is not a directory, false otherwise.
+
+
+
+---
+### FileUtility::fileExists
+
+Checks if a file exists.
+
+```php
+FileUtility::fileExists( string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the file. |
+
+
+**Return Value:**
+
+True if the file exists and is not a directory, false otherwise.
+
+
+
+---
+### FileUtility::fileNotExists
+
+Checks if a file does not exist.
+
+```php
+FileUtility::fileNotExists( string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the file. |
+
+
+**Return Value:**
+
+True if the file does not exist, false otherwise.
+
+
+
+---
+### FileUtility::readFromJson
+
+Reads data from a JSON file.
+
+```php
+FileUtility::readFromJson( string file ): array|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the JSON file. |
+
+
+**Return Value:**
+
+The decoded data as an associative array, or null on failure.
+
+
+
+---
+### FileUtility::writeToJson
+
+Writes data to a JSON file.
+
+```php
+FileUtility::writeToJson( array data, string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The data to be encoded and written to the file. |
+| `file` | **string** | The path to the JSON file. |
+
+
+**Return Value:**
+
+True on success, false on failure.
+
+
+
+---
+### FileUtility::readFromYaml
+
+Reads data from a YAML file.
+
+```php
+FileUtility::readFromYaml( string file ): array|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the YAML file. |
+
+
+**Return Value:**
+
+The parsed data as an associative array, or null on failure.
+
+
+
+---
+### FileUtility::writeToYaml
+
+Writes data to a YAML file.
+
+```php
+FileUtility::writeToYaml( array data, string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The data to be encoded and written to the file. |
+| `file` | **string** | The path to the YAML file. |
+
+
+**Return Value:**
+
+True on success, false on failure.
+
+
+
+---
+### FileUtility::readFromIni
+
+Reads data from an INI file.
+
+```php
+FileUtility::readFromIni( string file ): array|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the INI file. |
+
+
+**Return Value:**
+
+The parsed data as an associative array, or null on failure.
+
+
+
+---
+### FileUtility::writeToIni
+
+Writes data to an INI file.
+
+```php
+FileUtility::writeToIni( array data, string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The data to be encoded and written to the file. |
+| `file` | **string** | The path to the INI file. |
+
+
+**Return Value:**
+
+True on success, false on failure.
+
+
+
+---
+### FileUtility::readFromXml
+
+Reads data from an XML file.
+
+```php
+FileUtility::readFromXml( string file ): array|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the XML file. |
+
+
+**Return Value:**
+
+The parsed data as an associative array, or null on failure.
+
+
+
+---
+### FileUtility::writeToXml
+
+Writes data to an XML file.
+
+```php
+FileUtility::writeToXml( array data, string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The data to be encoded and written to the file. |
+| `file` | **string** | The path to the XML file. |
+
+
+**Return Value:**
+
+True on success, false on failure.
+
+
+
+---
+### FileUtility::readFromEnv
+
+Reads key-value pairs from a .env file.
+
+```php
+FileUtility::readFromEnv( string file ): array|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `file` | **string** | The path to the .env file. |
+
+
+**Return Value:**
+
+The parsed environment variables as an associative array, or null on failure.
+
+
+
+---
+### FileUtility::writeToEnv
+
+Writes key-value pairs to a .env file.
+
+```php
+FileUtility::writeToEnv( array data, string file ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The key-value pairs to be written to the .env file. |
+| `file` | **string** | The path to the .env file. |
+
+
+**Return Value:**
+
+True on success, false on failure.
 
 
 
@@ -7020,6 +7555,1215 @@ Polyfill::password_hash( string password, int algo = PASSWORD_DEFAULT, array opt
 **Return Value:**
 
 The hashed password or false on failure.
+
+
+
+---
+### Polyfill::yaml_parse
+
+Polyfill for yaml_parse function.
+
+```php
+Polyfill::yaml_parse( string yamlContent ): array|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `yamlContent` | **string** | The YAML content to parse. |
+
+
+**Return Value:**
+
+The parsed data as an associative array, or null on failure.
+
+
+
+---
+### Polyfill::yaml_emit
+
+Polyfill for yaml_emit function.
+
+```php
+Polyfill::yaml_emit( array data ): string|null
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The data to encode as YAML. |
+
+
+**Return Value:**
+
+The YAML representation of the data, or null on failure.
+
+
+
+---
+### Polyfill::arrayToXml
+
+Converts an associative array to XML format.
+
+```php
+Polyfill::arrayToXml( array data, string rootElement = 'root' ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **array** | The data to convert. |
+| `rootElement` | **string** | The root element name. |
+
+
+**Return Value:**
+
+The XML representation of the data.
+
+
+
+---
+### Polyfill::xmlToArray
+
+Converts XML to an associative array.
+
+```php
+Polyfill::xmlToArray( string xmlString ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `xmlString` | **string** | The XML string to convert. |
+
+
+**Return Value:**
+
+The converted associative array.
+
+
+
+---
+## RandomUtility
+
+Class RandomUtility
+
+Provides utility methods for generating random values.
+
+* Full name: \PHPallas\Utilities\RandomUtility
+
+
+### RandomUtility::randomInt
+
+Generates a random integer between the specified minimum and maximum values.
+
+```php
+RandomUtility::randomInt( int min, int max = 100 ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **int** | The minimum value (inclusive). |
+| `max` | **int** | The maximum value (inclusive). |
+
+
+**Return Value:**
+
+A random integer between min and max.
+
+
+
+---
+### RandomUtility::randomFloat
+
+Generates a random float between the specified minimum and maximum values.
+
+```php
+RandomUtility::randomFloat( float min = 0.0, float max = 100.0 ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **float** | The minimum value (inclusive). |
+| `max` | **float** | The maximum value (inclusive). |
+
+
+**Return Value:**
+
+A random float between min and max.
+
+
+
+---
+### RandomUtility::randomBool
+
+Generates a random boolean value.
+
+```php
+RandomUtility::randomBool(  ): bool
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+A random boolean value (true or false).
+
+
+
+---
+### RandomUtility::randomString
+
+Generates a random string of the specified length using predefined characters.
+
+```php
+RandomUtility::randomString( int length = 10 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the random string to generate. |
+
+
+**Return Value:**
+
+A random string of the specified length.
+
+
+
+---
+### RandomUtility::randomArray
+
+Generates an array of random values of the specified count.
+
+```php
+RandomUtility::randomArray( int count = 5 ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `count` | **int** | The number of random values to generate. |
+
+
+**Return Value:**
+
+An array containing random values.
+
+
+
+---
+### RandomUtility::randomObject
+
+Generates a random object with properties based on random values.
+
+```php
+RandomUtility::randomObject( int count = 5 ): object
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `count` | **int** | The number of properties to include in the random object. |
+
+
+**Return Value:**
+
+A random object with specified properties.
+
+
+
+---
+## SecurityUtility
+
+
+
+
+
+* Full name: \PHPallas\Utilities\SecurityUtility
+
+
+### SecurityUtility::hashPassword
+
+Hash a password using SHA-256.
+
+```php
+SecurityUtility::hashPassword( string password ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to hash. |
+
+
+**Return Value:**
+
+The hashed password.
+
+
+
+---
+### SecurityUtility::verifyPassword
+
+Verify a password against a hashed value.
+
+```php
+SecurityUtility::verifyPassword( string password, string hashedPassword ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to verify. |
+| `hashedPassword` | **string** | The hashed password to compare against. |
+
+
+**Return Value:**
+
+True if the password matches, false otherwise.
+
+
+
+---
+### SecurityUtility::generateToken
+
+Generate a secure random token.
+
+```php
+SecurityUtility::generateToken( int length = 32 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the token. |
+
+
+**Return Value:**
+
+The generated token.
+
+
+
+---
+### SecurityUtility::sanitizeString
+
+Sanitize a string to prevent XSS.
+
+```php
+SecurityUtility::sanitizeString( string string ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The string to sanitize. |
+
+
+**Return Value:**
+
+The sanitized string.
+
+
+
+---
+### SecurityUtility::validateEmail
+
+Validate an email address.
+
+```php
+SecurityUtility::validateEmail( string email ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `email` | **string** | The email address to validate. |
+
+
+**Return Value:**
+
+True if the email is valid, false otherwise.
+
+
+
+---
+### SecurityUtility::generateRandomPassword
+
+Generate a random password.
+
+```php
+SecurityUtility::generateRandomPassword( int length = 12 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the password. |
+
+
+**Return Value:**
+
+The generated password.
+
+
+
+---
+### SecurityUtility::isStrongPassword
+
+Check if a string is a strong password.
+
+```php
+SecurityUtility::isStrongPassword( string password ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to check. |
+
+
+**Return Value:**
+
+True if the password is strong, false otherwise.
+
+
+
+---
+### SecurityUtility::encryptData
+
+Encrypt data using a simple XOR cipher (not secure for sensitive data).
+
+```php
+SecurityUtility::encryptData( string data, string key ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **string** | The data to encrypt. |
+| `key` | **string** | The key to use for encryption. |
+
+
+**Return Value:**
+
+The encrypted data.
+
+
+
+---
+### SecurityUtility::decryptData
+
+Decrypt data encrypted by the XOR cipher.
+
+```php
+SecurityUtility::decryptData( string encryptedData, string key ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `encryptedData` | **string** | The encrypted data to decrypt. |
+| `key` | **string** | The key to use for decryption. |
+
+
+**Return Value:**
+
+The decrypted data.
+
+
+
+---
+### SecurityUtility::generateRandomString
+
+Generate a random alphanumeric string.
+
+```php
+SecurityUtility::generateRandomString( int length = 10, mixed characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the string. |
+| `characters` | **mixed** |  |
+
+
+**Return Value:**
+
+The generated string.
+
+
+
+---
+### SecurityUtility::generateRandomInt
+
+Generate a random integer.
+
+```php
+SecurityUtility::generateRandomInt( int min, int max = 100 ): int
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **int** | The minimum value. |
+| `max` | **int** | The maximum value. |
+
+
+**Return Value:**
+
+The generated integer.
+
+
+
+---
+### SecurityUtility::generateRandomFloat
+
+Generate a random float.
+
+```php
+SecurityUtility::generateRandomFloat( float min = 0.0, float max = 100.0 ): float
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `min` | **float** | The minimum value. |
+| `max` | **float** | The maximum value. |
+
+
+**Return Value:**
+
+The generated float.
+
+
+
+---
+### SecurityUtility::generateUUID
+
+Generate a random UUID.
+
+```php
+SecurityUtility::generateUUID(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The generated UUID.
+
+
+
+---
+### SecurityUtility::generateSecureRandomBytes
+
+Generate a secure random binary string.
+
+```php
+SecurityUtility::generateSecureRandomBytes( int length = 16 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the binary string. |
+
+
+**Return Value:**
+
+The generated binary string.
+
+
+
+---
+### SecurityUtility::validateURL
+
+Validate a URL.
+
+```php
+SecurityUtility::validateURL( string url ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `url` | **string** | The URL to validate. |
+
+
+**Return Value:**
+
+True if the URL is valid, false otherwise.
+
+
+
+---
+### SecurityUtility::validatePhoneNumber
+
+Validate a phone number (simple validation).
+
+```php
+SecurityUtility::validatePhoneNumber( string phone ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `phone` | **string** | The phone number to validate. |
+
+
+**Return Value:**
+
+True if the phone number is valid, false otherwise.
+
+
+
+---
+### SecurityUtility::hashWithBcrypt
+
+Generate a secure hash using bcrypt.
+
+```php
+SecurityUtility::hashWithBcrypt( string password ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to hash. |
+
+
+**Return Value:**
+
+The hashed password.
+
+
+
+---
+### SecurityUtility::verifyBcryptPassword
+
+Verify a bcrypt-hashed password.
+
+```php
+SecurityUtility::verifyBcryptPassword( string password, string hashedPassword ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to verify. |
+| `hashedPassword` | **string** | The hashed password to compare against. |
+
+
+**Return Value:**
+
+True if the password matches, false otherwise.
+
+
+
+---
+### SecurityUtility::generateRandomColor
+
+Generate a random color in HEX format.
+
+```php
+SecurityUtility::generateRandomColor(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The generated color.
+
+
+
+---
+### SecurityUtility::sanitizeArray
+
+Sanitize an array of strings.
+
+```php
+SecurityUtility::sanitizeArray( array array ): array
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `array` | **array** | The array of strings to sanitize. |
+
+
+**Return Value:**
+
+The sanitized array.
+
+
+
+---
+### SecurityUtility::generateSecurityQuestion
+
+Generate a random security question.
+
+```php
+SecurityUtility::generateSecurityQuestion(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The generated security question.
+
+
+
+---
+### SecurityUtility::generateSecurityAnswer
+
+Generate a random answer for a security question.
+
+```php
+SecurityUtility::generateSecurityAnswer(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The generated answer.
+
+
+
+---
+### SecurityUtility::getClientIP
+
+Get the current IP address.
+
+```php
+SecurityUtility::getClientIP(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The client's IP address.
+
+
+
+---
+### SecurityUtility::getUserAgent
+
+Get the current user agent.
+
+```php
+SecurityUtility::getUserAgent(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The user agent string.
+
+
+
+---
+### SecurityUtility::generateSessionID
+
+Generate a random session ID.
+
+```php
+SecurityUtility::generateSessionID(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The generated session ID.
+
+
+
+---
+### SecurityUtility::isValidJSON
+
+Check if a string is a valid JSON.
+
+```php
+SecurityUtility::isValidJSON( string string ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `string` | **string** | The string to check. |
+
+
+**Return Value:**
+
+True if valid JSON, false otherwise.
+
+
+
+---
+### SecurityUtility::generateRandomStringFromSet
+
+Generate a random string of a specified character set.
+
+```php
+SecurityUtility::generateRandomStringFromSet( int length, string set ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the string. |
+| `set` | **string** | The character set to use. |
+
+
+**Return Value:**
+
+The generated string.
+
+
+
+---
+### SecurityUtility::aesEncrypt
+
+Encrypt a string using AES-256.
+
+```php
+SecurityUtility::aesEncrypt( string data, string key ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **string** | The data to encrypt. |
+| `key` | **string** | The key to use for encryption. |
+
+
+**Return Value:**
+
+The encrypted data.
+
+
+
+---
+### SecurityUtility::aesDecrypt
+
+Decrypt a string using AES-256.
+
+```php
+SecurityUtility::aesDecrypt( string encryptedData, string key ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `encryptedData` | **string** | The encrypted data to decrypt. |
+| `key` | **string** | The key to use for decryption. |
+
+
+**Return Value:**
+
+The decrypted data.
+
+
+
+---
+### SecurityUtility::generateAPIKey
+
+Generate a random API key.
+
+```php
+SecurityUtility::generateAPIKey( int length = 32 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the API key. |
+
+
+**Return Value:**
+
+The generated API key.
+
+
+
+---
+### SecurityUtility::createCSRFToken
+
+Create a CSRF token.
+
+```php
+SecurityUtility::createCSRFToken(  ): string
+```
+
+
+
+* This method is **static**.
+
+**Return Value:**
+
+The generated CSRF token.
+
+
+
+---
+### SecurityUtility::validateCSRFToken
+
+Validate a CSRF token.
+
+```php
+SecurityUtility::validateCSRFToken( string token, string sessionToken ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `token` | **string** | The token to validate. |
+| `sessionToken` | **string** | The session token to compare against. |
+
+
+**Return Value:**
+
+True if the tokens match, false otherwise.
+
+
+
+---
+### SecurityUtility::generateHMACKey
+
+Generate a random secret key for HMAC.
+
+```php
+SecurityUtility::generateHMACKey( int length = 32 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the secret key. |
+
+
+**Return Value:**
+
+The generated secret key.
+
+
+
+---
+### SecurityUtility::generateHMAC
+
+Generate HMAC for a given data.
+
+```php
+SecurityUtility::generateHMAC( string data, string key ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **string** | The data to hash. |
+| `key` | **string** | The key to use for HMAC. |
+
+
+**Return Value:**
+
+The generated HMAC.
+
+
+
+---
+### SecurityUtility::validateHMAC
+
+Validate HMAC for a given data.
+
+```php
+SecurityUtility::validateHMAC( string data, string key, string hmac ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | **string** | The data to validate. |
+| `key` | **string** | The key used to generate the HMAC. |
+| `hmac` | **string** | The HMAC to compare against. |
+
+
+**Return Value:**
+
+True if the HMAC is valid, false otherwise.
+
+
+
+---
+### SecurityUtility::generateSalt
+
+Generate a random salt.
+
+```php
+SecurityUtility::generateSalt( int length = 16 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `length` | **int** | The length of the salt. |
+
+
+**Return Value:**
+
+The generated salt.
+
+
+
+---
+### SecurityUtility::hashPasswordWithSalt
+
+Hash a password with a salt.
+
+```php
+SecurityUtility::hashPasswordWithSalt( string password, string salt ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to hash. |
+| `salt` | **string** | The salt to use. |
+
+
+**Return Value:**
+
+The hashed password.
+
+
+
+---
+### SecurityUtility::verifyPasswordWithSalt
+
+Verify a password with a salt.
+
+```php
+SecurityUtility::verifyPasswordWithSalt( string password, string salt, string hashedPassword ): bool
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `password` | **string** | The password to verify. |
+| `salt` | **string** | The salt used in hashing. |
+| `hashedPassword` | **string** | The hashed password to compare against. |
+
+
+**Return Value:**
+
+True if the password matches, false otherwise.
+
+
+
+---
+### SecurityUtility::generateRandomPhrase
+
+Generate a random phrase (for testing).
+
+```php
+SecurityUtility::generateRandomPhrase( int wordCount = 4 ): string
+```
+
+
+
+* This method is **static**.
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `wordCount` | **int** | The number of words in the phrase. |
+
+
+**Return Value:**
+
+The generated phrase.
 
 
 
